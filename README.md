@@ -1,2 +1,1 @@
 # MasterNodes
-AutoInstaller MasterNodes
