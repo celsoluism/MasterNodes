@@ -1,5 +1,5 @@
 
-#!/bin/sh
+#!/bin/bash
 #Version 0.0.1.3
 #Info: Installs MasterNode Coins Daemons, Masternode based on privkey.
 #PerfilConectado.NET MasterNodes Installer
@@ -13,10 +13,9 @@ BACKTITLE="Created By PerfilConectado.NET"
 TITLE="Masternode Installer And Update"
 MENU="Choose one of the following options:"
 
-OPTIONS=(1 "Install OmegaCoin"
-         2 "Install DextroCore"
-         3 "Back to firs menu"
-         4 "Quit")
+OPTIONS=(1 "Install OmegaCoin Masternode..."
+         2 "Install OmegaCoin Libraries and Dependences..."
+         3 "Quit")
 
 CHOICE=$(dialog --clear \
                 --backtitle "$BACKTITLE" \
@@ -30,21 +29,18 @@ clear
 
 case $CHOICE in
         1)
-            echo "Install OmegaCoin"
-            ./omegacoin/menu_install_clean_omegacoin.sh
+            echo "You chose Install OmegaCoin Masternode..."
+            ./omegacoin/install_omegacoin.sh
             ;;
         2)
-            echo "Install DextroCore"
-            ./dextrocore/menu_install_clean_dextro.sh
+            echo "You chose to Install Libraries and Dependences..."
+            ./omegacoin/install_dependences_omegacoin.sh
             ;;
-        3)  
-            echo "You chose backup to first menu"
-            ./install.sh
-            ;;
-        3)  
+        3)
             echo "You chose Quit!"
             echo "Access https://PerfilConectado.NET"
             echo "Thankyou!"
             ;;
 esac
+
 

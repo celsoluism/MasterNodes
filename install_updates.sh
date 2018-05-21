@@ -6,8 +6,8 @@
 #Tested OS: 16.04
 #TODO: make script less "ubuntu" or add other linux flavors
 
-HEIGHT=30
-WIDTH=80
+HEIGHT=15
+WIDTH=60
 CHOICE_HEIGHT=6
 BACKTITLE="Backtitle here"
 TITLE="Updates need to compile local new version of that coin selected."

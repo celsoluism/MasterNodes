@@ -7,7 +7,7 @@
 #TODO: make script less "ubuntu" or add other linux flavors
 
 HEIGHT=15
-WIDTH=40
+WIDTH=60
 CHOICE_HEIGHT=4
 BACKTITLE="Created By PerfilConectado.NET"
 TITLE="Masternode Installer And Update"
