@@ -4,10 +4,10 @@ Install MasterNodes By Selector... It is most automated possible, meny masternod
 
 How to:
 
-$ git clone https://github.com/celsoluism/MasterNodes.git
-$ cd MasterNodes
-$ chmod -R +x *
-$ ./install.sh
+git clone https://github.com/celsoluism/MasterNodes.git
+cd MasterNodes
+chmod -R +x *
+./install.sh
 
    Follow installer options.
 
