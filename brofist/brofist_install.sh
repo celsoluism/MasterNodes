@@ -46,7 +46,7 @@ function download_node() {
   strip $COIN_DAEMON $COIN_CLI $COIN_QT $COIN_TX
   sudo cp $TMP_FOLDER/$COIN_SUBFOLDER/* $COIN_PATH
   cd ~ >/dev/null 2>&1
-  sudo rm -rf $TMP_FOLDER >/dev/null 2>&1
+  sudo rm -rf $TMP_FOLDER/* >/dev/null 2>&1
 }
 
 function install_blockchain() {
@@ -57,7 +57,7 @@ function install_blockchain() {
   $BLOCKCHAIN_TAR_UNZIP >/dev/null 2>&1
   cp -rvf $TMP_FOLDER/$BLOCKCHAIN_SUBFOLDER/* $CONFIG_FOLDER >/dev/null 2>&1
   cd ~ - >/dev/null 2>&1
-  sudo rm -rf $TMP_FOLDER >/dev/null 2>&1
+  sudo rm -rf $TMP_FOLDER/* >/dev/null 2>&1
 }
 
 function configure_systemd() {
@@ -95,7 +95,7 @@ sudo cp ~/$TMP_FOLDER/$COIN_NAME.service /etc/systemd/system/
   sudo systemctl enable $COIN_NAME.service >/dev/null 2>&1
 
   if [[ -z "$(ps axo cmd:100 | egrep $COIN_DAEMON)" ]]; then
-    echo -e "${RED}$COIN_NAME is not running${NC}, please investigate. You should start by running $
+    echo -e "${RED}$COIN_NAME is not running${NC}, please investigate. You should start by running $"
     echo -e "${GREEN}systemctl start $COIN_NAME.service"
     echo -e "systemctl status $COIN_NAME.service"
     echo -e "less /var/log/syslog${NC}"
