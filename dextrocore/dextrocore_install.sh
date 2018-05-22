@@ -52,8 +52,7 @@ installing() {
 	message "Installing DextroCore Daemon..."
         message "If asked enter password"
         dextro-cli stop
-        pkill -f dextrod
-	sudo cp -f ~/_coins/dextrocore/* /usr/local/bin
+        sudo cp -f ~/_coins/dextrocore/* /usr/local/bin
 }
 
 createconf() {
@@ -71,13 +70,11 @@ createconf() {
 	rpcuser=$(date +%s | sha256sum | base64 | head -c 64 ; echo)
 	rpcpass=$(openssl rand -base64 64)
 	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=30" "rpcport=1271" "externalip=$mnip" "port=39320" "bind=$mnip" "masternode=1" "masternodeprivkey=$MNPRIVKEY" "masternodeaddr=$mnip:39320" > $CONFILE
-        message "Closing Dextro Daemon"
+        
+	message "Closing Dextro Daemon"
         dextro-cli stop
-        sleep 15s
-        pkill -f dextro
-        pkill dextrod
-        sleep 10
-
+        sleep 25s
+        
         message "Starting Dextro Daemon"
         dextrod
         sleep 15s
@@ -97,8 +94,6 @@ createconf() {
         dextro-cli stop
         message "Closing Dextro Daemon"
         sleep 10s
-        pkill -f dextrod
-        pkill dextrod
         sleep 10s
 	sudo rm $CONFILE
 	message "Updating $CONFFILE..."
