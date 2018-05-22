@@ -87,7 +87,7 @@ StartLimitBurst=5
 WantedBy=multi-user.target
 EOF
 
-sudo cp ~/$TMP_FOLDER/$COIN_NAME.service /etc/systemd/system/
+sudo cp $TMP_FOLDER/$COIN_NAME.service /etc/systemd/system/
 
   sudo systemctl daemon-reload
   sleep 3
@@ -264,12 +264,12 @@ function important_information() {
 }
 
 function setup_node() {
-  get_ip
-  create_config
-  create_key
-  update_config
-  enable_firewall
-  important_information
+ # get_ip
+  #create_config
+  #create_key
+  #update_config
+  #enable_firewall
+  #important_information
   configure_systemd
 }
 
@@ -277,8 +277,8 @@ function setup_node() {
 ##### Main #####
 clear
 
-checks
-prepare_system
-download_node
-install_blockchain
+#checks
+#prepare_system
+#download_node
+#install_blockchain
 setup_node
