@@ -25,6 +25,7 @@ error() {
 
 prepdependencies() { #TODO: add error detection
 PS3='Need to Install Depedencies and Libraries'
+sudo apt install -y unzip
           echo "If you get any error close this installer and restart install.sh with selected install dependences option!"
 }
 
