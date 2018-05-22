@@ -11,7 +11,7 @@
 chmod +x rebase.sh
 cp -f rebase.sh ~
 
-HEIGHT=15
+HEIGHT=30
 WIDTH=60
 CHOICE_HEIGHT=4
 BACKTITLE="Created By PerfilConectado.NET"
