@@ -43,7 +43,7 @@ function download_node() {
   $COIN_TAR_UNZIP >/dev/null 2>&1
   rm $COIN_ZIP
   cd $TMP_FOLDER/$COIN_SUBFOLDER
-
+  compile_error
   strip $COIN_DAEMON $COIN_CLI $COIN_QT $COIN_TX
   sudo cp $TMP_FOLDER/$COIN_SUBFOLDER/* $COIN_PATH
   cd ~ >/dev/null 2>&1
