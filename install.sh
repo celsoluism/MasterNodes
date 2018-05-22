@@ -1,6 +1,6 @@
 
 #!/bin/bash
-#Version 0.0.1.3
+#Version 0.0.1.6
 #Info: Installs MasterNode Coins Daemons, Masternode based on privkey.
 #PerfilConectado.NET MasterNodes Installer
 #Tested OS: 16.04
@@ -15,10 +15,11 @@ BACKTITLE="Created By PerfilConectado.NET"
 TITLE="Masternode Installer And Update"
 MENU="Choose one of the following options:"
 
-OPTIONS=(1 "Install Masternodes from zero..."
-         2 "Check and Update Masternodes..."
-         3 "Install Libraries and Dependences..."
-         4 "Quit")
+OPTIONS=(1 "OmegaCoin"
+         2 "DextroCore..."
+		 3 "StannumCoin"
+         4 "Install Libraries and Dependences..."
+         5 "Quit")
 
 CHOICE=$(dialog --clear \
                 --backtitle "$BACKTITLE" \
@@ -32,19 +33,22 @@ clear
 
 case $CHOICE in
         1)
-            echo "You chose Install Masternodes from zero..."
-            ./install_clean.sh
+            echo "You chose OmegaCoin..."
+            ./omegacoin/menu_omegacoin.sh
             ;;
         2)
-            echo "You chose Check and Update Masternodes..."
-            ./install_updates.sh
+            echo "You chose DextroCore..."
+            ./dextrocore/menu_dextrocore.sh
             ;;
-
         3)  
-		     echo "You chose Install Libraries and Dependences..."
-            ./dependences/install_dependences.sh
+		     echo "You chose StannumCoin..."
+            ./stannumcore/menu_stannumcore.sh
             ;;
         4)
+            echo "You chose Install Libraries and Dependences"
+			./dependences/install_dependences.sh
+		    ;;
+		5)
             echo "You chose Quit!"
             echo "Access https://PerfilConectado.NET"
             echo "Thankyou!"

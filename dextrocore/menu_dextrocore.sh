@@ -1,4 +1,3 @@
-
 #!/bin/sh
 #Info: Install or Update MasterNode Daemons, Masternode based on privkey.
 #PerfilConectado.NET MasterNodes Installer
@@ -11,8 +10,9 @@ BACKTITLE="Created By PerfilConectado.NET"
 TITLE="Masternode Installer And Update"
 MENU="Choose one of the following options:"
 
-OPTIONS=(1 "Install OmegaCoin Masternode..."
-         2 "Install OmegaCoin Libraries and Dependences..."
+OPTIONS=(1 "Install DextroCore Masternode..."
+         2 "Update DextroCore Masternode"
+         2 "Install Libraries and Dependences..."
          3 "Quit")
 
 CHOICE=$(dialog --clear \
@@ -27,14 +27,17 @@ clear
 
 case $CHOICE in
         1)
-            echo "You chose Install OmegaCoin Masternode..."
-            ./omegacoin/install_omegacoin.sh
+            echo "You select Install DextroCore..."
+            ./dextrocore/install_dextrocore.sh
             ;;
-        2)
-            echo "You chose to Install Libraries and Dependences..."
-            ./omegacoin/install_dependences_omegacoin.sh
-            ;;
+		2)  echo "You chose Update DextroCore MasterNode..."
+		    ./dextrocore/update_dextrocore.sh
+		    ;;
         3)
+            echo "You select to Install Libraries and Dependences..."
+            ./dependences/install_dependences.sh
+            ;;
+        4)
             echo "You chose Quit!"
             echo "Access https://PerfilConectado.NET"
             echo "Thankyou!"
