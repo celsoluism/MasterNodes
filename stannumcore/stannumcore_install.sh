@@ -57,7 +57,8 @@ installing() {
 createconf() {
 	#TODO: Can check for flag and skip this
 	#TODO: Random generate the user and password
-
+        
+	rm ~/.stannumcore/stannum.conf
 	message "Creating stannum.conf..."
 	MNPRIVKEY="7faP7K1bBWYJt2MivDnTgEU3ZggSgteDuC4fSMkZiMowWS3Bmfn"
 	CONFDIR=~/.stannumcore
