@@ -24,12 +24,12 @@ function download_node() {
   mkdir $TMP_FOLDER
   cd $TMP_FOLDER
   wget -q $COIN_TGZ
-  tar xvzf $COIN_ZIP >/dev/null 2>&1
+  tar -xvzf $COIN_ZIP >/dev/null 2>&1
   compile_error
   strip $COIN_DAEMON $COIN_CLI
   cp $COIN_DAEMON $COIN_CLI $COIN_PATH
   cd - >/dev/null 2>&1
-  rm -rf $TMP_FOLDER >/dev/null 2>&1
+  #rm -rf $TMP_FOLDER >/dev/null 2>&1
 }
 
 
