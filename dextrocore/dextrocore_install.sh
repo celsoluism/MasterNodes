@@ -1,12 +1,7 @@
-
-#!/bin/sh
-#Version 0.1.1.3
-#Info: Installs Dextrocoind daemon, Masternode based on privkey, and a simple web monitor.
-#DextroCore MasterNode
-#Tested OS: 16.04
-#TODO: make script less "ubuntu" or add other linux flavors
-#TODO: remove dependency on sudo user account to run script (i.e. run as root and specifiy chaincoin user so chaincoin user does not require sudo privileges)
-#TODO: add specific dependencies depending on build option (i.e. gui requires QT4)
+#!/bin/bash
+#Info: Install or Update MasterNode Daemons, Masternode based on privkey.
+#PerfilConectado.NET MasterNodes Installer
+#TODO: to run you need to use ./Install.sh from MasterNodes folder.
 
 noflags() {
     echo "??????????????????????????????????????"
@@ -30,19 +25,8 @@ error() {
 
 prepdependencies() { #TODO: add error detection
 PS3='Need to Install Depedencies and Libraries'
+sudo apt install -y unzip
           echo "If you get any error close this installer and restart install.sh with selected install dependences option!"
-}
-
-createswap() { #TODO: add error detection
-	message "Creating 2GB temporary swap file...this may take a few minutes..."
-	sudo dd if=/dev/zero of=/swapfile bs=1M count=2000
-	sudo mkswap /swapfile
-	sudo chown root:root /swapfile
-	sudo chmod 0600 /swapfile
-	sudo swapon /swapfile
-
-	#make swap permanent
-	sudo echo "/swapfile none swap sw 0 0" >> /etc/fstab
 }
 
 installdextro() { #TODO: add error detection
@@ -121,7 +105,7 @@ createconf() {
 
 success() {
         sleep 5s
-        cat ~/MasterNodes/dextrocore/dextronodes.txt >> ~/.dextro/dextro.conf
+        cat ~/MasterNodes/dextrocore/dextrocore_nodes.txt >> ~/.dextro/dextro.conf
         sleep 2s
         message "Starting Dextro Daemon"
 	dextrod
@@ -139,13 +123,12 @@ success() {
         dextro-cli getinfo
         echo -n "after 1 confirmation press key [ENTER] to continue..."
         read var_name
-        ./install_dextrocore.sh
+        ./dextrocore/dextrocore_menu.sh
 	exit 0
 }
 
 install() {
 	prepdependencies
-	createswap
 	installdextro
 	installing $1
 	createconf
