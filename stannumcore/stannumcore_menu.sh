@@ -35,7 +35,7 @@ case $CHOICE in
 	    ;;
 	3)
             echo "You select to Install Libraries and Dependences..."
-            ./dependences/stannumcore_dependences.sh
+            ./stannumcore/stannumcore_dependences.sh
             ;;
         4)
             echo "You chose Quit!"
