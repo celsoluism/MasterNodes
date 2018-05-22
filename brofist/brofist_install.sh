@@ -2,7 +2,7 @@
 
 TMP_FOLDER=$(mktemp -d)
 CONFIG_FILE='brofist.conf'
-CONFIGFOLDER='~/.brofistcore'
+CONFIGFOLDER='/root/.brofistcore'
 COIN_DAEMON='brofistd'
 COIN_CLI='brofist-cli'
 COIN_PATH='/usr/local/bin/'
