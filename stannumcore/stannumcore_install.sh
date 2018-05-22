@@ -48,8 +48,8 @@ installing() {
 	message "Installing stannumcore Daemon..."
         message "If asked enter password"
         stannum-cli stop
-        pkill -f stannumd
-	sudo cp -f ~/_coins/stannumcore/* /usr/local/bin
+	sleep 10s
+        sudo cp -f ~/_coins/stannumcore/* /usr/local/bin
 }
 
 createconf() {
@@ -70,8 +70,6 @@ createconf() {
         message "Closing stannumcore Daemon"
         stannum-cli stop
         sleep 15s
-        pkill -f stannumd
-        pkill stannumd
         sleep 10
 
         message "Starting stannumcore Daemon"
@@ -93,10 +91,7 @@ createconf() {
         stannum-cli stop
         message "Closing stannumcore Daemon"
         sleep 10s
-        pkill -f stannumd
-        pkill stannumd
-        sleep 10s
-	sudo rm $CONFILE
+        sudo rm $CONFILE
 	message "Updating stannum.conf..."
         printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=256" "#rpcport=11995" "externalip=$mnip" "port=23403" "bind=$mnip" "masternode=1" "masternodeprivkey=$MNPRIVKEY" "masternodeaddr=$mnip:23403" > $CONFILE
 
