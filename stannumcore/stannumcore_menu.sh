@@ -28,13 +28,14 @@ clear
 case $CHOICE in
         1)
             echo "You select Install StannumCore..."
-            ./stannumcore/install_clean_stannumcore.sh
+            ./stannumcore/stannumcore_install.sh
             ;;
         2)  echo "You chose Update StannumCore"
-		    ./stannumcore/update_stannumcore.sh
-		3)
+	    ./stannumcore/stannumcore_update.sh
+	    ;;
+	3)
             echo "You select to Install Libraries and Dependences..."
-            ./dependences/install_dependences.sh
+            ./dependences/stannumcore_dependences.sh
             ;;
         4)
             echo "You chose Quit!"
