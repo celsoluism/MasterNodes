@@ -28,15 +28,15 @@ clear
 case $CHOICE in
         1)
             echo "You select Install DextroCore..."
-            ./dextrocore/install_dextrocore.sh
+            ./dextrocore/dextrocore_install.sh
             ;;
         2)
             echo "You chose Update DextroCore MasterNode..."
-            ./dextrocore/update_dextrocore.sh
+            ./dextrocore/dextrocore_update.sh
             ;;
 	3)  
 	    echo "You select to Install Libraries and Dependences..."
-	    ./dextrocore/dextro_dependences.sh
+	    ./dextrocore/dextrocore_dependences.sh
             ;;
         4)
             echo "You chose Quit!"
