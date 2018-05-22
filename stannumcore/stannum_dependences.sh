@@ -12,4 +12,4 @@ sudo apt-get -y update
 sudo apt-get install -y libdb4.8-dev libdb4.8++-dev
 sudo apt-get install -y build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils
 
-./stannumcore/menu_stannumcore.sh
+./stannumcore/stannumcore_menu.sh
