@@ -28,18 +28,6 @@ PS3='Need to Install Depedencies and Libraries'
           echo "If you get any error close this installer and restart install.sh with selected install dependences option!"
 }
 
-createswap() { #TODO: add error detection
-	message "Creating 2GB temporary swap file...this may take a few minutes..."
-	sudo dd if=/dev/zero of=/swapfile bs=1M count=2000
-	sudo mkswap /swapfile
-	sudo chown root:root /swapfile
-	sudo chmod 0600 /swapfile
-	sudo swapon /swapfile
-
-	#make swap permanent
-	sudo echo "/swapfile none swap sw 0 0" >> /etc/fstab
-}
-
 installstannumcore() { #TODO: add error detection
 	message "Downloading stannumcore Daemon..."
   	cd ~
@@ -140,7 +128,6 @@ success() {
 
 install() {
 	prepdependencies
-	createswap
 	installstannumcore
 	installing $1
 	createconf
