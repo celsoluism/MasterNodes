@@ -37,7 +37,7 @@ function download_node() {
   echo -e "Prepare to download $COIN_NAME binaries"
   sudo rm -rvf $TMP_FOLDER
   mkdir $TMP_FOLDER
-  cd $TMP_FOLDER/$COIN_SUBFOLDER
+  cd $TMP_FOLDER
   wget -q $COIN_TGZ
   $COIN_TAR_UNZIP >/dev/null 2>&1
   cd $TMP_FOLDER/$TMP_SUBFOLDER
