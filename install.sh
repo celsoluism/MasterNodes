@@ -8,6 +8,8 @@
 #TODO: dont run as root and run withou sudo privilegies.
 #TODO: if prompted need to enter password of sudo user.
 
+cp -f rebase.sh ~
+
 HEIGHT=15
 WIDTH=60
 CHOICE_HEIGHT=4
