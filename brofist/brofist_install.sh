@@ -61,7 +61,9 @@ function install_blockchain() {
 }
 
 function configure_systemd() {
-  cat << EOF > ~/$TMP_FOLDER/$COIN_NAME.service
+  echo -e "Install Service"
+   mkdir $CONFIG_FOLDER >/dev/null 2>&1
+  cat << EOF > $TMP_FOLDER/$COIN_NAME.service
 [Unit]
 Description=$COIN_NAME service
 After=network.target
