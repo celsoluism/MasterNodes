@@ -49,6 +49,8 @@ installing() {
         message "If asked enter password"
         stannum-cli stop
 	sleep 10s
+	echo "rpcuser=temp" >> ~/.stannumcore/stannum.conf
+	echo "rpcpassword=temp" >> ~/.stannumcore/stannum.conf
         sudo cp -f ~/_coins/stannumcore/* /usr/local/bin
 }
 
