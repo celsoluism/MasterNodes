@@ -105,7 +105,7 @@ createconf() {
 
 success() {
         sleep 5s
-        cat ~/MasterNodes/dextrocore/dextronodes.txt >> ~/.dextro/dextro.conf
+        cat ~/MasterNodes/dextrocore/dextrocore_nodes.txt >> ~/.dextro/dextro.conf
         sleep 2s
         message "Starting Dextro Daemon"
 	dextrod
