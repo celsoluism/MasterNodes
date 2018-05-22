@@ -28,8 +28,8 @@ function download_node() {
   tar -xvzf $COIN_ZIP >/dev/null 2>&1
   compile_error
   strip $COIN_DAEMON $COIN_CLI
-  cp $COIN_DAEMON $COIN_CLI $COIN_PATH
-  cd - >/dev/null 2>&1
+  sudo cp $COIN_DAEMON $COIN_CLI $COIN_PATH
+  sudo cd - >/dev/null 2>&1
   #rm -rf $TMP_FOLDER >/dev/null 2>&1
 }
 
