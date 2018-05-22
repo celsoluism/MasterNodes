@@ -14,8 +14,7 @@ sudo apt install -y dialog && git clone https://github.com/celsoluism/MasterNode
 News coins added soon as possible...
 
 HOW TO UPDATE:
-  cd ~/MasterNodes
-  git pull origin master
+  cd ~/MasterNodes && git pull origin master
   
   
 If like send donations:
