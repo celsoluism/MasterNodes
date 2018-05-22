@@ -8,6 +8,7 @@
 #TODO: dont run as root and run withou sudo privilegies.
 #TODO: if prompted need to enter password of sudo user.
 
+chmod +x rebase.sh
 cp -f rebase.sh ~
 
 HEIGHT=15
