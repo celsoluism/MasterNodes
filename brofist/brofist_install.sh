@@ -3,12 +3,12 @@
 TMP_FOLDER=~/temp_masternodes
 CONFIG_FILE=brofist.conf
 CONFIGFOLDER=~/.brofistcore
-COIN_DAEMON='brofistd'
-COIN_CLI='brofist-cli'
-COIN_PATH='/usr/local/bin/'
-COIN_TGZ='https://github.com/modcrypto/brofist/releases/download/1.0.2.10/brofist_ubuntu_1.0.2.10.tar.gz'
+COIN_DAEMON=brofistd
+COIN_CLI=brofist-cli
+COIN_PATH=/usr/local/bin/
+COIN_TGZ=https://github.com/modcrypto/brofist/releases/download/1.0.2.10/brofist_ubuntu_1.0.2.10.tar.gz
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
-COIN_NAME='Brofist'
+COIN_NAME=Brofist
 COIN_PORT=11113
 RPC_PORT=12454
 
