@@ -10,10 +10,10 @@ BACKTITLE="Created By PerfilConectado.NET"
 TITLE="Masternode Installer And Update"
 MENU="Choose one of the following options:"
 
-OPTIONS=(1 "Install DextroCore Masternode..."
+OPTIONS=(1 "Install DextroCore Masternode"
          2 "Update DextroCore Masternode"
-         2 "Install Libraries and Dependences..."
-         3 "Quit")
+		 3 "Install Libraries and Dependences..."
+         4 "Quit")
 
 CHOICE=$(dialog --clear \
                 --backtitle "$BACKTITLE" \
@@ -30,7 +30,8 @@ case $CHOICE in
             echo "You select Install DextroCore..."
             ./dextrocore/install_dextrocore.sh
             ;;
-		2)  echo "You chose Update DextroCore MasterNode..."
+		2)  
+		    echo "You chose Update DextroCore MasterNode..."
 		    ./dextrocore/update_dextrocore.sh
 		    ;;
         3)
