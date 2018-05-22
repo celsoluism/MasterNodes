@@ -34,15 +34,15 @@ clear
 case $CHOICE in
         1)
             echo "You chose OmegaCoin..."
-            ./omegacoin/menu_omegacoin.sh
+            ./omegacoin/omegacoin_menu.sh
             ;;
         2)
             echo "You chose DextroCore..."
-            ./dextrocore/menu_dextrocore.sh
+            ./dextrocore/dextrocore_menu.sh
             ;;
         3)  
 		     echo "You chose StannumCoin..."
-            ./stannumcore/menu_stannumcore.sh
+            ./stannumcore/stannumcore_menu.sh
             ;;
         4)
             echo "You chose Install Libraries and Dependences"
