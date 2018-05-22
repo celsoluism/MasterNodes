@@ -1,13 +1,8 @@
-
 #!/bin/sh
-#Version 0.0.1.3
-#Info: Installs MasterNode Daemons, Masternode based on privkey and txid.
-#DextroCore MasterNode
-#Tested OS: 16.04
-#TODO: make script less "ubuntu" or add other linux flavors
-#TODO: need sudo group on user account to run script (i.e. no run as root and no use sudo in comand line)
-#TODO: add specific dependencies depending on build option (i.e. gui requires QT4)
-#TODO: enter password sudo if required!
+#Info: Install or Update MasterNode Daemons, Masternode based on privkey.
+#PerfilConectado.NET MasterNodes Installer
+#TODO: to run you need to use ./Install.sh from MasterNodes folder.
+
 noflags() {
     echo "??????????????????????????????????????"
     echo "Usage: ./install.sh"

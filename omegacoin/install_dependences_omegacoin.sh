@@ -1,3 +1,8 @@
+#!/bin/sh
+#Info: Install or Update MasterNode Daemons, Masternode based on privkey.
+#PerfilConectado.NET MasterNodes Installer
+#TODO: to run you need to use ./Install.sh from MasterNodes folder.
+
 	  sudo apt-get -y update
 	  sudo apt-get -y upgrade
 	  sudo apt-get -y dist-upgrade

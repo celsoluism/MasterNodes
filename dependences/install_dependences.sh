@@ -1,5 +1,7 @@
-
-# prepare libraries for criptos
+#!/bin/sh
+#Info: Install or Update MasterNode Daemons, Masternode based on privkey.
+#PerfilConectado.NET MasterNodes Installer
+#TODO: to run you need to use ./Install.sh from MasterNodes folder.
 
 echo "PREPARING TO INSTALL LIBRARIES!"
 echo "TO CONTINUE ONLY WAIT TO START..."

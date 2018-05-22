@@ -5,6 +5,8 @@
 #PerfilConectado.NET MasterNodes Installer
 #Tested OS: 16.04
 #TODO: make script less "ubuntu" or add other linux flavors
+#TODO: dont run as root and run withou sudo privilegies.
+#TODO: if prompted need to enter password of sudo user.
 
 HEIGHT=15
 WIDTH=60
@@ -30,15 +32,16 @@ clear
 
 case $CHOICE in
         1)
-            echo "You select Install Masternodes from zero..."
+            echo "You chose Install Masternodes from zero..."
             ./install_clean.sh
             ;;
         2)
-            echo "You select Check and Update Masternodes..."
+            echo "You chose Check and Update Masternodes..."
             ./install_updates.sh
             ;;
 
         3)  
+		     echo "You chose Install Libraries and Dependences..."
             ./dependences/install_dependences.sh
             ;;
         4)
