@@ -8,14 +8,12 @@ COIN_CLI=brofist-cli
 COIN_QT=brofist-qt
 COIN_TX=brofist-tx
 COIN_PATH=/usr/local/bin/
-
 # link coin
 COIN_TGZ=https://github.com/modcrypto/brofist/releases/download/1.0.2.10/brofist_ubuntu_1.0.2.10.tar.gz
 # unziped subfolder?
 COIN_SUBFOLDER=linux
 # 'tar -xvzf *.gz' to gziped or 'unzip -o *.zip' to zip file.
 COIN_TAR_UNZIP=$(echo 'tar -xvzf *.gz')
-
 # link blockchain
 COIN_BLOCKCHAIN=https://github.com/modcrypto/brofist/releases/download/1.0.2.10/brofist.blockchain.data.zip
 # unziped subfolder?
@@ -42,10 +40,10 @@ function download_node() {
   cd $TMP_FOLDER
   wget -q $COIN_TGZ
   $COIN_TAR_UNZIP >/dev/null 2>&1
+  rm $COIN_ZIP
   cd $TMP_FOLDER/$TMP_SUBFOLDER
-  compile_error
   strip $COIN_DAEMON $COIN_CLI $COIN_QT $COIN_TX
-  sudo cp -f * $COIN_PATH
+  sudo cp -f $TMP_FOLDER/$TMP_SUBFOLDER/* $COIN_PATH
   cd ~ >/dev/null 2>&1
   sudo rm -rf $TMP_FOLDER >/dev/null 2>&1
 }
