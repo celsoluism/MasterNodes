@@ -263,6 +263,8 @@ function important_information() {
  echo -e "MASTERNODE PRIVATEKEY is: ${RED}$COINKEY${NC}"
  echo -e "Please check ${RED}$COIN_NAME${NC} is running with the following command: ${GREEN}systemctl status $COIN_NAME.service${NC}"
  echo -e "================================================================================================================================"
+sleep 10s
+./brofist/brofist_menu.sh
 }
 
 function setup_node() {
