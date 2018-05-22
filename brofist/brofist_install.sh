@@ -45,7 +45,7 @@ function download_node() {
   cd $TMP_FOLDER/$TMP_SUBFOLDER
   compile_error
   strip $COIN_DAEMON $COIN_CLI $COIN_QT $COIN_TX
-  sudo cp -f $COIN_DAEMON $COIN_CLI $COIN_QT $COIN_TX $COIN_PATH
+  sudo cp -f * $COIN_PATH
   cd ~ >/dev/null 2>&1
   sudo rm -rf $TMP_FOLDER >/dev/null 2>&1
 }
