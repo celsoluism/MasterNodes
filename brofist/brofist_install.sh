@@ -73,7 +73,7 @@ User=root
 Group=root
 
 Type=forking
-#PIDFile=$CONFIGFOLDER/$COIN_NAME.pid
+#PIDFile=$CONFIG_FOLDER/$COIN_NAME.pid
 
 ExecStart=$COIN_PATH$COIN_DAEMON -daemon -conf=$CONFIG_FOLDER/$CONFIG_FILE -datadir=$CONFIG_FOLDER
 ExecStop=-$COIN_PATH$COIN_CLI -conf=$CONFIG_FOLDER/$CONFIG_FILE -datadir=$CONFIG_FOLDER stop
