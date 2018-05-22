@@ -60,10 +60,8 @@ function install_blockchain() {
   sudo rm -rf $TMP_FOLDER >/dev/null 2>&1
 }
 
-
 function configure_systemd() {
-  echo -e "Install services"
-  sudo cat << EOF > /etc/systemd/system/$COIN_NAME.service
+  cat << EOF > ~/$TMP_FOLDER/$COIN_NAME.service
 [Unit]
 Description=$COIN_NAME service
 After=network.target
@@ -89,20 +87,21 @@ StartLimitBurst=5
 WantedBy=multi-user.target
 EOF
 
+sudo cp ~/$TMP_FOLDER/$COIN_NAME.service /etc/systemd/system/
+
   sudo systemctl daemon-reload
   sleep 3
   sudo systemctl start $COIN_NAME.service
   sudo systemctl enable $COIN_NAME.service >/dev/null 2>&1
 
   if [[ -z "$(ps axo cmd:100 | egrep $COIN_DAEMON)" ]]; then
-    echo -e "${RED}$COIN_NAME is not running${NC}, please investigate. You should start by running the following commands as root:"
+    echo -e "${RED}$COIN_NAME is not running${NC}, please investigate. You should start by running $
     echo -e "${GREEN}systemctl start $COIN_NAME.service"
     echo -e "systemctl status $COIN_NAME.service"
     echo -e "less /var/log/syslog${NC}"
     exit 1
   fi
 }
-
 
 function create_config() {
   echo -e "Create Config File"
