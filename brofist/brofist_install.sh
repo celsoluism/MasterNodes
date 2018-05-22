@@ -1,8 +1,8 @@
 #!/bin/bash
 
 TMP_FOLDER=~/temp_masternodes
-CONFIG_FILE='brofist.conf'
-CONFIGFOLDER='~/.brofistcore'
+CONFIG_FILE=brofist.conf
+CONFIGFOLDER=~/.brofistcore
 COIN_DAEMON='brofistd'
 COIN_CLI='brofist-cli'
 COIN_PATH='/usr/local/bin/'
