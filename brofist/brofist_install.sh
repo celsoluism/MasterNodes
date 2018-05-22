@@ -37,24 +37,24 @@ function download_node() {
   tar -xvzf $COIN_TAR_UNZIP >/dev/null 2>&1
   unzip $COIN_TAR_UNZIP >/dev/null 2>&1
   cd $TMP_FOLDER/$TMP_SUBFOLDER
- echo -e "CHECK FILES"
- ls 
- sleep 25s
   compile_error
   strip $COIN_DAEMON $COIN_CLI
   sudo cp -f $COIN_DAEMON $COIN_CLI $COIN_PATH
-  rm $COIN_ZIP
+  cd ~ >/dev/null 2>&1
+  sudo rm -rf $TMP_FOLDER >/dev/null 2>&1
+}
+
+function install_blockchain() {
   echo -e "Wait some time, installing blockchain!"
+  mkdir $TMP_FOLDER
   mkdir $TMP_FOLDER/temp_blockchain
   cd $TMP_FOLDER/temp_blockchain
   wget -q $COIN_BLOCKCHAIN
   tar -xvzf $BLOCKCHAIN_TAR_UNZIP >/dev/null 2>&1
-  unzip $BLOCKCHAIN_TAR_UNZIP >/dev/null 2>&1
+  unzip -o $BLOCKCHAIN_TAR_UNZIP >/dev/null 2>&1
   cp -rvf * $CONFIG_FOLDER
-  sudo cd - >/dev/null 2>&1
-  cd ~
-  rm -rf $TMP_FOLDER >/dev/null 2>&1
-  
+  cd ~ - >/dev/null 2>&1
+  sudo rm -rf $TMP_FOLDER >/dev/null 2>&1
 }
 
 
@@ -270,4 +270,5 @@ clear
 checks
 prepare_system
 download_node
+install_blockchain
 setup_node
