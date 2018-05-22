@@ -10,4 +10,4 @@ sudo apt-get -y update
 sudo apt-get install -y libdb4.8-dev libdb4.8++-dev
 sudo apt-get install -y libminiupnpc-dev
 
-./menu_dextrocore.sh
+./dextrocore/menu_dextrocore.sh
