@@ -1,4 +1,7 @@
 #!/bin/bash
+#Info: Install or Update MasterNode Daemons, Masternode based on privkey.
+#PerfilConectado.NET MasterNodes Installer
+#TODO: to run you need to use ./Install.sh from MasterNodes folder.
 
 cd ~
 echo "****************************************************************************"

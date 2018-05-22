@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #Info: Install or Update MasterNode Daemons, Masternode based on privkey.
 #PerfilConectado.NET MasterNodes Installer
 #TODO: to run you need to use ./Install.sh from MasterNodes folder.
@@ -10,10 +10,10 @@ BACKTITLE="Created By PerfilConectado.NET"
 TITLE="Masternode Installer And Update"
 MENU="Choose one of the following options:"
 
-OPTIONS=(1 "Install DextroCore Masternode"
-         2 "Update DextroCore Masternode"
+OPTIONS=(1 "Install DextroCore MasterNode..."
+         2 "Update DextroCore MasterNode..."
 		 3 "Install Libraries and Dependences..."
-         4 "Quit")
+		 4 "Quit")
 
 CHOICE=$(dialog --clear \
                 --backtitle "$BACKTITLE" \
@@ -30,13 +30,13 @@ case $CHOICE in
             echo "You select Install DextroCore..."
             ./dextrocore/install_dextrocore.sh
             ;;
-		2)  
-		    echo "You chose Update DextroCore MasterNode..."
-		    ./dextrocore/update_dextrocore.sh
-		    ;;
-        3)
-            echo "You select to Install Libraries and Dependences..."
-            ./dependences/install_dependences.sh
+        2)
+            echo "You chose Update DextroCore MasterNode..."
+            ./dextrocore/update_dextrocore.sh
+            ;;
+		3)  
+		    echo "You select to Install Libraries and Dependences..."
+		    ./dependences/install_dependences.sh
             ;;
         4)
             echo "You chose Quit!"
@@ -44,5 +44,3 @@ case $CHOICE in
             echo "Thankyou!"
             ;;
 esac
-
-
