@@ -220,6 +220,7 @@ echo -e "If prompted enter password. Please wait a time!"
   rm $CONFIG_FOLDER/$CONFIG_FILE
   echo "rpcuser=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
   echo "rpcpassword=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
+  echo "daemon=1" >> $CONFIG_FOLDER/$CONFIG_FILE
 sudo apt-get -y update >/dev/null 2>&1
 DEBIAN_FRONTEND=noninteractive apt-get update > /dev/null 2>&1
 DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y -qq upgrade >/dev/null 2>&1
