@@ -134,7 +134,7 @@ success() {
         stannum-cli getinfo
         echo -n "after 1 confirmation press key [ENTER] to continue..."
         read var_name
-        ./menu_stannumcore.sh
+        ./stannumcore/stannumcore_menu.sh
 	exit 0
 }
 
