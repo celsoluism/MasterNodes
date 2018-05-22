@@ -5,6 +5,8 @@ CONFIG_FILE=brofist.conf
 CONFIGFOLDER=~/.brofistcore
 COIN_DAEMON=brofistd
 COIN_CLI=brofist-cli
+COIN_QT=brofist-qt
+COIN_TX=brofist-tx
 COIN_PATH=/usr/local/bin/
 
 # link coin
@@ -42,8 +44,8 @@ function download_node() {
   $COIN_TAR_UNZIP >/dev/null 2>&1
   cd $TMP_FOLDER/$TMP_SUBFOLDER
   compile_error
-  strip $COIN_DAEMON $COIN_CLI
-  sudo cp -f $COIN_DAEMON $COIN_CLI $COIN_PATH
+  strip $COIN_DAEMON $COIN_CLI $COIN_QT $COIN_TX
+  sudo cp -f $COIN_DAEMON $COIN_CLI $COIN_QT $COIN_TX $COIN_PATH
   cd ~ >/dev/null 2>&1
   sudo rm -rf $TMP_FOLDER >/dev/null 2>&1
 }
