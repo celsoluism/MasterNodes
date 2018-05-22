@@ -30,6 +30,7 @@ NC='\033[0m'
 
 function download_node() {
   echo -e "Prepare to download $COIN_NAME binaries"
+  sudo rm -rvf $TMP_FOLDER
   mkdir $TMP_FOLDER
   cd $TMP_FOLDER
   wget -q $COIN_TGZ
