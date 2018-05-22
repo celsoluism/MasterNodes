@@ -8,9 +8,11 @@ COIN_DAEMON=brofistd
 COIN_CLI=brofist-cli
 COIN_PATH=/usr/local/bin/
 COIN_TGZ=https://github.com/modcrypto/brofist/releases/download/1.0.2.10/brofist_ubuntu_1.0.2.10.tar.gz
+#example 1: TAR_UNZIP=tar -xvzf #example 2: TAR_UNZIP=unzip -o
+COIN_TAR_UNZIP=tar -xvzf
 COIN_BLOCKCHAIN=https://github.com/modcrypto/brofist/releases/download/1.0.2.10/brofist.blockchain.data.zip
 #example 1: TAR_UNZIP=tar -xvzf #example 2: TAR_UNZIP=unzip -o
-TAR_UNZIP=tar -xvzf
+BLOCKCHAIN_TAR_UNZIP=unzip -o
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 COIN_NAME=Brofist
 COIN_PORT=11113
