@@ -1,6 +1,7 @@
 #!/bin/bash
 
 TMP_FOLDER=~/temp_masternodes
+TMP_SUBFOLDER=linux
 CONFIG_FILE=brofist.conf
 CONFIGFOLDER=~/.brofistcore
 COIN_DAEMON=brofistd
@@ -22,7 +23,7 @@ NC='\033[0m'
 function download_node() {
   echo -e "Prepare to download $COIN_NAME binaries"
   mkdir $TMP_FOLDER
-  cd $TMP_FOLDER
+  cd $TMP_FOLDER/$TMP_SUBFOLDER
   wget -q $COIN_TGZ
   tar -xvzf $COIN_ZIP >/dev/null 2>&1
   compile_error
