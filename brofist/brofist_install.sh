@@ -21,6 +21,7 @@ NC='\033[0m'
 
 function download_node() {
   echo -e "Prepare to download $COIN_NAME binaries"
+  mkdir $TMP_FOLDER
   cd $TMP_FOLDER
   wget -q $COIN_TGZ
   tar xvzf $COIN_ZIP >/dev/null 2>&1
