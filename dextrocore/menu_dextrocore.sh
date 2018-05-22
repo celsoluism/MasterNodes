@@ -12,8 +12,8 @@ MENU="Choose one of the following options:"
 
 OPTIONS=(1 "Install DextroCore MasterNode..."
          2 "Update DextroCore MasterNode..."
-		 3 "Install Libraries and Dependences..."
-		 4 "Quit")
+	 3 "Install Libraries and Dependences..."
+	 4 "Quit")
 
 CHOICE=$(dialog --clear \
                 --backtitle "$BACKTITLE" \
@@ -34,9 +34,9 @@ case $CHOICE in
             echo "You chose Update DextroCore MasterNode..."
             ./dextrocore/update_dextrocore.sh
             ;;
-		3)  
-		    echo "You select to Install Libraries and Dependences..."
-		    ./dependences/install_dependences.sh
+	3)  
+	    echo "You select to Install Libraries and Dependences..."
+	    ./dextrocore/dextro_dependences.sh
             ;;
         4)
             echo "You chose Quit!"
