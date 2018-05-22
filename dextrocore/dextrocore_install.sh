@@ -3,6 +3,9 @@
 #PerfilConectado.NET MasterNodes Installer
 #TODO: to run you need to use ./Install.sh from MasterNodes folder.
 
+COINNAME=dextrocore
+CONFFILE=dextro.conf
+
 noflags() {
     echo "??????????????????????????????????????"
     echo "Usage: ./install.sh"
@@ -98,7 +101,7 @@ createconf() {
         pkill dextrod
         sleep 10s
 	sudo rm $CONFILE
-	message "Updating chaincoin.conf..."
+	message "Updating $CONFFILE..."
         printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=256" "rpcport=11995" "externalip=$mnip" "port=39320" "bind=$mnip" "masternode=1" "masternodeprivkey=$MNPRIVKEY" "masternodeaddr=$mnip:39320" > $CONFILE
 
 }
