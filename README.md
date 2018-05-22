@@ -16,7 +16,15 @@ News coins added soon as possible...
 
 HOW TO UPDATE:
 
+cd ~
+
+./rebase.sh
+
+OR
+
 cd ~/MasterNodes && git pull origin master
+
+
 
 If like send donations:
 
