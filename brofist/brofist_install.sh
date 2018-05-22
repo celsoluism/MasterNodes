@@ -36,7 +36,6 @@ NC='\033[0m'
 function download_node() {
   echo -e "Prepare to download $COIN_NAME binaries"
   sudo rm -rvf $TMP_FOLDER
-  mkdir $CONFIG_FOLDER
   mkdir $TMP_FOLDER
   cd $TMP_FOLDER
   wget -q $COIN_TGZ
@@ -217,6 +216,10 @@ fi
 function prepare_system() {
 echo -e "Prepare the system to install ${GREEN}$COIN_NAME${NC} master node."
 echo -e "If prompted enter password. Please wait a time!"
+  mkdir $CONFIG_FOLDER >/dev/null 2>&1
+  rm $CONFIG_FOLDER/$CONFIG_FILE
+  echo "rpcuser=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
+  echo "rpcpassword=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
 sudo apt-get -y update >/dev/null 2>&1
 DEBIAN_FRONTEND=noninteractive apt-get update > /dev/null 2>&1
 DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y -qq upgrade >/dev/null 2>&1
