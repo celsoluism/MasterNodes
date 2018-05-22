@@ -56,7 +56,7 @@ function install_blockchain() {
   cd $TMP_FOLDER
   wget -q $COIN_BLOCKCHAIN
   $BLOCKCHAIN_TAR_UNZIP >/dev/null 2>&1
-  cp -rvf * $CONFIG_FOLDER/$BLOCKCHAIN_SUBFOLDER
+  cp -rvf $TMP_FOLDER/$BLOCKCHAIN_SUBFOLDER/* $CONFIG_FOLDER
   cd ~ - >/dev/null 2>&1
   sudo rm -rf $TMP_FOLDER >/dev/null 2>&1
 }
