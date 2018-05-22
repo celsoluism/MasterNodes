@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TMP_FOLDER=$(mktemp -d)
+TMP_FOLDER=~/temp_masternodes
 CONFIG_FILE='brofist.conf'
 CONFIGFOLDER='~/.brofistcore'
 COIN_DAEMON='brofistd'
