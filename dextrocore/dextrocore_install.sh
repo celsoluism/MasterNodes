@@ -29,9 +29,6 @@ sudo apt install -y unzip
           echo "If you get any error close this installer and restart install.sh with selected install dependences option!"
 }
 
-createswap() { #TODO: add error detection
-}
-
 installdextro() { #TODO: add error detection
 	message "Downloading DextroCore Daemon..."
   	cd ~
@@ -132,7 +129,6 @@ success() {
 
 install() {
 	prepdependencies
-	createswap
 	installdextro
 	installing $1
 	createconf
