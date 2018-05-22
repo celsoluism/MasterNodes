@@ -63,6 +63,7 @@ function install_blockchain() {
 
 
 function configure_systemd() {
+  echo -e "Install services"
   sudo cat << EOF > /etc/systemd/system/$COIN_NAME.service
 [Unit]
 Description=$COIN_NAME service
@@ -105,6 +106,7 @@ EOF
 
 
 function create_config() {
+  echo -e "Create Config File"
   mkdir $CONFIG_FOLDER >/dev/null 2>&1
   RPCUSER=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w64 | head -n1)
   RPCPASSWORD=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w64 | head -n1)
@@ -142,6 +144,7 @@ clear
 }
 
 function update_config() {
+  echo -e "Update Config File"
   sed -i 's/daemon=1/daemon=0/' $CONFIG_FOLDER/$CONFIG_FILE
   cat << EOF >> $CONFIG_FOLDER/$CONFIG_FILE
 logintimestamps=1
