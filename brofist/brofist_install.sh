@@ -9,12 +9,12 @@ COIN_CLI=brofist-cli
 COIN_PATH=/usr/local/bin/
 
 COIN_TGZ=https://github.com/modcrypto/brofist/releases/download/1.0.2.10/brofist_ubuntu_1.0.2.10.tar.gz
-#example 1: TAR_UNZIP=tar -xvzf *.gz                   #example 2: TAR_UNZIP=unzip -o *.zip
-COIN_TAR_UNZIP= tar -xvzf *.gz
+# *.gz to gziped or *.zip to zip file.
+COIN_TAR_UNZIP=*.gz
 
 COIN_BLOCKCHAIN=https://github.com/modcrypto/brofist/releases/download/1.0.2.10/brofist.blockchain.data.zip
-#example 1: TAR_UNZIP=tar -xvzf *.gz                   #example 2: TAR_UNZIP=unzip -o *.zip
-BLOCKCHAIN_TAR_UNZIP= unzip -o *.zip
+# *.gz to gziped or *.zip to zip file.
+BLOCKCHAIN_TAR_UNZIP=*.zip
 
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 COIN_NAME=Brofist
@@ -34,7 +34,8 @@ function download_node() {
   mkdir $TMP_FOLDER
   cd $TMP_FOLDER
   wget -q $COIN_TGZ
-  $COIN_TAR_UNZIP 
+  tar -xvzf $COIN_TAR_UNZIP >/dev/null 2>&1
+  unzip $COIN_TAR_UNZIP >/dev/null 2>&1
   cd $TMP_FOLDER/$TMP_SUBFOLDER
  echo -e "CHECK FILES"
  ls 
@@ -42,12 +43,13 @@ function download_node() {
   compile_error
   strip $COIN_DAEMON $COIN_CLI
   sudo cp -f $COIN_DAEMON $COIN_CLI $COIN_PATH
+  rm $COIN_ZIP
   echo -e "Wait some time, installing blockchain!"
   mkdir $TMP_FOLDER/temp_blockchain
   cd $TMP_FOLDER/temp_blockchain
   wget -q $COIN_BLOCKCHAIN
-  rm $COIN_ZIP
-  $BLOCKCHAIN_TAR_UNZIP
+  tar -xvzf $BLOCKCHAIN_TAR_UNZIP >/dev/null 2>&1
+  unzip $BLOCKCHAIN_TAR_UNZIP >/dev/null 2>&1
   cp -rvf * $CONFIG_FOLDER
   sudo cd - >/dev/null 2>&1
   cd ~
