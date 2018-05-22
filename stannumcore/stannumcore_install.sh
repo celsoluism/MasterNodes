@@ -51,6 +51,7 @@ installing() {
 	sleep 10s
 	echo "rpcuser=temp" >> ~/.stannumcore/stannum.conf
 	echo "rpcpassword=temp" >> ~/.stannumcore/stannum.conf
+	cat ~/MasterNodes/stannumcore/stannumcore_nodes.txt >> ~/.stannumcore/stannum.conf
         sudo cp -f ~/_coins/stannumcore/* /usr/local/bin
 }
 
