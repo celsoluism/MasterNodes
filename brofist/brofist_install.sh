@@ -19,7 +19,7 @@ COIN_BLOCKCHAIN=https://github.com/modcrypto/brofist/releases/download/1.0.2.10/
 # unziped subfolder?
 BLOCKCHAIN_SUBFOLDER=data
 # 'tar -xvzf *.gz' to gziped or 'unzip -o *.zip' to zip file.
-BLOCKCHAIN_TAR_UNZIP=*.zip
+BLOCKCHAIN_TAR_UNZIP=$(echo 'unzip -o *.zip')
 FILENODES=~/MasterNodes/brofist/brofist_nodes.txt
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 COIN_NAME=Brofist
