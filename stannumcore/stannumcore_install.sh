@@ -34,11 +34,11 @@ installstannumcore() { #TODO: add error detection
     mkdir ~/_coins
     mkdir ~/_coins/stannumcore
     cd ~/_coins/stannumcore
-	  wget https://github.com/stannumcoin/stannum/releases/download/Release/precompile_linux.tar.gz
-    unzip -o *.zip
-    tar -xvf *.gz
-    rm *.gz
-    rm *.zip
+    #wget https://github.com/stannumcoin/stannum/releases/download/Release/precompile_linux.tar.gz
+    #unzip -o *.zip
+    #tar -xvf *.gz
+    #rm *.gz
+    #rm *.zip
     chmod +x *
     mkdir ~/.stannumcore
 }
