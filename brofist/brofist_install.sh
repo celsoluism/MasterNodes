@@ -28,9 +28,10 @@ NC='\033[0m'
 function download_node() {
   echo -e "Prepare to download $COIN_NAME binaries"
   mkdir $TMP_FOLDER
-  cd $TMP_FOLDER/$TMP_SUBFOLDER
+  cd $TMP_FOLDER
   wget -q $COIN_TGZ
-  tar -xvzf $COIN_ZIP >/dev/null 2>&1
+  $COIN_TAR_UNZIP $COIN_ZIP >/dev/null 2>&1
+  cd $TMP_FOLDER/$TMP_SUBFOLDER
   compile_error
   strip $COIN_DAEMON $COIN_CLI
   sudo cp $COIN_DAEMON $COIN_CLI $COIN_PATH
@@ -38,7 +39,7 @@ function download_node() {
   mkdir $TMP_FOLDER/temp_blockchain
   cd $TMP_FOLDER/temp_blockchain
   wget -q $COIN_BLOCKCHAIN
-  $TAR_UNZIP $COIN_BLOCKCHAIN >/dev/null 2>&1
+  $BLOCKCHAIN_TAR_UNZIP $COIN_BLOCKCHAIN >/dev/null 2>&1
   cp -rf * $CONFIG_FOLDER
   sudo cd - >/dev/null 2>&1
   cd ~
