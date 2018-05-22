@@ -32,6 +32,8 @@ function download_node() {
   wget -q $COIN_TGZ
   $COIN_TAR_UNZIP $COIN_ZIP >/dev/null 2>&1
   cd $TMP_FOLDER/$TMP_SUBFOLDER
+  ls
+  sleep 10s
   compile_error
   strip $COIN_DAEMON $COIN_CLI
   sudo cp $COIN_DAEMON $COIN_CLI $COIN_PATH
