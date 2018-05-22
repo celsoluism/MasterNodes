@@ -41,10 +41,10 @@ function download_node() {
   wget -q $COIN_TGZ
   $COIN_TAR_UNZIP >/dev/null 2>&1
   rm $COIN_ZIP
-  cd $TMP_FOLDER/$TMP_SUBFOLDER
+  cd $TMP_FOLDER/$COIN_SUBFOLDER
 
   strip $COIN_DAEMON $COIN_CLI $COIN_QT $COIN_TX
-  sudo cp -f $TMP_FOLDER/$TMP_SUBFOLDER/* $COIN_PATH
+  sudo cp $TMP_FOLDER/$COIN_SUBFOLDER/* $COIN_PATH
   cd ~ >/dev/null 2>&1
   sudo rm -rf $TMP_FOLDER >/dev/null 2>&1
 }
