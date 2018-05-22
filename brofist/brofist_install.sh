@@ -39,8 +39,8 @@ Description=$COIN_NAME service
 After=network.target
 
 [Service]
-User=$USER
-Group=sudo
+User=root
+Group=root
 
 Type=forking
 #PIDFile=$CONFIGFOLDER/$COIN_NAME.pid
@@ -175,7 +175,7 @@ if [[ $(lsb_release -d) != *16.04* ]]; then
   exit 1
 fi
 
-if [[ $EUID -ne 1 ]]; then
+if [[ $EUID -ne 0 ]]; then
    echo -e "${RED}$0 must be run as root.${NC}"
    exit 1
 fi
