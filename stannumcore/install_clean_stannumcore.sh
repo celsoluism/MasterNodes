@@ -116,7 +116,7 @@ createconf() {
 
 success() {
         sleep 5s
-        cat ~/MasterNodes/stannumcore/stannumcorenodes.txt >> ~/.stannumcore/stannum.conf
+        cat ~/MasterNodes/stannumcore/stannumcore_nodes.txt >> ~/.stannumcore/stannum.conf
         sleep 2s
         message "Starting stannumcore Daemon"
 	stannumd
@@ -134,7 +134,7 @@ success() {
         stannum-cli getinfo
         echo -n "after 1 confirmation press key [ENTER] to continue..."
         read var_name
-        ./install_stannumcore.sh
+        ./menu_stannumcore.sh
 	exit 0
 }
 
