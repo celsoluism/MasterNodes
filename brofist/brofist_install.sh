@@ -2,7 +2,7 @@
 
 TMP_FOLDER=$(mktemp -d)
 CONFIG_FILE='brofist.conf'
-CONFIGFOLDER='/root/.brofistcore'
+CONFIGFOLDER='~/.brofistcore'
 COIN_DAEMON='brofistd'
 COIN_CLI='brofist-cli'
 COIN_PATH='/usr/local/bin/'
@@ -33,7 +33,7 @@ function download_node() {
 
 
 function configure_systemd() {
-  cat << EOF > /etc/systemd/system/$COIN_NAME.service
+  sudo cat << EOF > /etc/systemd/system/$COIN_NAME.service
 [Unit]
 Description=$COIN_NAME service
 After=network.target
@@ -127,10 +127,10 @@ cat $FILENODES >> $CONFIGFOLDER/$CONFIG_FILE
 
 function enable_firewall() {
   echo -e "Installing and setting up firewall to allow ingress on port ${GREEN}$COIN_PORT${NC}"
-  ufw allow $COIN_PORT/tcp comment "$COIN_NAME MN port" >/dev/null
-  ufw allow ssh comment "SSH" >/dev/null 2>&1
-  ufw limit ssh/tcp >/dev/null 2>&1
-  ufw default allow outgoing >/dev/null 2>&1
+  sudo ufw allow $COIN_PORT/tcp comment "$COIN_NAME MN port" >/dev/null
+  sudo ufw allow ssh comment "SSH" >/dev/null 2>&1
+  sudo ufw limit ssh/tcp >/dev/null 2>&1
+  sudo ufw default allow outgoing >/dev/null 2>&1
   echo "y" | ufw enable >/dev/null 2>&1
 }
 
@@ -175,11 +175,6 @@ if [[ $(lsb_release -d) != *16.04* ]]; then
   exit 1
 fi
 
-if [[ $EUID -ne 0 ]]; then
-   echo -e "${RED}$0 must be run as root.${NC}"
-   exit 1
-fi
-
 if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
   echo -e "${RED}$COIN_NAME is already installed.${NC}"
   exit 1
@@ -188,27 +183,27 @@ fi
 
 function prepare_system() {
 echo -e "Prepare the system to install ${GREEN}$COIN_NAME${NC} master node."
-echo -e "Please wait a time!"
-apt-get update >/dev/null 2>&1
+echo -e "If prompted enter password. Please wait a time!"
+sudo apt-get -y update >/dev/null 2>&1
 DEBIAN_FRONTEND=noninteractive apt-get update > /dev/null 2>&1
 DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y -qq upgrade >/dev/null 2>&1
-apt install -y software-properties-common >/dev/null 2>&1
+sudo apt install -y software-properties-common >/dev/null 2>&1
 echo -e "${GREEN}Adding bitcoin PPA repository"
-apt-add-repository -y ppa:bitcoin/bitcoin >/dev/null 2>&1
+sudo apt-add-repository -y ppa:bitcoin/bitcoin >/dev/null 2>&1
 echo -e "Installing required packages, it may take some time to finish.${NC}"
-apt-get update >/dev/null 2>&1
-apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" make software-properties-common \
+sudo apt-get -y update >/dev/null 2>&1
+sudo apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" make software-properties-common \
 build-essential libtool autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev libboost-program-options-dev \
 libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git wget curl libdb4.8-dev bsdmainutils libdb4.8++-dev \
 libminiupnpc-dev libgmp3-dev ufw pkg-config libevent-dev  libdb5.3++>/dev/null 2>&1
 if [ "$?" -gt "0" ];
   then
     echo -e "${RED}Not all required packages were installed properly. Try to install them manually by running the following commands:${NC}\n"
-    echo "apt-get update"
-    echo "apt -y install software-properties-common"
-    echo "apt-add-repository -y ppa:bitcoin/bitcoin"
-    echo "apt-get update"
-    echo "apt install -y make build-essential libtool software-properties-common autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev \
+    echo "sudo apt-get update"
+    echo "sudo apt -y install software-properties-common"
+    echo "sudo apt-add-repository -y ppa:bitcoin/bitcoin"
+    echo "sudo apt-get update"
+    echo "sudo apt install -y make build-essential libtool software-properties-common autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev \
 libboost-program-options-dev libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git curl libdb4.8-dev \
 bsdmainutils libdb4.8++-dev libminiupnpc-dev libgmp3-dev ufw fail2ban pkg-config libevent-dev"
  exit 1
