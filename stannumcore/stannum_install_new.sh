@@ -148,6 +148,7 @@ function temp_config() {
         echo -e "If asked enter password"
         $COIN_CLI stop
 	sleep 10s
+	sudo rm $CONFIG_FOLDER/$CONFIG_FILE
 	echo "rpcuser=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
 	echo "rpcpassword=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
 	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
