@@ -38,7 +38,7 @@ BLOCKCHAIN_TAR_UNZIP=$(echo 'unzip -o *.zip')
 # TO CONFIG
 COIN_PATH=/usr/local/bin/
 TMP_FOLDER=~/temp_masternodes
-STRIP_FILE=$COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT
+
 
 # DONT TOUCH
 COIN_ZIP=$(echo $COIN_TGZ_ZIP | awk -F'/' '{print $NF}')
@@ -114,7 +114,6 @@ function prepare_node() { #TODO: add error detection
 	rm *.gz >/dev/null 2>&1
     rm *.zip >/dev/null 2>&1
 	cd ./$COIN_SUBFOLDER
-	strip $STRIP_FILE
 	compile_error
 	chmod +x *
 	sudo cp -f * /usr/local/bin
