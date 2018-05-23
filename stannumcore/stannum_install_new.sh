@@ -147,7 +147,7 @@ function temp_config() {
    #TODO: squash relative path
 	echo -e "Create Temporary Configs..."
         echo -e "If asked enter password"
-        $COIN_CLI stop
+        $COIN_CLI stop  >/dev/null 2>&1
 	sleep 10s
 	sudo rm $CONFIG_FOLDER/$CONFIG_FILE
 	echo "rpcuser=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
