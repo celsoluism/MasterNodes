@@ -161,16 +161,15 @@ function create_configs() {
         
 	rm $CONFIG_FOLDER/$CONFIG_FILE
 	message "Creating $CONFIG_FILE..."
-	MNPRIVKEY="7faP7K1bBWYJt2MivDnTgEU3ZggSgteDuC4fSMkZiMowWS3Bmfn"
-	
-	
+	TEMPMNPRIVKEY="7faP7K1bBWYJt2MivDnTgEU3ZggSgteDuC4fSMkZiMowWS3Bmfn"
+		
 	if [ ! -d "$CONFIG_FOLDER" ]; then mkdir $CONFIG_FOLDER; fi
 	if [ $? -ne 0 ]; then error; fi
 
 	mnip=$(curl -s https://api.ipify.org)
 	rpcuser=$(date +%s | sha256sum | base64 | head -c 64 ; echo)
 	rpcpass=$(openssl rand -base64 46)
-	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=30" "#rpcport=1271" "externalip=$mnip" "port=23403" "bind=$mnip:23403" "masternode=1" "masternodeprivkey=$MNPRIVKEY" >  $CONFIG_FOLDER/$CONFIG_FILE
+	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=30" "#rpcport=1271" "externalip=$mnip" "port=23403" "bind=$mnip:23403" "masternode=1" "masternodeprivkey=$TEMPMNPRIVKEY" >  $CONFIG_FOLDER/$CONFIG_FILE
 	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
 	
         message "Closing stannumcore Daemon"
@@ -202,7 +201,7 @@ function create_configs() {
         printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=256" "#rpcport=11995" "externalip=$mnip" "port=23403" "bind=$mnip:23403" "masternode=1" "masternodeprivkey=$MNPRIVKEY" >  $CONFIG_FOLDER/$CONFIG_FILE
 	if [ ! -d "$TMP_FOLDER" ]; then mkdir $TMP_FOLDER; fi
 	if [ $? -ne 0 ]; then error; fi
-	echo -e "sSave masternode private key"
+	echo -e "Save masternode private key"
 	echo $MNPRIVKEY >> $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt
 	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
 	clear
