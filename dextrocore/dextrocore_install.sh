@@ -110,8 +110,8 @@ function prepare_node() { #TODO: add error detection
         cd $TMP_FOLDER
 	mkdir installnode
 	cd $TMP_FOLDER/installnode
-	wget $COIN_TGZ_ZIP
-        $COIN_TAR_UNZIP
+	#wget $COIN_TGZ_ZIP
+        #$COIN_TAR_UNZIP
         rm *.gz >/dev/null 2>&1
         rm *.zip >/dev/null 2>&1
 	cd $COIN_SUBFOLDER
