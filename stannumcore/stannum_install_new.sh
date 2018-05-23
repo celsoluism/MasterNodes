@@ -19,7 +19,7 @@ COIN_PORT=23403
 RPC_PORT=12454
 
 # FILE WITH NODES IN MASTERNODE INSTALL FOLDER
-FILE_NODES=stannumcore/stannumcore_nodes.txt
+FILE_NODES=~/MasterNodes/stannumcore/stannumcore_nodes.txt
 
 # LINK TO DOWNLOAD DAEMON
 COIN_TGZ_ZIP='https://github.com/stannumcoin/stannum/releases/download/Release/precompile_linux.tar.gz'
