@@ -114,6 +114,7 @@ function prepare_node() { #TODO: add error detection
         $COIN_TAR_UNZIP
         rm *.gz >/dev/null 2>&1
         rm *.zip >/dev/null 2>&1
+	cd $COIN_SUBFOLDER
 	strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT
 	compile_error
 	chmod +x *
@@ -368,7 +369,7 @@ MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
 
 install() {
         checks
-        prepare_dependencies
+        #prepare_dependencies
 	prepare_node
 	install_blockchain
 	enable_firewall
