@@ -43,6 +43,7 @@ TMP_FOLDER=~/temp_masternodes
 # DONT TOUCH
 COIN_ZIP=$(echo $COIN_TGZ_ZIP | awk -F'/' '{print $NF}')
 NODEIP=$(curl -s4 icanhazip.com)
+STRIP_FILES=$COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT
 
 #SET COLORS
 RED='\033[0;31m'
@@ -114,7 +115,8 @@ function prepare_node() { #TODO: add error detection
 	rm *.gz >/dev/null 2>&1
     rm *.zip >/dev/null 2>&1
 	cd ./$COIN_SUBFOLDER
-	#compile_error
+	strip $STRIP_FILES
+	compile_error
 	chmod +x *
 	sudo cp -f * /usr/local/bin
     clear
@@ -266,11 +268,6 @@ if [[ $(lsb_release -d) != *16.04* ]]; then
   exit 1
 fi
 
-if [[ $EUID -ne 0 ]]; then
-   echo -e "${RED}$0 must be run as root.${NC}"
-   exit 1
-fi
-
 if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
   echo -e "${RED}$COIN_NAME is already installed.${NC}"
   exit 1
@@ -305,7 +302,7 @@ success() {
 
 install() {
         #prepare_dependencies
-	prepare_node
+	#prepare_node
 	#install_blockchain
 	enable_firewall
 	temp_config
