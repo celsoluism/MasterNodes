@@ -14,7 +14,7 @@ COIN_DAEMON=stannumd
 COIN_CLI=stannum-cli
 COIN_QT=stannum-qt
 COIN_TX=stannum-tx
-COIN_PORT=11113
+COIN_PORT=23403
 RPC_PORT=12454
 FILE_NODES=MasterNodes/stannumcore/stannumcore_nodes.txt
 
@@ -69,7 +69,7 @@ error() {
 
 function prepare_dependencies() { #TODO: add error detection
    PS3='Need to Install Depedencies and Libraries'
-   echo -e "Prepare the system to install ${GREEN}$COIN_NAME${NC} master node."
+   echo -e "Prepare the system to install ${GREEN}$COIN_NAME master node.${NC}"
    echo -e "If prompted enter password of current user!"
       sudo apt-get -y update >/dev/null 2>&1
       DEBIAN_FRONTEND=noninteractive apt-get update > /dev/null 2>&1
@@ -101,8 +101,8 @@ function prepare_dependencies() { #TODO: add error detection
 
 function prepare_node() { #TODO: add error detection
 	echo -e "Downloading ${GREEN}$COIN_NAME ${NC} Daemon..."
-  	mkdir $TEMP_FOLDER
-    cd $TEMP_FOLDER
+  	mkdir $TMP_FOLDER >/dev/null 2>&1
+    cd $TMP_FOLDER
 	mkdir installnode
 	cd installnode
 	wget $COIN_TGZ_ZIP
