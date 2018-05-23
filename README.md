@@ -8,9 +8,9 @@ Dialog is necessary.
 
 HOW TO INSTALL
 
-    Run this command and wait:
+        Run this command and wait:
 
-$ sudo apt install -y dialog && wget https://raw.githubusercontent.com/celsoluism/MasterNodes/master/rebase.sh && chmod -R +x rebase.sh && ./rebase.sh
+        $ sudo apt install -y dialog && wget https://raw.githubusercontent.com/celsoluism/MasterNodes/master/rebase.sh && chmod -R +x rebase.sh && ./rebase.sh
 
 Follow installer options.
 
@@ -18,9 +18,9 @@ Obs.: if NO run as root you need to enter password of a sudo user. No need to ru
 
 News coins added soon as possible...
 
-TO UPDATE INSTALLER RUN:
+        TO UPDATE INSTALLER RUN:
 
-$ ./rebase.sh
+        $ ./rebase.sh
 
 If like send donations:
 
