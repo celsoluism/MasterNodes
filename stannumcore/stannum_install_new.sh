@@ -283,7 +283,7 @@ function last_commits() {
         echo -e "Commit lasts configs of $COIN_NAME Daemon!"
         sleep 2s
         echo -e "Starting $COIN_NAME Daemon"
-	$COIN_DAEMON >/dev/null 2>&1
+#	$COIN_DAEMON >/dev/null 2>&1
         sleep 15s
         message "Wait 120 seconds to $COIN_NAME start sync"
         sleep 120s
@@ -314,7 +314,12 @@ clear
 }
 
 function success() {
+ TXOUTPUTS=$($COIN_CLI masternode outputs )
  MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
+
+        if [ ! -e "~/$COIN_NAME.txt" ]; then rm ~/$COIN_NAME.txt; fi
+        if [ $? -ne 0 ]; then clear; fi
+
  echo "SUCCESS! Your ${GREE}$COIN_NAME ${CN}has started. All your configs are"
  # TO SHOW
  echo -e "Obs: All informations are saved in /home/userfolder/$COIN_NAME.txt or in /root/$COIN_NAME.txt if run as root!"
@@ -323,28 +328,41 @@ function success() {
  echo -e "Configuration file is: ${RED}$CONFIG_FOLDER/$CONFIG_FILE${NC}"
  echo -e "Start: ${RED}systemctl start $COIN_NAME.service${NC}"
  echo -e "Stop: ${RED}systemctl stop $COIN_NAME.service${NC}"
- echo -e "VPS_IP:PORT ${RED}$NODEIP:$COIN_PORT ${NC}"
+ echo -e "NODE_IP:PORT ${RED}$NODEIP:$COIN_PORT ${NC}"
  echo -e "MASTERNODE PRIVATEKEY is: ${RED} $MN_PRIVKEY ${NC}"
- echo -e "Masternode config file: MN $NODEIP:$COIN_PORT $MN_PRIVKEY TXHASH INDEX"
+ echo -e "MASTERNODE file: $CONFIG_FOLDER/masternode.conf"
+ echo -e "MASTERNODE configuration bellow:"
+ echo -e "MN $NODEIP:$COIN_PORT $MN_PRIVKEY $TXOUTPUTS"
  echo -e "Please check ${RED}$COIN_NAME${NC} is running with the following command: ${GREEN}systemctl status $COIN_NAME.service${NC}" 
  echo -e "================================================================================================================================" 
 
 # TO FILE
-echo -e "================================================================================================================================" >> ~/$COIN_NAME.txt
+ echo -e "================================================================================================================================" >> ~/$COIN_NAME.txt
  echo -e "$COIN_NAME Masternode is up and running listening on port ${RED}$COIN_PORT${NC}." >> ~/$COIN_NAME.txt
  echo -e "Configuration file is: $CONFIG_FOLDER/$CONFIG_FILE" >> ~/$COIN_NAME.txt
  echo -e "Start: systemctl start $COIN_NAME.service$" >> ~/$COIN_NAME.txt
  echo -e "Stop: systemctl stop $COIN_NAME.service$" >> ~/$COIN_NAME.txt
- echo -e "VPS_IP:PORT $NODEIP:$COIN_PORT" >> ~/$COIN_NAME.txt
+ echo -e "NODE_IP:PORT $NODEIP:$COIN_PORT" >> ~/$COIN_NAME.txt
  echo -e "MASTERNODE PRIVATEKEY is: $MN_PRIVKEY$" >> ~/$COIN_NAME.txt
- echo -e "Masternode config file: MN $NODEIP:$COIN_PORT $MN_PRIVKEY TXHASH INDEX" >> ~/$COIN_NAME.txt
+ echo -e "MASTERNODE file: $CONFIG_FOLDER/masternode.conf " >> ~/$COIN_NAME.txt
+ echo -e "MASTERNODE configuration bellow:" >> ~/$COIN_NAME.txt
+ echo -e "MN $NODEIP:$COIN_PORT $MN_PRIVKEY $TXOUTPUTS" >> ~/$COIN_NAME.txt
  echo -e "Please check $COIN_NAME$ is running with the following command: systemctl status $COIN_NAME.service" >> ~/$COIN_NAME.txt
  echo -e "================================================================================================================================" >> ~/$COIN_NAME.txt
+
+# TO MASTERNODE CONFIG FILE
+ MN_CONF=$(cat ~/$COIN_NAME.txt | grep -n ^ | grep ^10: | cut -d: -f2)
+
+        if [ ! -e "$CONFIG_FOLDER/masternode.conf" ]; then rm $CONFIG_FOLDER/masternode.conf; fi
+        if [ $? -ne 0 ]; then echo -e "masternode.conf created!" ; fi
+
+ printf "%s\n" "# Masternode config file" "# Format: alias IP:port masternodeprivkey collateral_output_txid collateral_output_index" "# Example: mn1 127.0.0.2:23403 93HaYBVUCYjEMeeH1Y4sBGLALQZE1Yc1K64xiqgX37tGBDQL8Xg 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 0" "MN $NODEIP:$COIN_PORT $MN_PRIVKEY $TXOUTPUTS" >  $CONFIG_FOLDER/masternode.conf
+ 
 }
 
 install() {
-        checks
-        prepare_dependencies
+    checks
+    prepare_dependencies
 	prepare_node
 	install_blockchain
 	enable_firewall
@@ -359,4 +377,5 @@ install() {
 #default to --without-gui
 clear
 install --without-gui
+
 
