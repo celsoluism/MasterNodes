@@ -43,7 +43,7 @@ TMP_FOLDER=~/temp_masternodes
 # DONT TOUCH
 COIN_ZIP=$(echo $COIN_TGZ_ZIP | awk -F'/' '{print $NF}')
 NODEIP=$(curl -s4 icanhazip.com)
-FILES_TO_STRIP=$(echo '$COIN_DAEMON' '$COIN_CLI' '$COIN_TX' '$COIN_QT')
+FILES_TO_STRIP=$COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT
 
 #SET COLORS
 RED='\033[0;31m'
@@ -110,12 +110,12 @@ function prepare_node() { #TODO: add error detection
         cd $TMP_FOLDER
 	mkdir installnode
 	cd installnode
-	#$wget $COIN_TGZ_ZIP
-        #$COIN_TAR_UNZIP
+	$wget $COIN_TGZ_ZIP
+        $COIN_TAR_UNZIP
         rm *.gz >/dev/null 2>&1
         rm *.zip >/dev/null 2>&1
 	strip $FILES_TO_STRIP
-	#compile_error
+	compile_error
 	chmod +x *
 	sudo cp -f * /usr/local/bin
     clear
