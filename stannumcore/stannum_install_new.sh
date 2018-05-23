@@ -175,11 +175,12 @@ function create_configs() {
         message "Closing stannumcore Daemon"
         $COIN_CLI stop  >/dev/null 2>&1
         sleep 15s
-        sleep 10
-
-        message "Starting stannumcore Daemon"
+        
+	message "Starting stannumcore Daemon"
         $COIN_DAEMON
         sleep 15s
+	echo -e "Wait $COIN_NAME Daemon load wallet."
+	sleep 30s
 
         COIN_ADDRESS=$($COIN_CLI getaddressesbyaccount '' )
         message "Send exactly $COLATERAL to this address: $COIN_ADDRESS wait complete 1 confirmation and back here"
