@@ -41,7 +41,7 @@ case $CHOICE in
 	4)
             echo "PLEASE CANCEL..."
 	    sleep 5s
-            ./stannumcore/stannumcore_install_new.sh
+            ./stannumcore/stannum_install_new.sh
             ;;
         5)
             echo "You chose Quit!"
