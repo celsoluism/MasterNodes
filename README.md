@@ -8,7 +8,7 @@ Dialog is necessary.
 
 HOW TO INSTALL
 
-        Run this command and wait:
+Run this command and wait:
 
         $ sudo apt install -y dialog && wget https://raw.githubusercontent.com/celsoluism/MasterNodes/master/rebase.sh && chmod -R +x rebase.sh && ./rebase.sh
 
@@ -18,12 +18,14 @@ Obs.: if NO run as root you need to enter password of a sudo user. No need to ru
 
 News coins added soon as possible...
 
-        TO UPDATE INSTALLER RUN:
+HOW TO UPDATE
+
+Run this command and wait:
 
         $ ./rebase.sh
 
 If like send donations:
 
-BTC: 3Eih37fYqRL3CkLdtYas3nVhsh84B5RVf1
+        BTC: 3Eih37fYqRL3CkLdtYas3nVhsh84B5RVf1
 
-GIN: GS8vBa53PukMAdeV3WjXfCanAnBCv8kchS
+        GIN: GS8vBa53PukMAdeV3WjXfCanAnBCv8kchS
