@@ -286,7 +286,7 @@ function last_commits() {
 #	$COIN_DAEMON >/dev/null 2>&1
         sleep 15s
         message "Wait 120 seconds to $COIN_NAME start sync"
-        sleep 120s
+ #       sleep 120s
         clear
 
         echo "Checking $COIN_NAME sync progress"
@@ -309,13 +309,17 @@ function last_commits() {
 	echo -e " "
 	echo -e " "
 	echo -e "If show none you need to create masternode.conf manualy"
-	sleep 10s
+#	sleep 10s
 clear        
 }
 
 function success() {
- TXOUTPUTS=$($COIN_CLI masternode outputs )
- MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
+ TXID_INDEX=$($COIN_CLI masternode outputs)
+ echo "$TXID_INDEX" >> $TMP_FOLDER/txouts.txt
+ TX_PRINT=$(tr -d ‘{}:‘ < $TMP_FOLDER/txouts.txt )
+ TX_OUTPUTS=$(echo $TXOUTPUTS  |  sed 's/"//g')
+
+MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
 
         if [ ! -e "~/$COIN_NAME.txt" ]; then rm ~/$COIN_NAME.txt; fi
         if [ $? -ne 0 ]; then clear; fi
@@ -351,7 +355,6 @@ function success() {
  echo -e "================================================================================================================================" >> ~/$COIN_NAME.txt
 
 # TO MASTERNODE CONFIG FILE
- MN_CONF=$(cat ~/$COIN_NAME.txt | grep -n ^ | grep ^10: | cut -d: -f2)
 
         if [ ! -e "$CONFIG_FOLDER/masternode.conf" ]; then rm $CONFIG_FOLDER/masternode.conf; fi
         if [ $? -ne 0 ]; then echo -e "masternode.conf created!" ; fi
@@ -361,14 +364,14 @@ function success() {
 }
 
 install() {
-    checks
-    prepare_dependencies
-	prepare_node
-	install_blockchain
-	enable_firewall
+ #   checks
+  #  prepare_dependencies
+#	prepare_node
+#	install_blockchain
+#	enable_firewall
 	temp_config
 	create_configs
-	install_service
+#	install_service
 	last_commits
 	success
 }
