@@ -110,7 +110,7 @@ function prepare_node() { #TODO: add error detection
     cd $TMP_FOLDER
 	mkdir installnode
 	cd installnode
-	wget $COIN_TGZ_ZIP
+	$wget $COIN_TGZ_ZIP
     $COIN_TAR_UNZIP
     rm *.gz >/dev/null 2>&1
     rm *.zip >/dev/null 2>&1
@@ -301,7 +301,7 @@ success() {
 
 install() {
         checks
-        prepare_dependencies
+        $prepare_dependencies
 	prepare_node
 	install_blockchain
 	enable_firewall
