@@ -167,13 +167,9 @@ function create_configs() {
 
 	mnip=$(curl -s https://api.ipify.org)
 	rpcuser=$(date +%s | sha256sum | base64 | head -c 64 ; echo)
-	rpcpass=$(openssl rand -base64 46)
+	rpcpass=$(date +%s | sha256sum | base64 | head -c 64 ; echo)
 	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=30" "#rpcport=1271" "externalip=$mnip" "port=23403" "bind=$mnip:23403" "masternode=1" "masternodeprivkey=$MNPRIVKEY" > $CONFIG_FOLDER/$CONFIG_FILE
 	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
-
-	echo -e "Closing $COIN_NAME Daemon"
-        $COIN_CLI stop
-        sleep 15s
 
         echo -e "Starting $COIN_NAME Daemon"
         echo -e "Wait 60s to $COIN_NAME Sync"
@@ -306,7 +302,7 @@ install() {
 	#prepare_node
 	#install_blockchain
 	#enable_firewall
-	temp_config
+	#temp_config
 	create_configs
 	#install_service
 	#success
@@ -314,7 +310,6 @@ install() {
 
 #main
 #default to --without-gui
-$COIN_CLI stop >/dev/null 2>&1
 clear
 install --without-gui
 
