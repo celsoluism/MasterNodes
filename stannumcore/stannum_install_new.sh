@@ -24,7 +24,7 @@ FILE_NODES=stannumcore/stannumcore_nodes.txt
 # LINK TO DOWNLOAD DAEMON
 COIN_TGZ_ZIP='https://github.com/stannumcoin/stannum/releases/download/Release/precompile_linux.tar.gz'
 # SET FOLDER IF UNZIP DAEMON IS ON SUBFOLDER?
-COIN_SUBFOLDER=linux
+COIN_SUBFOLDER=
 # SET $(echo 'tar -xvzf *.gz') IF FILE IS TAR.GZ OR $(echo 'unzip -o *.zip'  TO ZIP FILE.)
 COIN_TAR_UNZIP=$(echo 'tar -xvf *.gz')
 
@@ -112,9 +112,9 @@ function prepare_node() { #TODO: add error detection
 	cd installnode
 	wget $COIN_TGZ_ZIP
     $COIN_TAR_UNZIP
-	rm *.gz >/dev/null 2>&1
+    rm *.gz >/dev/null 2>&1
     rm *.zip >/dev/null 2>&1
-	cd ./$COIN_SUBFOLDER
+	cd $TMP_FOLDER/installnode/$COIN_SUBFOLDER
 	strip $STRIP_FILES
 	compile_error
 	chmod +x *
