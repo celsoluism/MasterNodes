@@ -1,7 +1,7 @@
 
 #!/bin/bash
 #Version 0.0.2.7
-#Info: Installs MasterNode Coins Daemons, Masternode based on privkey.
+#Info: Installs MasterNode Coins Daemons much automated possible, Masternode based on privkey.
 #PerfilConectado.NET MasterNodes Installer
 #Tested OS: 16.04
 #TODO: make script less "ubuntu" or add other linux flavors
