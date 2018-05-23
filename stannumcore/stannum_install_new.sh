@@ -202,14 +202,16 @@ function create_configs() {
         printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=256" "#rpcport=11995" "externalip=$mnip" "port=23403" "bind=$mnip:23403" "masternode=1" "masternodeprivkey=$MNPRIVKEY" >  $CONFIG_FOLDER/$CONFIG_FILE
 	if [ ! -d "$TMP_FOLDER" ]; then mkdir $TMP_FOLDER; fi
 	if [ $? -ne 0 ]; then error; fi
-	echo " $MNPRIVKEY " >> $TMP_FOLDER/$COIN_NAME_masternode_privkey.txt
+	echo -e "sSave masternode private key"
+	echo $MNPRIVKEY >> $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt
 	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
 	clear
 }
 
 function install_service() {
   echo -e "${GREEN}Install Service ${NC}"
-   mkdir $TMP_FOLDER >/dev/null 2>&1
+   	if [ ! -d "$TMP_FOLDER" ]; then mkdir $TMP_FOLDER; fi
+	if [ $? -ne 0 ]; then error; fi
   cat << EOF > $TMP_FOLDER/$COIN_NAME.service
 [Unit]
 Description=$COIN_NAME service
@@ -312,7 +314,7 @@ clear
 }
 
 function success() {
- MN_PRIVKEY=(head -n 1 $TMP_FOLDER/$COIN_NAME_masternode_privkey.txt)
+ MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
  echo "SUCCESS! Your ${GREE}$COIN_NAME ${CN}has started. All your configs are"
  # TO SHOW
  echo -e "Obs: All informations are saved in /home/userfolder/$COIN_NAME.txt or in /root/$COIN_NAME.txt if run as root!"
@@ -321,8 +323,8 @@ function success() {
  echo -e "Configuration file is: ${RED}$CONFIG_FOLDER/$CONFIG_FILE${NC}"
  echo -e "Start: ${RED}systemctl start $COIN_NAME.service${NC}"
  echo -e "Stop: ${RED}systemctl stop $COIN_NAME.service${NC}"
- echo -e "VPS_IP:PORT ${RED}$NODEIP:$COIN_PORT${NC}"
- echo -e "MASTERNODE PRIVATEKEY is: ${RED}$MN_PRIVKEY ${NC}"
+ echo -e "VPS_IP:PORT ${RED}$NODEIP:$COIN_PORT ${NC}"
+ echo -e "MASTERNODE PRIVATEKEY is: ${RED} $MN_PRIVKEY ${NC}"
  echo -e "Masternode config file: MN $NODEIP:$COIN_PORT $MN_PRIVKEY TXHASH INDEX"
  echo -e "Please check ${RED}$COIN_NAME${NC} is running with the following command: ${GREEN}systemctl status $COIN_NAME.service${NC}" 
  echo -e "================================================================================================================================" 
@@ -333,7 +335,7 @@ echo -e "=======================================================================
  echo -e "Configuration file is: $CONFIG_FOLDER/$CONFIG_FILE" >> ~/$COIN_NAME.txt
  echo -e "Start: systemctl start $COIN_NAME.service$" >> ~/$COIN_NAME.txt
  echo -e "Stop: systemctl stop $COIN_NAME.service$" >> ~/$COIN_NAME.txt
- echo -e "VPS_IP:PORT $NODEIP:$COIN_PORT$" >> ~/$COIN_NAME.txt
+ echo -e "VPS_IP:PORT $NODEIP:$COIN_PORT" >> ~/$COIN_NAME.txt
  echo -e "MASTERNODE PRIVATEKEY is: $MN_PRIVKEY$" >> ~/$COIN_NAME.txt
  echo -e "Masternode config file: MN $NODEIP:$COIN_PORT $MN_PRIVKEY TXHASH INDEX" >> ~/$COIN_NAME.txt
  echo -e "Please check $COIN_NAME$ is running with the following command: systemctl status $COIN_NAME.service" >> ~/$COIN_NAME.txt
