@@ -8,6 +8,7 @@
 COIN_NAME=Stannum
 COLATERAL=1000
 CONFIG_FILE=stannum.conf
+
 # ALWAYS START WITH ~/ AND DEFAULT COIN FOLDER
 CONFIG_FOLDER=~/.stannumcore
 COIN_DAEMON=stannumd
@@ -145,9 +146,9 @@ function temp_config() {
     echo -e "If prompted enter password"
     $COIN_CLI stop >/dev/null 2>&1
 	sleep 10s
-	echo "rpcuser=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
-	echo "rpcpassword=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
-	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
+#	echo "rpcuser=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
+#	echo "rpcpassword=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
+#	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
   clear
 }
 
@@ -155,7 +156,6 @@ function create_configs() {
 	#TODO: Can check for flag and skip this
 	#TODO: Random generate the user and password
         
-	rm $CONFIG_FOLDER/$CONFIG_FILE
 	echo -e "Creating ${GREEN}$CONFIG_FILE${NC}..."
 	MNPRIVKEY="7faP7K1bBWYJt2MivDnTgEU3ZggSgteDuC4fSMkZiMowWS3Bmfn"
 	if [ ! -d "$CONFIG_FOLDER" ]; then mkdir $CONFIG_FOLDER; fi
@@ -164,9 +164,9 @@ function create_configs() {
 	mnip=$(curl -s https://api.ipify.org)
 	rpcuser=$(date +%s | sha256sum | base64 | head -c 64 ; echo)
 	rpcpass=$(openssl rand -base64 64)
-	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=30" "#rpcport=1271" "externalip=$mnip" "port=23403" "bind=$mnip:23403" "masternode=1" "masternodeprivkey=$MNPRIVKEY" > $CONFIG_FILE
+	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=30" "#rpcport=1271" "externalip=$mnip" "port=23403" "bind=$mnip:23403" "masternode=1" "masternodeprivkey=$MNPRIVKEY" > $CONFIG_FOLDER/$CONFIG_FILE
 
-		echo -e "Closing $COIN_NAME Daemon"
+	echo -e "Closing $COIN_NAME Daemon"
         $COIN_CLI stop
         sleep 15s
 
@@ -189,9 +189,9 @@ function create_configs() {
 	    $COIN_CLI stop
 	    echo -e "wait 10 seconds for deamon to stop..."
         sleep 15s
-		sudo rm $CONFIG_FOLDER/$CONFIG_FILE
+	sudo rm $CONFIG_FOLDER/$CONFIG_FILE
 	    echo -e "Updating $CONFIG_FILE..."
-        printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=256" "#rpcport=11995" "externalip=$mnip" "port=23403" "bind=$mnip:23403" "masternode=1" "masternodeprivkey=$MNPRIVKEY" > $CONFIG_FILE
+        printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=256" "#rpcport=11995" "externalip=$mnip" "port=23403" "bind=$mnip:23403" "masternode=1" "masternodeprivkey=$MNPRIVKEY" > $CONFIG_FOLDER/$CONFIG_FILE
     clear
 }
 
