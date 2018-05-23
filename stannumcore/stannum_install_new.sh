@@ -114,7 +114,7 @@ function prepare_node() { #TODO: add error detection
 	rm *.gz >/dev/null 2>&1
     rm *.zip >/dev/null 2>&1
 	cd ./$COIN_SUBFOLDER
-	compile_error
+	#compile_error
 	chmod +x *
 	sudo cp -f * /usr/local/bin
     clear
