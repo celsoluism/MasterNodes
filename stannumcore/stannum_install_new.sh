@@ -114,7 +114,6 @@ function prepare_node() { #TODO: add error detection
     $COIN_TAR_UNZIP
     rm *.gz >/dev/null 2>&1
     rm *.zip >/dev/null 2>&1
-	cd $TMP_FOLDER/installnode/$COIN_SUBFOLDER
 	strip $STRIP_FILES
 	compile_error
 	chmod +x *
