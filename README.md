@@ -1,30 +1,26 @@
-# MasterNodes
+# Automated MasterNodes Installer
 
-Install MasterNodes By Selector... It is most automated possible, meny masternodes automatic start and work completely after install without any intervention...
+Install MasterNodes By Selector... It is most automated possible, many masternodes automatic start and work completely after install without much intervention...
 
-Dependences:
+DEPENDENCES:
 
 Dialog is necessary.
 
-How to:
+HOW TO INSTALL
 
-sudo apt install -y dialog && git clone https://github.com/celsoluism/MasterNodes.git && cd MasterNodes && chmod -R +x * && ./install.sh
+    Run this command and wait:
+
+$ sudo apt install -y dialog && wget https://raw.githubusercontent.com/celsoluism/MasterNodes/master/rebase.sh && chmod -R +x rebase.sh && ./rebase.sh
 
 Follow installer options.
 
+Obs.: if NO run as root you need to enter password of a sudo user. No need to run it as root, work with any user!
+
 News coins added soon as possible...
 
-HOW TO UPDATE:
+TO UPDATE INSTALLER RUN:
 
-cd ~
-
-./rebase.sh
-
-OR
-
-cd ~/MasterNodes && git pull origin master
-
-
+$ ./rebase.sh
 
 If like send donations:
 
