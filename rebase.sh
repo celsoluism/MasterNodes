@@ -25,5 +25,14 @@ clear
 ./install.sh 
 }
 
+function checks() {
+if [[ $(lsb_release -d) != *16.04* ]]; then
+  echo -e "${RED}You are not running Ubuntu 16.04. Installation is cancelled.${NC}"
+  exit 1
+fi
+
+### MAIN
+clear
+checks
 dependences
 run_installer
