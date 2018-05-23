@@ -144,6 +144,7 @@ function enable_firewall() {
 
 function temp_config() {
    #TODO: squash relative path
+        rm $CONFIG_FOLDER/masternode.conf
 	echo -e "Create Temporary Configs..."
         echo -e "If asked enter password"
         $COIN_CLI stop  >/dev/null 2>&1
