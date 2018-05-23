@@ -26,7 +26,7 @@ COIN_TGZ_ZIP='https://github.com/stannumcoin/stannum/releases/download/Release/p
 # SET FOLDER IF UNZIP DAEMON IS ON SUBFOLDER?
 COIN_SUBFOLDER=linux
 # SET $(echo 'tar -xvzf *.gz') IF FILE IS TAR.GZ OR $(echo 'unzip -o *.zip'  TO ZIP FILE.)
-COIN_TAR_UNZIP=$(echo 'tar -xvzf *.gz')
+COIN_TAR_UNZIP=$(echo 'tar -xvf *.gz')
 
 # LINK TO DOWNLOAD BLOCKCHAIN
 COIN_BLOCKCHAIN=
