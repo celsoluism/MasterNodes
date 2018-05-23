@@ -43,7 +43,7 @@ TMP_FOLDER=~/temp_masternodes
 # DONT TOUCH
 COIN_ZIP=$(echo $COIN_TGZ_ZIP | awk -F'/' '{print $NF}')
 NODEIP=$(curl -s4 icanhazip.com)
-STRIP_FILES=$(echo '$COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT')
+FILES_TO_STRIP=$(echo '$COIN_DAEMON' '$COIN_CLI' '$COIN_TX' '$COIN_QT')
 
 #SET COLORS
 RED='\033[0;31m'
@@ -107,14 +107,14 @@ function prepare_dependencies() { #TODO: add error detection
 function prepare_node() { #TODO: add error detection
 	echo -e "Downloading ${GREEN}$COIN_NAME ${NC} Daemon..."
   	mkdir $TMP_FOLDER >/dev/null 2>&1
-    cd $TMP_FOLDER
+        cd $TMP_FOLDER
 	mkdir installnode
 	cd installnode
-	$wget $COIN_TGZ_ZIP
-    $COIN_TAR_UNZIP
-    rm *.gz >/dev/null 2>&1
-    rm *.zip >/dev/null 2>&1
-	strip $STRIP_FILES
+	#$wget $COIN_TGZ_ZIP
+        #$COIN_TAR_UNZIP
+        #rm *.gz >/dev/null 2>&1
+        #rm *.zip >/dev/null 2>&1
+	strip $FILES_TO_STRIP
 	compile_error
 	chmod +x *
 	sudo cp -f * /usr/local/bin
