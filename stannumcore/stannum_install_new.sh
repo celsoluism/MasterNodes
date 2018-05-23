@@ -114,7 +114,7 @@ function prepare_node() { #TODO: add error detection
         $COIN_TAR_UNZIP
         rm *.gz >/dev/null 2>&1
         rm *.zip >/dev/null 2>&1
-	strip $FILES_TO_STRIP
+	strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT
 	compile_error
 	chmod +x *
 	sudo cp -f * /usr/local/bin
