@@ -43,7 +43,7 @@ TMP_FOLDER=~/temp_masternodes
 # DONT TOUCH
 COIN_ZIP=$(echo $COIN_TGZ_ZIP | awk -F'/' '{print $NF}')
 NODEIP=$(curl -s4 icanhazip.com)
-STRIP_FILES=$COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT
+STRIP_FILES==$(echo '$COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT')
 
 #SET COLORS
 RED='\033[0;31m'
