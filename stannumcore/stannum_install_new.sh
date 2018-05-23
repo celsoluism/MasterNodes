@@ -155,7 +155,7 @@ function temp_config() {
 function create_configs() {
 	#TODO: Can check for flag and skip this
 	#TODO: Random generate the user and password
-        
+        	
 	echo -e "Creating ${GREEN}$CONFIG_FILE${NC}..."
 	MNPRIVKEY="7faP7K1bBWYJt2MivDnTgEU3ZggSgteDuC4fSMkZiMowWS3Bmfn"
 	if [ ! -d "$CONFIG_FOLDER" ]; then mkdir $CONFIG_FOLDER; fi
@@ -163,7 +163,7 @@ function create_configs() {
 
 	mnip=$(curl -s https://api.ipify.org)
 	rpcuser=$(date +%s | sha256sum | base64 | head -c 64 ; echo)
-	rpcpass=$(openssl rand -base64 64)
+	rpcpass=$(openssl rand -base64 54)
 	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=30" "#rpcport=1271" "externalip=$mnip" "port=23403" "bind=$mnip:23403" "masternode=1" "masternodeprivkey=$MNPRIVKEY" > $CONFIG_FOLDER/$CONFIG_FILE
 
 	echo -e "Closing $COIN_NAME Daemon"
