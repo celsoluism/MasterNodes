@@ -305,13 +305,13 @@ success() {
 
 install() {
         #prepare_dependencies
-	#prepare_node
+	prepare_node
 	#install_blockchain
-	#enable_firewall
+	enable_firewall
 	temp_config
 	create_configs
-	#install_service
-	#success
+	install_service
+	success
 }
 
 #main
