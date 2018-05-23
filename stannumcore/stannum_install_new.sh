@@ -274,39 +274,65 @@ fi
 
 
 # ----------------------------- CONGRATULATIONS ---------------------------------
-success() {
-        sleep 5s
-        cat ~/MasterNodes/stannumcore/stannumcore_nodes.txt >> ~/.stannumcore/stannum.conf
+function last_commits() {
+        echo -e "Commit lasts configs of $COIN_NAME Daemon!"
         sleep 2s
-        message "Starting stannumcore Daemon"
-	stannumd
+        echo -e "Starting $COIN_NAME Daemon"
+	$COIN_DAEMON
         sleep 15s
-        message "Wait 60 seconds to sync masternode"
+        message "Wait 60 seconds to $COIN_NAME sync"
         sleep 60s
         clear
-	message "SUCCESS! Your stannumcore has started. Masternode.conf setting below..."
-	message "MN $mnip:23403 $MNPRIVKEY TXHASH INDEX"
-        TXOUTPUTS=$(stannum-cli masternode outputs )
-        message "Copy outputs bellow and modify ~/.stannumcore/masternode.conf following TXHASH and INDEX"
-        message " Outputs: $TXOUTPUTS " 
-        
-        message "check if 'stannum-cli getinfo' work, if no work need to restart install or install dependences"
-        stannum-cli getinfo
-        echo -n "after 1 confirmation press key [ENTER] to continue..."
+
+        echo "Checking $COIN_NAME sync progress"
+        $COIN_CLI getinfo
+        echo -e "Obs: Only work if you have send ${GREEN}$COLATERAL${NC} to address ${GREEN}$COIN_ADDRESS${NC} of ${GREEN}$COIN_NAME$ {NC}and alrely get ${GREEN}1 confirmation!${NC}" 
+	echo -e " "
+	echo -e " " 
+	echo -e "If like try to create masternode.conf you can wait sync complete or "
+	echo -n "Press key [ENTER] to continue and create it manualy..."
         read var_name
-        ./stannumcore/stannumcore_menu.sh
-	exit 0
+        sleep 2s
+	clear
+
+        TXOUTPUTS=$($COIN_CLI masternode outputs )
+        echo -e "If have send ammount $COLATERAL and get 1 confirmed to the $COIN_ADDRESS the OUTPUTS show now:"
+	echo -e "Obs: $COIN_NAME need to be sync completed!"
+        echo -e " "
+	echo -e " "
+	echo -e "Outputs: $TXOUTPUTS "
+	echo -e " "
+	echo -e " "
+	echo -e "If show none you need to create masternode.conf manualy"
+	sleep 10s
+clear        
+}
+
+function success() {
+ echo "SUCCESS! Your ${GREE}$COIN_NAME ${CN}has started. All your configs are"
+ echo -e "Obs: All informations are saved in /home/userfolder/$COIN_NAME.txt or in /root/$COIN_NAME.txt if run as root!"
+ echo -e "================================================================================================================================" >> ~/$COIN_NAME.TXT
+ echo -e "$COIN_NAME Masternode is up and running listening on port ${RED}$COIN_PORT${NC}." >> ~/$COIN_NAME.TXT
+ echo -e "Configuration file is: ${RED}$CONFIGFOLDER/$CONFIG_FILE${NC}" >> ~/$COIN_NAME.TXT
+ echo -e "Start: ${RED}systemctl start $COIN_NAME.service${NC}" >> ~/$COIN_NAME.TXT
+ echo -e "Stop: ${RED}systemctl stop $COIN_NAME.service${NC}" >> ~/$COIN_NAME.TXT
+ echo -e "VPS_IP:PORT ${RED}$NODEIP:$COIN_PORT${NC}" >> ~/$COIN_NAME.TXT
+ echo -e "MASTERNODE PRIVATEKEY is: ${RED}$COINKEY${NC}" >> ~/$COIN_NAME.TXT
+ echo -e "Masternode config file: MN $mnip:$COIN_PORT $MNPRIVKEY TXHASH INDEX" >> ~/$COIN_NAME.TXT
+ echo -e "Please check ${RED}$COIN_NAME${NC} is running with the following command: ${GREEN}systemctl status $COIN_NAME.service${NC}" >> ~/$COIN_NAME.TXT
+ echo -e "================================================================================================================================" >> ~/$COIN_NAME.TXT
 }
 
 install() {
-        checks
-        $prepare_dependencies
-	prepare_node
-	install_blockchain
-	enable_firewall
-	temp_config
-	create_configs
-	install_service
+#        checks
+ #       $prepare_dependencies
+#	prepare_node
+#	install_blockchain
+#	enable_firewall
+#	temp_config
+#	create_configs
+#	install_service
+	last_commits
 	success
 }
 
