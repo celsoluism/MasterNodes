@@ -318,10 +318,8 @@ function success() {
         if [ ! -e "~/$TMP_FOLDER/txouts.txt" ]; then rm ~/$TMP_FOLDER/txouts.txt; fi
         if [ $? -ne 0 ]; then clear; fi
 	
- TXID_INDEX=$($COIN_CLI masternode outputs)
- echo "$TXID_INDEX" >> $TMP_FOLDER/txouts.txt
- TX_PRINT=$(tr -d ‘{}:‘ < $TMP_FOLDER/txouts.txt )
- TX_OUTPUTS=$(echo $TX_PRINT  |  sed 's/"//g')
+TXID_INDEX=$($COIN_CLI masternode outputs)
+TX_OUTPUTS=$(echo $TXID_INDEX  |  sed 's/"//g' | sed 's/{//g' |  sed 's/}//g' |  sed 's/://g')
 
 MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
 
@@ -340,7 +338,7 @@ MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
  echo -e "MASTERNODE PRIVATEKEY is: ${RED} $MN_PRIVKEY ${NC}"
  echo -e "MASTERNODE file: $CONFIG_FOLDER/masternode.conf"
  echo -e "MASTERNODE configuration bellow:"
- echo -e "MN $NODEIP:$COIN_PORT $MN_PRIVKEY $TXOUTPUTS"
+ echo -e "MN $NODEIP:$COIN_PORT $MN_PRIVKEY $TX_OUTPUTS"
  echo -e "Please check ${RED}$COIN_NAME${NC} is running with the following command: ${GREEN}systemctl status $COIN_NAME.service${NC}" 
  echo -e "================================================================================================================================" 
 
@@ -354,7 +352,7 @@ MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
  echo -e "MASTERNODE PRIVATEKEY is: $MN_PRIVKEY$" >> ~/$COIN_NAME.txt
  echo -e "MASTERNODE file: $CONFIG_FOLDER/masternode.conf " >> ~/$COIN_NAME.txt
  echo -e "MASTERNODE configuration bellow:" >> ~/$COIN_NAME.txt
- echo -e "MN $NODEIP:$COIN_PORT $MN_PRIVKEY $TXOUTPUTS" >> ~/$COIN_NAME.txt
+ echo -e "MN $NODEIP:$COIN_PORT $MN_PRIVKEY $TX_OUTPUTS" >> ~/$COIN_NAME.txt
  echo -e "Please check $COIN_NAME$ is running with the following command: systemctl status $COIN_NAME.service" >> ~/$COIN_NAME.txt
  echo -e "================================================================================================================================" >> ~/$COIN_NAME.txt
 
@@ -363,7 +361,7 @@ MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
         if [ ! -e "$CONFIG_FOLDER/masternode.conf" ]; then rm $CONFIG_FOLDER/masternode.conf; fi
         if [ $? -ne 0 ]; then echo -e "masternode.conf created!" ; fi
 
- printf "%s\n" "# Masternode config file" "# Format: alias IP:port masternodeprivkey collateral_output_txid collateral_output_index" "# Example: mn1 127.0.0.2:23403 93HaYBVUCYjEMeeH1Y4sBGLALQZE1Yc1K64xiqgX37tGBDQL8Xg 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 0" "MN $NODEIP:$COIN_PORT $MN_PRIVKEY $TXOUTPUTS" >  $CONFIG_FOLDER/masternode.conf
+ printf "%s\n" "# Masternode config file" "# Format: alias IP:port masternodeprivkey collateral_output_txid collateral_output_index" "# Example: mn1 127.0.0.2:23403 93HaYBVUCYjEMeeH1Y4sBGLALQZE1Yc1K64xiqgX37tGBDQL8Xg 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 0" "MN $NODEIP:$COIN_PORT $MN_PRIVKEY $TX_OUTPUTS" >  $CONFIG_FOLDER/masternode.conf
  
 }
 
