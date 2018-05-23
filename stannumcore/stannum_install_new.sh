@@ -314,6 +314,9 @@ clear
 }
 
 function success() {
+        if [ ! -e "~/$TMP_FOLDER/txouts.txt" ]; then rm ~/$TMP_FOLDER/txouts.txt; fi
+        if [ $? -ne 0 ]; then clear; fi
+	
  TXID_INDEX=$($COIN_CLI masternode outputs)
  echo "$TXID_INDEX" >> $TMP_FOLDER/txouts.txt
  TX_PRINT=$(tr -d ‘{}:‘ < $TMP_FOLDER/txouts.txt )
