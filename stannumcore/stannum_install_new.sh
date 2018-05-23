@@ -17,7 +17,9 @@ COIN_QT=stannum-qt
 COIN_TX=stannum-tx
 COIN_PORT=23403
 RPC_PORT=12454
-FILE_NODES=MasterNodes/stannumcore/stannumcore_nodes.txt
+
+# FILE WITH NODES IN MASTERNODE INSTALL FOLDER
+FILE_NODES=stannumcore/stannumcore_nodes.txt
 
 # LINK TO DOWNLOAD DAEMON
 COIN_TGZ_ZIP='https://github.com/stannumcoin/stannum/releases/download/Release/precompile_linux.tar.gz'
@@ -144,12 +146,12 @@ function temp_config() {
     #TODO: squash relative path
     echo -e "Create temporary configuration..."
     echo -e "If prompted enter password"
-    $COIN_CLI stop >/dev/null 2>&1
-	sleep 10s
-	rm $CONFIG_FOLDER/$CONFIG_FILE
-	echo "rpcuser=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
-	echo "rpcpassword=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
-        cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
+    # $COIN_CLI stop >/dev/null 2>&1
+	#sleep 10s
+	#rm $CONFIG_FOLDER/$CONFIG_FILE
+#echo "rpcuser=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
+#echo "rpcpassword=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
+       # cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
   clear
 }
 
@@ -165,7 +167,7 @@ function create_configs() {
 
 	mnip=$(curl -s https://api.ipify.org)
 	rpcuser=$(date +%s | sha256sum | base64 | head -c 64 ; echo)
-	rpcpass=$(openssl rand -base64 32)
+	rpcpass=$(openssl rand -base64 46)
 	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=30" "#rpcport=1271" "externalip=$mnip" "port=23403" "bind=$mnip:23403" "masternode=1" "masternodeprivkey=$MNPRIVKEY" > $CONFIG_FOLDER/$CONFIG_FILE
 	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
 
@@ -300,8 +302,7 @@ success() {
 }
 
 install() {
-        clear
-	#prepare_dependencies
+        #prepare_dependencies
 	#prepare_node
 	#install_blockchain
 	#enable_firewall
@@ -313,6 +314,7 @@ install() {
 
 #main
 #default to --without-gui
+$COIN_CLI stop >/dev/null 2>&1
 clear
 install --without-gui
 
