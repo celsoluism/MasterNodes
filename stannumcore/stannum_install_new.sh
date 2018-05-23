@@ -314,24 +314,24 @@ function success() {
  echo -e "Obs: All informations are saved in /home/userfolder/$COIN_NAME.txt or in /root/$COIN_NAME.txt if run as root!"
  echo -e "================================================================================================================================" 
  echo -e "$COIN_NAME Masternode is up and running listening on port ${RED}$COIN_PORT${NC}." 
- echo -e "Configuration file is: ${RED}$CONFIGFOLDER/$CONFIG_FILE${NC}"
+ echo -e "Configuration file is: ${RED}$CONFIG_FOLDER/$CONFIG_FILE${NC}"
  echo -e "Start: ${RED}systemctl start $COIN_NAME.service${NC}"
  echo -e "Stop: ${RED}systemctl stop $COIN_NAME.service${NC}"
  echo -e "VPS_IP:PORT ${RED}$NODEIP:$COIN_PORT${NC}"
- echo -e "MASTERNODE PRIVATEKEY is: ${RED}$COINKEY${NC}"
- echo -e "Masternode config file: MN $mnip:$COIN_PORT $MNPRIVKEY TXHASH INDEX"
+ echo -e "MASTERNODE PRIVATEKEY is: ${RED}$MNPRIVKEY${NC}"
+ echo -e "Masternode config file: MN $NODEIP:$COIN_PORT $MNPRIVKEY TXHASH INDEX"
  echo -e "Please check ${RED}$COIN_NAME${NC} is running with the following command: ${GREEN}systemctl status $COIN_NAME.service${NC}" 
  echo -e "================================================================================================================================" 
 
 # TO FILE
 echo -e "================================================================================================================================" >> ~/$COIN_NAME.txt
  echo -e "$COIN_NAME Masternode is up and running listening on port ${RED}$COIN_PORT${NC}." >> ~/$COIN_NAME.txt
- echo -e "Configuration file is: $CONFIGFOLDER/$CONFIG_FILE" >> ~/$COIN_NAME.txt
+ echo -e "Configuration file is: $CONFIG_FOLDER/$CONFIG_FILE" >> ~/$COIN_NAME.txt
  echo -e "Start: systemctl start $COIN_NAME.service$" >> ~/$COIN_NAME.txt
  echo -e "Stop: systemctl stop $COIN_NAME.service$" >> ~/$COIN_NAME.txt
  echo -e "VPS_IP:PORT $NODEIP:$COIN_PORT$" >> ~/$COIN_NAME.txt
- echo -e "MASTERNODE PRIVATEKEY is: $COINKEY$" >> ~/$COIN_NAME.txt
- echo -e "Masternode config file: MN $mnip:$COIN_PORT $MNPRIVKEY TXHASH INDEX" >> ~/$COIN_NAME.txt
+ echo -e "MASTERNODE PRIVATEKEY is: $MNPRIVKEY$" >> ~/$COIN_NAME.txt
+ echo -e "Masternode config file: MN $NODEIP:$COIN_PORT $MNPRIVKEY TXHASH INDEX" >> ~/$COIN_NAME.txt
  echo -e "Please check $COIN_NAME$ is running with the following command: systemctl status $COIN_NAME.service" >> ~/$COIN_NAME.txt
  echo -e "================================================================================================================================" >> ~/$COIN_NAME.txt
 }
