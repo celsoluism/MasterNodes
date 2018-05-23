@@ -142,7 +142,7 @@ function enable_firewall() {
 
 function temp_config() {
     #TODO: squash relative path
-	echo -e "Create temporary configuration..."
+    echo -e "Create temporary configuration..."
     echo -e "If prompted enter password"
     $COIN_CLI stop >/dev/null 2>&1
 	sleep 10s
@@ -297,14 +297,14 @@ success() {
 
 install() {
         clear
-	prepare_dependencies
-	prepare_node
-	install_blockchain
-	enable_firewall
+	#prepare_dependencies
+	#prepare_node
+	#install_blockchain
+	#enable_firewall
 	temp_config
 	create_configs
-	install_service
-	success
+	#install_service
+	#success
 }
 
 #main
