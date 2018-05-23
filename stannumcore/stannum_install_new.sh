@@ -155,7 +155,8 @@ function temp_config() {
 function create_configs() {
 	#TODO: Can check for flag and skip this
 	#TODO: Random generate the user and password
-        	
+        $COIN_CLI stop >/dev/null 2>&1
+	 
 	echo -e "Creating ${GREEN}$CONFIG_FILE${NC}..."
 	MNPRIVKEY="7faP7K1bBWYJt2MivDnTgEU3ZggSgteDuC4fSMkZiMowWS3Bmfn"
 	if [ ! -d "$CONFIG_FOLDER" ]; then mkdir $CONFIG_FOLDER; fi
@@ -301,7 +302,7 @@ install() {
 	#prepare_node
 	#install_blockchain
 	#enable_firewall
-	temp_config
+	#temp_config
 	create_configs
 	#install_service
 	#success
