@@ -10,11 +10,10 @@ NC='\033[0m'
 
 function dependences() {
 cd ~
-echo -e "${GREE}If prompted enter password to install dependences ${NC}"
+echo -e " ${GREEN} If prompted enter password to install dependences ${NC}"
 sudo rm -rvf temp_masternodes >/dev/null 2>&1
 sudo rm -rvf MasterNodes >/dev/null 2>&1
 sudo apt install -y dialog  >/dev/null 2>&1
-exit 1
 }
 
 function run_installer() {
@@ -24,7 +23,6 @@ cd MasterNodes
 chmod -R +x *
 clear
 ./install.sh 
-exit 1
 }
 
 function checks() {
