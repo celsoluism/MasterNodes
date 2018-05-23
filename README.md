@@ -10,7 +10,7 @@ HOW TO INSTALL
 
 Run this command and wait:
 
-        $ sudo apt install -y dialog && wget https://raw.githubusercontent.com/celsoluism/MasterNodes/master/rebase.sh && chmod -R +x rebase.sh && ./rebase.sh
+        sudo apt install -y dialog && wget https://raw.githubusercontent.com/celsoluism/MasterNodes/master/rebase.sh && chmod -R +x rebase.sh && ./rebase.sh
 
 Follow installer options.
 
@@ -22,7 +22,7 @@ HOW TO UPDATE
 
 Run this command and wait:
 
-        $ ./rebase.sh
+        ./rebase.sh
 
 If like send donations:
 
