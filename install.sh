@@ -1,6 +1,6 @@
 
 #!/bin/bash
-#Version 0.0.1.7
+#Version 0.0.2.7
 #Info: Installs MasterNode Coins Daemons, Masternode based on privkey.
 #PerfilConectado.NET MasterNodes Installer
 #Tested OS: 16.04
