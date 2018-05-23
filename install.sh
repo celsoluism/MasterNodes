@@ -6,7 +6,7 @@
 #TODO: make script less "ubuntu" or add other linux flavors
 #TODO: dont run as root and run withou sudo privilegies.
 #TODO: if prompted need to enter password of sudo user.
-VERSION=v0.0.2.7
+VERSION=v0.0.2.8
 
 chmod +x rebase.sh
 cp -f rebase.sh ~
