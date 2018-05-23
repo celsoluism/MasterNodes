@@ -158,43 +158,47 @@ function temp_config() {
 function create_configs() {
 	#TODO: Can check for flag and skip this
 	#TODO: Random generate the user and password
-        $COIN_CLI stop >/dev/null 2>&1
-	 
-	echo -e "Creating ${GREEN}$CONFIG_FILE${NC}..."
+        
+	rm $CONFIG_FOLDER/$CONFIG_FILE
+	message "Creating $CONFIG_FILE..."
 	MNPRIVKEY="7faP7K1bBWYJt2MivDnTgEU3ZggSgteDuC4fSMkZiMowWS3Bmfn"
+	
+	
 	if [ ! -d "$CONFIG_FOLDER" ]; then mkdir $CONFIG_FOLDER; fi
 	if [ $? -ne 0 ]; then error; fi
 
 	mnip=$(curl -s https://api.ipify.org)
 	rpcuser=$(date +%s | sha256sum | base64 | head -c 64 ; echo)
-	rpcpass=$(date +%s | sha256sum | base64 | head -c 64 ; echo)
-	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=30" "#rpcport=1271" "externalip=$mnip" "port=23403" "bind=$mnip:23403" "masternode=1" "masternodeprivkey=$MNPRIVKEY" > $CONFIG_FOLDER/$CONFIG_FILE
-	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
-
-        echo -e "Starting $COIN_NAME Daemon"
-        echo -e "Wait 60s to $COIN_NAME Sync"
-        $COIN_DAEMON
-        sleep 60s
-        clear
-		
-        COIN_ADDRESS=$($COIN_CLI getaddressesbyaccount '' )
-        echo -e "Send exactly ${GREEN}$COLATERAL ${NC}to this address: ${GREEN}$COIN_ADDRESS${NC} "
-        echo -e	"wait complete 1 confirmation and tecle [ENTER] to automatic create masternode.conf"
-        echo -n "or tecle [ENTER] now to continue withthout create masternode.conf"
-        read var_name
-        clear
-        
-		echo -e "Prepare to create configs!"
-        sleep 5s
-        MNPRIVKEY=$($COIN_CLI masternode genkey)
-	    $COIN_CLI stop
-	    echo -e "wait 10 seconds for deamon to stop..."
+	rpcpass=$(openssl rand -base64 64)
+	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=30" "#rpcport=1271" "externalip=$mnip" "port=23403" "bind=$mnip:23403" "masternode=1" "masternodeprivkey=$MNPRIVKEY" > $CONFIG_FILE
+        message "Closing stannumcore Daemon"
+        $COIN_CLI stop
         sleep 15s
-	sudo rm $CONFIG_FOLDER/$CONFIG_FILE
-	    echo -e "Updating $CONFIG_FILE..."
-        printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=256" "#rpcport=11995" "externalip=$mnip" "port=23403" "bind=$mnip:23403" "masternode=1" "masternodeprivkey=$MNPRIVKEY" > $CONFIG_FOLDER/$CONFIG_FILE
-	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
-    clear
+        sleep 10
+
+        message "Starting stannumcore Daemon"
+        $COIN_DAEMON
+        sleep 15s
+
+        COIN_ADDRESS=$($COIN_CLI getaddressesbyaccount '' )
+        message "Send exactly $COLATERAL to this address: $COIN_ADDRESS wait complete 1 confirmation and back here"
+        message "No continue if have no confirmation, is to much important!"
+        echo -n "after 1 confirmation press key [ENTER] to continue..."
+        read var_name
+ 
+        message "Wait 10 seconds for daemon to load..."
+        sleep 20s
+        MNPRIVKEY=$($COIN_CLI masternode genkey)
+	$COIN_CLI stop
+	message "wait 10 seconds for deamon to stop..."
+        sleep 10s
+        $COIN_CLI stop
+        message "Closing $COIN_NAME Daemon"
+        sleep 10s
+        sudo rm $CONFIG_FILE
+	message "Updating $CONFIG_FILE..."
+        printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=256" "#rpcport=11995" "externalip=$mnip" "port=23403" "bind=$mnip:23403" "masternode=1" "masternodeprivkey=$MNPRIVKEY" > $CONFIG_FILE
+
 }
 
 function install_service() {
