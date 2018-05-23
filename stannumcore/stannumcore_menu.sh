@@ -13,7 +13,8 @@ MENU="Choose one of the following options:"
 OPTIONS=(1 "Install StannumCore Masternode"
          2 "Update StannumCore MasterNode"
          3 "Install Libraries and Dependences..."
-         4 "Quit")
+	 4 "Testing New Installer (PLEASE DONT USE!)"
+         5 "Quit")
 
 CHOICE=$(dialog --clear \
                 --backtitle "$BACKTITLE" \
@@ -37,7 +38,12 @@ case $CHOICE in
             echo "You select to Install Libraries and Dependences..."
             ./stannumcore/stannumcore_dependences.sh
             ;;
-        4)
+	4)
+            echo "PLEASE CANCEL..."
+	    sleep 5s
+            ./stannumcore/stannumcore_install_new.sh
+            ;;
+        5)
             echo "You chose Quit!"
             echo "Access https://PerfilConectado.NET"
             echo "Thankyou!"
