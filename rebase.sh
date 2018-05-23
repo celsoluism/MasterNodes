@@ -14,6 +14,7 @@ echo -q "${GREE}If prompted enter password to install dependences ${NC}"
 sudo rm -rvf temp_masternodes >/dev/null 2>&1
 sudo rm -rvf MasterNodes >/dev/null 2>&1
 sudo apt install -y dialog  >/dev/null 2>&1
+exit 0
 }
 
 function run_installer() {
@@ -23,6 +24,7 @@ cd MasterNodes
 chmod -R +x *
 clear
 ./install.sh 
+exit 0
 }
 
 function checks() {
@@ -30,6 +32,7 @@ if [[ $(lsb_release -d) != *16.04* ]]; then
   echo -e "${RED}You are not running Ubuntu 16.04. Installation is cancelled.${NC}"
   exit 1
 fi
+}
 
 ### MAIN
 clear
