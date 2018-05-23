@@ -175,7 +175,7 @@ function create_configs() {
 	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
 	
         message "Closing stannumcore Daemon"
-        $COIN_CLI stop
+        $COIN_CLI stop  >/dev/null 2>&1
         sleep 15s
         sleep 10
 
@@ -192,10 +192,10 @@ function create_configs() {
         message "Wait 10 seconds for daemon to load..."
         sleep 20s
         MNPRIVKEY=$($COIN_CLI masternode genkey)
-	$COIN_CLI stop
+	$COIN_CLI stop  >/dev/null 2>&1
 	message "wait 10 seconds for deamon to stop..."
         sleep 10s
-        $COIN_CLI stop
+        $COIN_CLI stop >/dev/null 2>&1
         message "Closing $COIN_NAME Daemon"
         sleep 10s
         sudo rm $CONFIG_FILE
