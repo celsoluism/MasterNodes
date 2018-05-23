@@ -201,6 +201,7 @@ function create_configs() {
         sudo rm $CONFIG_FILE
 	message "Updating $CONFIG_FILE..."
         printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=256" "#rpcport=11995" "externalip=$mnip" "port=23403" "bind=$mnip:23403" "masternode=1" "masternodeprivkey=$MNPRIVKEY" >  $CONFIG_FOLDER/$CONFIG_FILE
+	echo "$MNPRIVKEY" >> $TMP_FOLDER/$COIN_NAME_masternode_privkey.txt
 	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
 }
 
@@ -309,6 +310,7 @@ clear
 }
 
 function success() {
+ MN_PRIVKEY=(head -n 1 $TMP_FOLDER/$COIN_NAME_masternode_privkey.txt)
  echo "SUCCESS! Your ${GREE}$COIN_NAME ${CN}has started. All your configs are"
  # TO SHOW
  echo -e "Obs: All informations are saved in /home/userfolder/$COIN_NAME.txt or in /root/$COIN_NAME.txt if run as root!"
@@ -318,8 +320,8 @@ function success() {
  echo -e "Start: ${RED}systemctl start $COIN_NAME.service${NC}"
  echo -e "Stop: ${RED}systemctl stop $COIN_NAME.service${NC}"
  echo -e "VPS_IP:PORT ${RED}$NODEIP:$COIN_PORT${NC}"
- echo -e "MASTERNODE PRIVATEKEY is: ${RED}$MNPRIVKEY${NC}"
- echo -e "Masternode config file: MN $NODEIP:$COIN_PORT $MNPRIVKEY TXHASH INDEX"
+ echo -e "MASTERNODE PRIVATEKEY is: ${RED}$MN_PRIVKEY ${NC}"
+ echo -e "Masternode config file: MN $NODEIP:$COIN_PORT $MN_PRIVKEY TXHASH INDEX"
  echo -e "Please check ${RED}$COIN_NAME${NC} is running with the following command: ${GREEN}systemctl status $COIN_NAME.service${NC}" 
  echo -e "================================================================================================================================" 
 
@@ -330,8 +332,8 @@ echo -e "=======================================================================
  echo -e "Start: systemctl start $COIN_NAME.service$" >> ~/$COIN_NAME.txt
  echo -e "Stop: systemctl stop $COIN_NAME.service$" >> ~/$COIN_NAME.txt
  echo -e "VPS_IP:PORT $NODEIP:$COIN_PORT$" >> ~/$COIN_NAME.txt
- echo -e "MASTERNODE PRIVATEKEY is: $MNPRIVKEY$" >> ~/$COIN_NAME.txt
- echo -e "Masternode config file: MN $NODEIP:$COIN_PORT $MNPRIVKEY TXHASH INDEX" >> ~/$COIN_NAME.txt
+ echo -e "MASTERNODE PRIVATEKEY is: $MN_PRIVKEY$" >> ~/$COIN_NAME.txt
+ echo -e "Masternode config file: MN $NODEIP:$COIN_PORT $MN_PRIVKEY TXHASH INDEX" >> ~/$COIN_NAME.txt
  echo -e "Please check $COIN_NAME$ is running with the following command: systemctl status $COIN_NAME.service" >> ~/$COIN_NAME.txt
  echo -e "================================================================================================================================" >> ~/$COIN_NAME.txt
 }
