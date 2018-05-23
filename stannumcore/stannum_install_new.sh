@@ -146,9 +146,10 @@ function temp_config() {
     echo -e "If prompted enter password"
     $COIN_CLI stop >/dev/null 2>&1
 	sleep 10s
-#	echo "rpcuser=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
-#	echo "rpcpassword=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
-#	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
+	rm $CONFIG_FOLDER/$CONFIG_FILE
+	echo "rpcuser=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
+	echo "rpcpassword=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
+        cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
   clear
 }
 
@@ -166,6 +167,7 @@ function create_configs() {
 	rpcuser=$(date +%s | sha256sum | base64 | head -c 64 ; echo)
 	rpcpass=$(openssl rand -base64 54)
 	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=30" "#rpcport=1271" "externalip=$mnip" "port=23403" "bind=$mnip:23403" "masternode=1" "masternodeprivkey=$MNPRIVKEY" > $CONFIG_FOLDER/$CONFIG_FILE
+	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
 
 	echo -e "Closing $COIN_NAME Daemon"
         $COIN_CLI stop
@@ -193,6 +195,7 @@ function create_configs() {
 	sudo rm $CONFIG_FOLDER/$CONFIG_FILE
 	    echo -e "Updating $CONFIG_FILE..."
         printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=256" "#rpcport=11995" "externalip=$mnip" "port=23403" "bind=$mnip:23403" "masternode=1" "masternodeprivkey=$MNPRIVKEY" > $CONFIG_FOLDER/$CONFIG_FILE
+	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
     clear
 }
 
@@ -302,7 +305,7 @@ install() {
 	#prepare_node
 	#install_blockchain
 	#enable_firewall
-	#temp_config
+	temp_config
 	create_configs
 	#install_service
 	#success
