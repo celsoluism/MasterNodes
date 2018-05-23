@@ -1,20 +1,25 @@
 
 #!/bin/bash
-#Version 0.0.2.7
 #Info: Installs MasterNode Coins Daemons much automated possible, Masternode based on privkey.
 #PerfilConectado.NET MasterNodes Installer
 #Tested OS: 16.04
 #TODO: make script less "ubuntu" or add other linux flavors
 #TODO: dont run as root and run withou sudo privilegies.
 #TODO: if prompted need to enter password of sudo user.
+VERSION=v0.0.2.7
 
 chmod +x rebase.sh
 cp -f rebase.sh ~
 
+#SET COLORS
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
 HEIGHT=20
 WIDTH=60
 CHOICE_HEIGHT=6
-BACKTITLE="Created By PerfilConectado.NET"
+BACKTITLE="Created By PerfilConectado.NET - ${GREEN}$VERSION${NC}"
 TITLE="Masternode Installer And Update"
 MENU="Choose one of the following options:"
 
