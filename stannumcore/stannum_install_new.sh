@@ -201,8 +201,11 @@ function create_configs() {
         sudo rm $CONFIG_FILE
 	message "Updating $CONFIG_FILE..."
         printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=256" "#rpcport=11995" "externalip=$mnip" "port=23403" "bind=$mnip:23403" "masternode=1" "masternodeprivkey=$MNPRIVKEY" >  $CONFIG_FOLDER/$CONFIG_FILE
-	echo "$MNPRIVKEY" >> $TMP_FOLDER/$COIN_NAME_masternode_privkey.txt
+	if [ ! -d "$TMP_FOLDER" ]; then mkdir $TMP_FOLDER; fi
+	if [ $? -ne 0 ]; then error; fi
+	echo " $MNPRIVKEY " >> $TMP_FOLDER/$COIN_NAME_masternode_privkey.txt
 	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
+	clear
 }
 
 function install_service() {
