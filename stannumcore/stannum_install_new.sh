@@ -344,8 +344,8 @@ install() {
 #	prepare_node
 #	install_blockchain
 #	enable_firewall
-#	temp_config
-#	create_configs
+	temp_config
+	create_configs
 #	install_service
 	last_commits
 	success
