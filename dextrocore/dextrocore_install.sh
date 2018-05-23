@@ -110,12 +110,11 @@ function prepare_node() { #TODO: add error detection
         cd $TMP_FOLDER
 	mkdir installnode
 	cd $TMP_FOLDER/installnode
-	#wget $COIN_TGZ_ZIP
-        #$COIN_TAR_UNZIP
+	wget $COIN_TGZ_ZIP
+        $COIN_TAR_UNZIP
         rm *.gz >/dev/null 2>&1
         rm *.zip >/dev/null 2>&1
-	cd $COIN_SUBFOLDER
-	strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT
+	cd $COIN_SUBFOLDER && $strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT
 	compile_error
 	chmod +x *
 	sudo cp -f * /usr/local/bin
