@@ -321,7 +321,7 @@ function success() {
  TXID_INDEX=$($COIN_CLI masternode outputs)
  echo "$TXID_INDEX" >> $TMP_FOLDER/txouts.txt
  TX_PRINT=$(tr -d ‘{}:‘ < $TMP_FOLDER/txouts.txt )
- TX_OUTPUTS=$(echo $TXOUTPUTS  |  sed 's/"//g')
+ TX_OUTPUTS=$(echo $TX_PRINT  |  sed 's/"//g')
 
 MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
 
