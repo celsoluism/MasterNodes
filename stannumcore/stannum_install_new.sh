@@ -14,7 +14,7 @@ CONFIG_FOLDER=~/.stannumcore
 COIN_DAEMON=stannumd
 COIN_CLI=stannum-cli
 COIN_TX=stannum-tx
-COIN_QT=stannum-qt
+COIN_QT=
 COIN_PORT=23403
 RPC_PORT=12454
 
@@ -43,7 +43,6 @@ TMP_FOLDER=~/temp_masternodes
 # DONT TOUCH
 COIN_ZIP=$(echo $COIN_TGZ_ZIP | awk -F'/' '{print $NF}')
 NODEIP=$(curl -s4 icanhazip.com)
-FILES_TO_STRIP=$COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT
 
 #SET COLORS
 RED='\033[0;31m'
