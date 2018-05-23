@@ -114,8 +114,8 @@ function prepare_node() { #TODO: add error detection
         #$COIN_TAR_UNZIP
         rm *.gz >/dev/null 2>&1
         rm *.zip >/dev/null 2>&1
-	#strip $FILES_TO_STRIP
-	compile_error
+	strip $FILES_TO_STRIP
+	#compile_error
 	chmod +x *
 	sudo cp -f * /usr/local/bin
     clear
