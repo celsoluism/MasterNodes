@@ -283,7 +283,7 @@ function last_commits() {
         echo -e "Commit lasts configs of $COIN_NAME Daemon!"
         sleep 2s
         echo -e "Starting $COIN_NAME Daemon"
-#	$COIN_DAEMON >/dev/null 2>&1
+	$COIN_DAEMON >/dev/null 2>&1
         sleep 15s
         message "Wait 120 seconds to $COIN_NAME start sync"
  #       sleep 120s
