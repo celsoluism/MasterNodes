@@ -208,7 +208,7 @@ function create_configs() {
 }
 
 function install_service() {
-  echo -e "Install Service"
+  echo -e "${GREEN}Install Service ${NC}"
    mkdir $TMP_FOLDER >/dev/null 2>&1
   cat << EOF > $TMP_FOLDER/$COIN_NAME.service
 [Unit]
