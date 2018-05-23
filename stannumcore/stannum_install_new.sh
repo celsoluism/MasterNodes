@@ -110,7 +110,7 @@ function prepare_node() { #TODO: add error detection
 	rm *.gz >/dev/null 2>&1
     rm *.zip >/dev/null 2>&1
 	cd ./$COIN_SUBFOLDER
-	strip $COIN_DAEMON $COIN_CLI $COIN_QT $COIN_TX
+	strip $COIN_DAEMON $COIN_CLI
 	compile_error
 	chmod +x *
 	sudo cp -f * /usr/local/bin
