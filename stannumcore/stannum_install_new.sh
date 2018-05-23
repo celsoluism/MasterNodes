@@ -261,7 +261,6 @@ if [ "$?" -gt "0" ];
 fi
 }
 
-
 function checks() {
 if [[ $(lsb_release -d) != *16.04* ]]; then
   echo -e "${RED}You are not running Ubuntu 16.04. Installation is cancelled.${NC}"
@@ -301,9 +300,10 @@ success() {
 }
 
 install() {
-        #prepare_dependencies
-	#prepare_node
-	#install_blockchain
+        checks
+        prepare_dependencies
+	prepare_node
+	install_blockchain
 	enable_firewall
 	temp_config
 	create_configs
