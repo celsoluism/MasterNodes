@@ -143,16 +143,15 @@ function enable_firewall() {
 }
 
 function temp_config() {
-    #TODO: squash relative path
-    echo -e "Create temporary configuration..."
-    echo -e "If prompted enter password"
-    # $COIN_CLI stop >/dev/null 2>&1
-	#sleep 10s
-	#rm $CONFIG_FOLDER/$CONFIG_FILE
-#echo "rpcuser=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
-#echo "rpcpassword=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
-       # cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
-  clear
+   #TODO: squash relative path
+	echo -e "Create Temporary Configs..."
+        echo -e "If asked enter password"
+        $COIN_CLI stop
+	sleep 10s
+	echo "rpcuser=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
+	echo "rpcpassword=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
+	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
+   clear
 }
 
 function create_configs() {
@@ -171,6 +170,8 @@ function create_configs() {
 	rpcuser=$(date +%s | sha256sum | base64 | head -c 64 ; echo)
 	rpcpass=$(openssl rand -base64 64)
 	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=30" "#rpcport=1271" "externalip=$mnip" "port=23403" "bind=$mnip:23403" "masternode=1" "masternodeprivkey=$MNPRIVKEY" > $CONFIG_FILE
+	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
+	
         message "Closing stannumcore Daemon"
         $COIN_CLI stop
         sleep 15s
@@ -198,7 +199,7 @@ function create_configs() {
         sudo rm $CONFIG_FILE
 	message "Updating $CONFIG_FILE..."
         printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=256" "#rpcport=11995" "externalip=$mnip" "port=23403" "bind=$mnip:23403" "masternode=1" "masternodeprivkey=$MNPRIVKEY" > $CONFIG_FILE
-
+	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
 }
 
 function install_service() {
@@ -306,7 +307,7 @@ install() {
 	#prepare_node
 	#install_blockchain
 	#enable_firewall
-	#temp_config
+	temp_config
 	create_configs
 	#install_service
 	#success
