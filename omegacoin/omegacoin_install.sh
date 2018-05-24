@@ -203,7 +203,7 @@ function create_configs() {
         sleep 10s
         sudo rm $CONFIG_FOLDER/$CONFIG_FILE >/dev/null 2>&1
 	message "Updating $CONFIG_FILE..."
-        printf "%s\n" "masternode=1" "masternodeprivkey=$MNPRIVKEY" >  $TMP_FOLDER/$CONFIG_FILE
+        printf "\n%s\n" "masternode=1" "masternodeprivkey=$MNPRIVKEY" >  $TMP_FOLDER/$CONFIG_FILE
 	cat $FILE_NODES >> $TMP_FOLDER/$CONFIG_FILE
 	cp -f $TMP_FOLDER/$CONFIG_FILE $CONFIG_FOLDER
 	
