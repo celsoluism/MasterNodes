@@ -88,8 +88,9 @@ function prepare_dependencies() { #TODO: add error detection
       sudo apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" make software-properties-common \
       build-essential libtool autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev libboost-program-options-dev \
       libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git wget curl libdb4.8-dev bsdmainutils libdb4.8++-dev \
-      libminiupnpc-dev libgmp3-dev ufw pkg-config libevent-dev  libdb5.3++>/dev/null 2>&1 
+      libminiupnpc-dev libgmp3-dev ufw pkg-config libevent-dev  libdb5.3++ >/dev/null 2>&1 
       sudo apt-get install -y libzmq3-dev
+      sudo apt-get install -y unzip
    if [ "$?" -gt "0" ];
       then
       echo -e "${RED}Not all required packages were installed properly. Try to install them manually by running the following commands:${NC}\n"
@@ -99,7 +100,7 @@ function prepare_dependencies() { #TODO: add error detection
       echo "sudo apt-get update"
       echo "sudo apt install -y make build-essential libtool software-properties-common autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev \
             libboost-program-options-dev libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git curl libdb4.8-dev \
-            bsdmainutils libdb4.8++-dev libminiupnpc-dev libgmp3-dev ufw fail2ban pkg-config libevent-dev"
+            bsdmainutils libdb4.8++-dev libminiupnpc-dev libgmp3-dev ufw fail2ban pkg-config libevent-dev unzip"
       exit 1
    fi
    clear
