@@ -109,3 +109,11 @@ function testing_sentinel() {
       echo -e "Testing Sentinel"
       ./venv/bin/py.test ./test
 }
+
+###### MAIN ######
+clear
+prepare_dependencies
+check_version
+install_sentinel
+configure_sentinel
+testing_sentinel
