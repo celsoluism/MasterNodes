@@ -183,7 +183,7 @@ function create_configs() {
 	sleep 30s
 
         COIN_ADDRESS=$($COIN_CLI getaddressesbyaccount '' )
-        echo -e "Send exactly ${GREEN}$COLATERAL ${NC} to this address:${GREEN} $COIN_ADDRESS ${NC}wait complete ${GREEN} 1 confirmation ${NC}, check it in explorer and back here"
+        echo -e "Send exactly ${GREEN}$COLATERAL ${NC} to this address:${GREEN} $COIN_ADDRESS ${NC}wait complete ${GREEN} 1 confirmation ${NC}, check it in explorer and back here"  |  sed 's/"//g' | sed 's/[//g' |  sed 's/]//g' 
         echo -e "Obs.: Wait 1 confirmation is necessary to create masternode file with all informations or continue and will create partial file. "
         echo -n "Press key [ENTER] to continue..."
         read var_name
