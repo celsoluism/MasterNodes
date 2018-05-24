@@ -212,7 +212,7 @@ function create_configs() {
 
 function configfile_error() {
         echo -e " "
-	echo -e "${RED}Error in create $CONFIG_FILE!${NC}"
+	echo -e "${RED}Error in create $CONFIG_FILE! ${NC}"
 	echo -e " "
 	echo -e "Installer will try to repair!"
 	sleep 10s
@@ -314,7 +314,7 @@ function last_commits() {
 	echo -e " " 
 	echo -e "${RED} $COIN_CLI getinfo ${NC}"
 	echo -e " " 
-	echo -e "Or you can press [ENTER] now and continue without complete masternode.conf if sync is not completed! 
+	echo -e "Or you can press [ENTER] now and continue without complete masternode.conf if sync is not completed!" 
 	echo -e "Obs.: You need to edit $CONF_FOLDER/masternode.conf and insert TXID INDEX after install complete and reboot server."
 	echo -e " " 
 	echo -n "Press key [ENTER] to continue..."
