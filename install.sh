@@ -18,7 +18,7 @@ NC='\033[0m'
 
 HEIGHT=20
 WIDTH=60
-CHOICE_HEIGHT=6
+CHOICE_HEIGHT=10
 BACKTITLE="Created By PerfilConectado.NET - $VERSION "
 TITLE="Masternode Installer And Update"
 MENU="Choose one of the following options:"
