@@ -67,7 +67,6 @@ function install_sentinel() {
 
 function configure_sentinel() {
     echo -e "Configuring sentinel and cronjob"
-}
 
 function cronjob_creator () {
           # usage: cronjob_creator '<interval>' '<command>'
@@ -84,6 +83,8 @@ function cronjob_creator () {
             rm $CRONIN
             fi
 }
+cronjob_creator '* * * * * ' 'cd /home/'$USERNAME'/sentinel && ./venv/bin/python bin/sentinel.py >/dev/null 2>&1'
+}
 
 function testing_sentinel() {
       echo -e "Testing Sentinel"
@@ -95,7 +96,6 @@ install() {
     check_version
     install_sentinel
     configure_sentinel
-    cronjob_creator '* * * * * ' 'cd /home/'$USERNAME'/sentinel && ./venv/bin/python bin/sentinel.py >/dev/null 2>&1'
     testing_sentinel
 }
 
@@ -103,6 +103,3 @@ install() {
 #default to --without-gui
 clear
 install --without-gui
-exit 0
-    
-    
