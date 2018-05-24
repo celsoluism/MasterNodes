@@ -11,7 +11,7 @@ CONFIG_FOLDER=~/.omegacoincore
 COIN_PATH=/usr/local/bin/
 TMP_FOLDER=~/temp_masternodes
 NODEIP=$(curl -s4 icanhazip.com)
-$HOMEFOLDER=$(echo $HOME)
+HOMEFOLDER=$(echo $HOME)
 
 #SET COLORS
 RED='\033[0;31m'
@@ -28,11 +28,12 @@ if [[ $(lsb_release -d) != *16.04* ]]; then
 fi
 if [ ! -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
   echo -e "${RED}$COIN_NAME is not detected. Need to be installed and run.${NC}"
-  echo -e "${RED}First install $COIN_NAME before install Sentinel.${NC}"
+  echo -e "${RED}Try install $COIN_NAME before install Sentinel.${NC}"
   exit 1
 fi
 if [ -d "$HOMEFOLDER/sentinel" ] ; then
-  echo -e "${RED}SENTINEL is detected. Need to be stoped and remove folder '$HOMEFOLDER'/sentinel.${NC}"
+  echo -e "${RED}SENTINEL is detected. Need to be stoped and remove folder $HOMEFOLDER/sentinel.${NC}"
+  echo -e "${RED}Remove it and run ./rebase.sh.${NC}"
   exit 1
 fi
 }
@@ -59,7 +60,7 @@ error() {
 # ---------------------------------------- INSTALL ------------------------------------
 function prepare_dependencies() { #TODO: add error detection
    PS3='Need to Install Depedencies and Libraries'
-   echo -e "Prepare the system to install ${GREEN}$COIN_NAME master node.${NC}"
+   echo -e "Prepare the system to install ${GREEN}Sentinel to $COIN_NAME.${NC}"
    echo -e "If prompted enter password of current user!"
    sudo apt-get -y update >/dev/null 2>&1  
    sudo apt-get -y install python-virtualenv
@@ -103,7 +104,7 @@ function cronjob_creator () {
             rm $CRONIN
             fi
 }
-cronjob_creator '* * * * * ' 'cd '$HOMEFOLDER'/sentinel_omegacoin && ./venv/bin/python bin/sentinel.py >/dev/null 2>&1'
+cronjob_creator '* * * * * ' 'cd '$HOMEFOLDER'/sentinel && ./venv/bin/python bin/sentinel.py >/dev/null 2>&1'
 }
 
 function testing_sentinel() {
@@ -111,11 +112,6 @@ function testing_sentinel() {
       ./venv/bin/py.test ./test
 }
 
-function remove() {
-      echo -e "${RED}Preparing to uninstall Sentinel${NC}"
-      sudo rm -rvf $HOMEFOLDER/sentinel
-      install
-}
       
 install() {
     checks
@@ -124,7 +120,7 @@ install() {
     check_version
     install_sentinel
     configure_sentinel
-    testing_sentinel
+	testing_sentinel
 }
 
 #main
@@ -132,3 +128,4 @@ install() {
 clear
 checks
 install --without-gui
+
