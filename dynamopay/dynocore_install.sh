@@ -25,7 +25,7 @@ FILE_NODES=~/MasterNodes/dynamopay/dynocore_nodes.txt
 # LINK TO DOWNLOAD DAEMON
 COIN_TGZ_ZIP='https://github.com/dynamopay/dyno/releases/download/0.13.2.1/dynocore-0.13.2-x86_64-linux-gnu.tar.gz'
 # SET FOLDER IF UNZIP DAEMON IS ON SUBFOLDER?
-COIN_SUBFOLDER=linux
+COIN_SUBFOLDER=
 # SET $(echo 'tar -xvzf *.gz') IF FILE IS TAR.GZ OR $(echo 'unzip -o *.zip')  TO ZIP FILE.
 COIN_TAR_UNZIP=$(echo 'tar -xvzf *.gz')
 
