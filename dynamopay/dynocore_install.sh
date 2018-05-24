@@ -169,7 +169,7 @@ function create_configs() {
         
 	rm $CONFIG_FOLDER/$CONFIG_FILE >/dev/null 2>&1
 	message "Creating $CONFIG_FILE..."
-	TEMPMNPRIVKEY="7ficcy6L4vnssPv38gUVubv6UKBGXQF24McozRAw7Zts7FkC91m"
+	TEMPMNPRIVKEY="3cttRPyo1GFVvGZXjRCywfHxVEqEEfiC8qBTc3pJfeu8CgkCnyv"
 		
 	if [ ! -d "$CONFIG_FOLDER" ]; then mkdir $CONFIG_FOLDER; fi
 	if [ $? -ne 0 ]; then error; fi
