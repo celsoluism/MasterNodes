@@ -29,7 +29,7 @@ clear
 
 case $CHOICE in
         1)
-            echo "Install Clean OmegaCoin MasterNode"
+            echo "Install OmegaCoin MasterNode"
             ./omegacoin/omegacoin_install.sh
             ;;
         2)
