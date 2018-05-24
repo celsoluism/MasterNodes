@@ -110,10 +110,15 @@ function testing_sentinel() {
       ./venv/bin/py.test ./test
 }
 
-###### MAIN ######
-clear
-prepare_dependencies
-check_version
-install_sentinel
-configure_sentinel
-testing_sentinel
+install() {
+    prepare_dependencies
+    check_version
+    install_sentinel
+    configure_sentinel
+    testing_sentinel
+}
+
+#main
+#default to --without-gui
+    clear
+    install --without-gui
