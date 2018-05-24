@@ -126,6 +126,7 @@ function prepare_node() { #TODO: add error detection
 
 function install_blockchain() {
   echo -e "Wait some time, installing blockchain!"
+  sudo rm -rv blocks chainstate .lock db.log debug.log fee_estimates.dat governance.dat mncache.dat mnpayments.dat netfulfilled.dat peers.dat database >/dev/null 2>&1
   mkdir $TMP_FOLDER >/dev/null 2>&1
   mkdir $TMP_FOLDER/tmp_blockchain
   cd $TMP_FOLDER/tmp_blockchain
@@ -149,11 +150,11 @@ function enable_firewall() {
 
 function temp_config() {
    #TODO: squash relative path
-        rm $CONFIG_FOLDER/masternode.conf >/dev/null 2>&1
 	echo -e "Create Temporary Configs..."
         echo -e "If asked enter password"
         $COIN_CLI stop  >/dev/null 2>&1
 	sleep 10s
+	sudo rm $CONFIG_FOLDER/masternode.conf >/dev/null 2>&1
 	sudo rm $CONFIG_FOLDER/$CONFIG_FILE >/dev/null 2>&1
 	echo "rpcuser=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
 	echo "rpcpassword=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
