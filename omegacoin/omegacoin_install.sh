@@ -182,9 +182,9 @@ function create_configs() {
 	echo -e "Wait $COIN_NAME Daemon load wallet."
 	sleep 30s
         
-	GET_ADDRESS=$($COIN_CLI getaddressesbyaccount '' )
-        COIN_ADDRESS=$($GET_ADDRESS |  sed 's/"//g' | sed 's/[//g' |  sed 's/]//g' )
-        message -e "Send exactly ${GREEN}$COLATERAL ${NC} to this address:${GREEN} $COIN_ADDRESS ${NC}wait complete ${GREEN} 1 confirmation ${NC}, check it in explorer and back here" 
+	GET_ADDRESS=$(echo $COIN_CLI getaddressesbyaccount "" )
+        COIN_ADDRESS=$($GET_ADDRESS | sed 's/"//g' | sed 's/[//g' |  sed 's/]//g' )
+        message "Send exactly ${GREEN}$COLATERAL ${NC} to this address:${GREEN} $COIN_ADDRESS ${NC}wait complete ${GREEN} 1 confirmation ${NC}, check it in explorer and back here" 
         echo -e "Obs.: Wait 1 confirmation is necessary to create masternode file with all informations or continue and will create partial file. "
         echo -n "Press key [ENTER] to continue..."
         read var_name
