@@ -152,7 +152,8 @@ function create_configs() {
 	#TODO: Can check for flag and skip this
 	#TODO: Random generate the user and password
         echo -e "Preparing to create config files."
-        $COIN_CLI stop  >/dev/null 2>&1
+	sudo systemctl stop $COIN_NAME.service >/dev/null 2>&1
+        $COIN_CLI stop >/dev/null 2>&1
 	sleep 10s
 	message "Closing $COIN_NAMEe Daemon"
         sleep 10s
