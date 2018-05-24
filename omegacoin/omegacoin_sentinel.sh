@@ -31,7 +31,7 @@ if [ ! -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
   echo -e "${RED}First install $COIN_NAME before install Sentinel.${NC}"
   exit 1
 fi
-if [ -d "$HOMEFOLDER/sentinel" ] || [ -d "$HOMEFOLDER/sentinel" ] && [ -d "$HOMEFOLDER/$CONFIG_FOLDER" ] ; then
+if [ -d "$HOMEFOLDER/sentinel" ] ; then
   echo -e "${RED}SENTINEL is detected. Need to be stoped and remove folder '$HOMEFOLDER'/sentinel.${NC}"
   exit 1
 fi
@@ -130,4 +130,5 @@ install() {
 #main
 #default to --without-gui
 clear
+checks
 install --without-gui
