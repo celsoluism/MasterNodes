@@ -7,9 +7,12 @@
 # DONT TOUCH
 COIN_NAME=OmegaCoin
 COIN_DAEMON=omegacoind
+CONFIG_FOLDER=~/.omegacoincore
+SENTINEL_FOLDER=~/
 COIN_PATH=/usr/local/bin/
 TMP_FOLDER=~/temp_masternodes
 NODEIP=$(curl -s4 icanhazip.com)
+$HOMEFOLDER=$(echo $HOME)
 
 #SET COLORS
 RED='\033[0;31m'
@@ -27,6 +30,10 @@ fi
 if [ ! -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
   echo -e "${RED}$COIN_NAME is not detected. Need to be installed and run.${NC}"
   echo -e "${RED}First install $COIN_NAME before install Sentinel.${NC}"
+  exit 1
+fi
+if [ -d "~/$SENTINEL_FOLDER" ] && [ -d "~/$CONFIG_FOLDER" ] ; then
+  echo -e "${RED}SENTINEL is detected. Need to be stoped and remove folder '$HOMEFOLDER'/sentinel_omegacoin.${NC}"
   exit 1
 fi
 }
@@ -99,7 +106,7 @@ function cronjob_creator () {
             rm $CRONIN
             fi
 }
-cronjob_creator '* * * * * ' 'cd /home/'$USERNAME'/sentinel && ./venv/bin/python bin/sentinel.py >/dev/null 2>&1'
+cronjob_creator '* * * * * ' 'cd '$HOMEFOLDER'/sentinel_omegacoin && ./venv/bin/python bin/sentinel.py >/dev/null 2>&1'
 }
 
 function testing_sentinel() {
@@ -109,6 +116,7 @@ function testing_sentinel() {
 
 install() {
     checks
+    check_version
     prepare_dependencies
     check_version
     install_sentinel
