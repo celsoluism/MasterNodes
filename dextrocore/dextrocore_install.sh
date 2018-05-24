@@ -121,7 +121,7 @@ function prepare_node() { #TODO: add error detection
 	compile_error
 	   if [ -d "$TMP_FOLDER/installnode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/installnode/$COIN_SUBFOLDER && chmod +x * && sudo cp -f * /usr/local/bin ; fi
 	   if [ $? -ne 0 ]; then cd $TMP_FOLDER/installnode && chmod +x * && sudo cp -f * /usr/local/bin ; fi
-	clear
+           clear
 }
 
 function install_blockchain() {
