@@ -5,6 +5,8 @@
 
 
 # DONT TOUCH
+COIN_NAME=OmegaCoin
+COIN_DAEMON=omegacoind
 COIN_PATH=/usr/local/bin/
 TMP_FOLDER=~/temp_masternodes
 NODEIP=$(curl -s4 icanhazip.com)
@@ -15,6 +17,14 @@ GREEN='\033[0;32m'
 NC='\033[0m'
 
 #-------------------------------------------- LETS START ----------------------------------------
+
+if [ ! -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
+  echo -e "${RED}$COIN_NAME is not installed.${NC}"
+  echo -e "${RED}First install $COIN_NAME before install Sentinel.${NC}"
+  
+  exit 1
+fi
+}
 
 noflags() {
     echo "??????????????????????????????????????"
