@@ -185,7 +185,7 @@ function create_configs() {
         sleep 15s
         
 	message "Starting $COIN_NAME Daemon"
-        $COIN_DAEMON
+        $COIN_DAEMON -daemon
         sleep 15s
 	echo -e "Wait $COIN_NAME Daemon load wallet."
 	sleep 30s
