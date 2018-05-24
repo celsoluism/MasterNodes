@@ -66,7 +66,7 @@ function install_sentinel() {
 }
 
 function configure_sentinel() {
-
+    echo -e "Configuring sentinel and cronjob"
 }
 
 function cronjob_creator () {
