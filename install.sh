@@ -6,7 +6,7 @@
 #TODO: make script less "ubuntu" or add other linux flavors
 #TODO: dont run as root and run withou sudo privilegies.
 #TODO: if prompted need to enter password of sudo user.
-VERSION=v0.0.2.8
+VERSION=v0.0.2.9
 
 chmod +x rebase.sh
 cp -f rebase.sh ~
@@ -24,11 +24,12 @@ TITLE="Masternode Installer And Update"
 MENU="Choose one of the following options:"
 
 OPTIONS=(1 "Brofist"
-         2 "OmegaCoin"
-         3 "DextroCore..."
-	 4 "StannumCoin"
-         5 "Install Libraries and Dependences..."
-         6 "Quit")
+         2 "DextroCore"
+         3 "DynamoPay..."
+	 4 "OmegaCoin"
+	 5 "StannumCoin"
+         6 "Install Libraries and Dependences..."
+         7 "Quit")
 
 CHOICE=$(dialog --clear \
                 --backtitle "$BACKTITLE" \
@@ -46,22 +47,26 @@ case $CHOICE in
 	    ./brofist/brofist_menu.sh
 	    ;;	
         2)
-            echo "You chose OmegaCoin..."
-            ./omegacoin/omegacoin_menu.sh
-            ;;
-        3)
-            echo "You chose DextroCore..."
+	    echo "You chose DextroCore..."
             ./dextrocore/dextrocore_menu.sh
             ;;
-        4)  
-		     echo "You chose StannumCoin..."
+        3)  
+	    echo "You chose DynamoPay..."
+            ./dynamopay/dynocore_menu.sh
+            ;;
+	4)    
+	    echo "You chose OmegaCoin..."
+            ./omegacoin/omegacoin_menu.sh
+            ;;
+        5)  
+	    echo "You chose StannumCoin..."
             ./stannumcore/stannumcore_menu.sh
             ;;
-        5)
+        6)
             echo "You chose Install Libraries and Dependences"
             ./dependences/install_dependences.sh
 	    ;;
-	6)
+	7)
             echo "You chose Quit!"
             echo "Access https://PerfilConectado.NET"
             echo "Thankyou!"
