@@ -162,7 +162,7 @@ function temp_config() {
 	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
    clear
 }
-
+ 
 function create_configs() {
 	#TODO: Can check for flag and skip this
 	#TODO: Random generate the user and password
