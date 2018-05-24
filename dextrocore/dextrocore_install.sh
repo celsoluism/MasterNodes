@@ -24,7 +24,7 @@ RPC_PORT=39321
 FILE_NODES=~/MasterNodes/dextrocore/dextrocore_nodes.txt
 
 # LINK TO DOWNLOAD DAEMON
-COIN_TGZ_ZIP='https://github.com/dextrocoin/dextro/releases/download/1.0.1.1/dextro_ubuntu_16.04_v1.0.1.zip'
+COIN_TGZ_ZIP=https://github.com/dextrocoin/dextro/releases/download/1.0.1.1/dextro_ubuntu_16.04_v1.0.1.zip
 # SET FOLDER IF UNZIP DAEMON IS ON SUBFOLDER?
 COIN_SUBFOLDER=dextro
 # SET $(echo 'tar -xvzf *.gz') IF FILE IS TAR.GZ OR $(echo 'unzip -o *.zip')  TO ZIP FILE.
@@ -114,9 +114,7 @@ function prepare_node() { #TODO: add error detection
 	cd $TMP_FOLDER/installnode
 	wget $COIN_TGZ_ZIP
         $COIN_TAR_UNZIP
-        rm *.gz >/dev/null 2>&1
-        rm *.zip >/dev/null 2>&1
-	   if [ -d "$TMP_FOLDER/installnode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/installnode/$COIN_SUBFOLDER && strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
+           if [ -d "$TMP_FOLDER/installnode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/installnode/$COIN_SUBFOLDER && strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
 	   if [ $? -ne 0 ]; then strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
 	compile_error
 	   if [ -d "$TMP_FOLDER/installnode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/installnode/$COIN_SUBFOLDER && chmod +x * && sudo cp -f * /usr/local/bin ; fi
