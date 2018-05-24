@@ -147,12 +147,12 @@ function enable_firewall() {
 
 function temp_config() {
    #TODO: squash relative path
-        rm $CONFIG_FOLDER/masternode.conf
+        rm $CONFIG_FOLDER/masternode.conf >/dev/null 2>&1
 	echo -e "Create Temporary Configs..."
         echo -e "If asked enter password"
         $COIN_CLI stop  >/dev/null 2>&1
 	sleep 10s
-	sudo rm $CONFIG_FOLDER/$CONFIG_FILE
+	sudo rm $CONFIG_FOLDER/$CONFIG_FILE >/dev/null 2>&1
 	echo "rpcuser=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
 	echo "rpcpassword=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
 	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
@@ -163,7 +163,7 @@ function create_configs() {
 	#TODO: Can check for flag and skip this
 	#TODO: Random generate the user and password
         
-	rm $CONFIG_FOLDER/$CONFIG_FILE
+	rm $CONFIG_FOLDER/$CONFIG_FILE >/dev/null 2>&1
 	message "Creating $CONFIG_FILE..."
 	TEMPMNPRIVKEY="6JKhdudXtLxevoys6ipfpfizbBsCew2iLSBFrE3dUkvLhedQXct"
 		
@@ -201,7 +201,7 @@ function create_configs() {
         $COIN_CLI stop >/dev/null 2>&1
         message "Closing $COIN_NAME Daemon"
         sleep 10s
-        sudo rm $CONFIG_FILE
+        sudo rm $CONFIG_FILE >/dev/null 2>&1
 	message "Updating $CONFIG_FILE..."
         printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=$MAX_CONNECTIONS" "logintimestamps=$LOGINTIMESTAMPS" "rpcport=$RPC_PORT" "externalip=$mnip:$COIN_PORT" "port=$COIN_PORT" "bind=$mnip:$COIN_PORT" "masternode=1" "masternodeprivkey=$MNPRIVKEY" >  $CONFIG_FOLDER/$CONFIG_FILE
 	if [ ! -d "$TMP_FOLDER" ]; then mkdir $TMP_FOLDER; fi
