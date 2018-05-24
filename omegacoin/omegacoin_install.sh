@@ -309,7 +309,8 @@ function last_commits() {
         clear
 
         message "Checking $COIN_NAME sync progress"
-        $COIN_CLI getinfo
+        GET_INFO=$(echo $COIN_CLI getinfo)
+	echo "${GREEN} $GET_INFO ${NC}"
 	
 	message "Preparing masternode.conf file."
         echo -e "Obs: Only work if you have send ${GREEN}$COLATERAL${NC} to address ${GREEN}$COIN_ADDRESS ${NC}of ${GREEN}$COIN_NAME ${NC}and alrely get ${GREEN}1 confirmation!${NC}" 
