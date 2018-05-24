@@ -36,7 +36,7 @@ LINK_BLOCKCHAIN=https://github.com/modcrypto/brofist/releases/download/1.0.2.10/
 BLOCKCHAIN_SUBFOLDER=data
 # SET $(echo 'tar -xvzf *.gz') IF FILE IS TAR.GZ OR $(echo 'unzip -o *.zip'  TO ZIP FILE.)
 BLOCKCHAIN_TAR_UNZIP=$(echo 'unzip -o *.zip')
-
+ 
 # TO CONFIG
 COIN_PATH=/usr/local/bin/
 TMP_FOLDER=~/temp_masternodes
