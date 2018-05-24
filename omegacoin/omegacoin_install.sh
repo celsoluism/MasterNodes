@@ -206,8 +206,19 @@ function create_configs() {
 	echo -e "Save masternode private key"
 	echo $MNPRIVKEY >> $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt
 	clear
+	if [ -d "$TMP_FOLDER/$CONFIG_FILE" ]; then install_service ; fi
+	if [ $? -ne 0 ]; then configfile_error ; fi
 }
 
+function configfile_error() {
+        echo -e " "
+	echo -e "${RED}Error in create $CONFIG_FILE!${NC}"
+	echo -e " "
+	echo -e "Installer will try to repair!"
+	sleep 10s
+	create_configs
+}
+	
 function install_service() {
   echo -e "${GREEN}Install Service ${NC}"
    	if [ ! -d "$TMP_FOLDER" ]; then mkdir $TMP_FOLDER; fi
