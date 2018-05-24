@@ -19,7 +19,7 @@ NC='\033[0m'
 #-------------------------------------------- LETS START ----------------------------------------
 
 if [ ! -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
-  echo -e "${RED}$COIN_NAME is not installed.${NC}"
+  echo -e "${RED}$COIN_NAME is not detected. Need to be installed and run.${NC}"
   echo -e "${RED}First install $COIN_NAME before install Sentinel.${NC}"
   
   exit 1
