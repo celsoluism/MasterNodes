@@ -5,7 +5,7 @@
 
 HEIGHT=15
 WIDTH=60
-CHOICE_HEIGHT=4
+CHOICE_HEIGHT=5
 BACKTITLE="Created By PerfilConectado.NET"
 TITLE="Masternode Installer And Update"
 MENU="Choose one of the following options:"
