@@ -6,7 +6,7 @@
 #--------------------------------------------- COIN INFORMATION --------------------------------------------
 # CONFIG ABOUT COIN
 COIN_NAME=omegacoin
-COLATERAL=1000 omega
+COLATERAL=1000omega
 CONFIG_FILE=omega.conf
 
 # ALWAYS START WITH ~/ AND DEFAULT COIN FOLDER
