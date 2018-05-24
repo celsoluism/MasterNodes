@@ -157,7 +157,8 @@ function temp_config() {
 	sudo rm $CONFIG_FOLDER/$CONFIG_FILE >/dev/null 2>&1
 	echo "rpcuser=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
 	echo "rpcpassword=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
-	echo "rpcport=1900" >> $CONFIG_FOLDER/$CONFIG_FILE
+	echo "daemon=1" >> $CONFIG_FOLDER/$CONFIG_FILE
+	echo "rpcport=$RPC_PORT" >> $CONFIG_FOLDER/$CONFIG_FILE
 	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
    clear
 }
