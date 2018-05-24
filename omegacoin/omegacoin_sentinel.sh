@@ -17,11 +17,16 @@ GREEN='\033[0;32m'
 NC='\033[0m'
 
 #-------------------------------------------- LETS START ----------------------------------------
-
+function checks() {
+if [[ $(lsb_release -d) != *16.04* ]]; then
+  echo -e "${RED}You are not running Ubuntu 16.04. Installation is cancelled.${NC}"
+  echo -e "${RED}If like to reinstall please use '$COIN_CLI stop' and restart ./rebase.sh.${NC}"
+  echo -e "${RED}Remembr: It will remove all your configuration of the $COIN_NAME and create a new.${NC}"
+  exit 1
+fi
 if [ ! -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
   echo -e "${RED}$COIN_NAME is not detected. Need to be installed and run.${NC}"
   echo -e "${RED}First install $COIN_NAME before install Sentinel.${NC}"
-  
   exit 1
 fi
 }
@@ -103,6 +108,7 @@ function testing_sentinel() {
 }
 
 install() {
+    checks
     prepare_dependencies
     check_version
     install_sentinel
