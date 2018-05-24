@@ -112,14 +112,14 @@ function prepare_node() { #TODO: add error detection
 	mkdir installnode
 	cd $TMP_FOLDER/installnode
 	#wget $COIN_TGZ_ZIP
-        $COIN_TAR_UNZIP
+        #$COIN_TAR_UNZIP
         rm *.gz >/dev/null 2>&1
         rm *.zip >/dev/null 2>&1
-	   if [ -d "$TMP_FOLDER/installnode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/installnode/$COIN_SUBFOLDER && strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
-	   if [ $? -ne 0 ]; then strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
+	   if [ ! -d "$TMP_FOLDER/installnode/$COIN_SUBFOLDER" ]; then strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
+	   if [ $? -ne 0 ]; then cd $TMP_FOLDER/installnode/$COIN_SUBFOLDER && strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT  ; fi
 	compile_error
-	   if [ -d "$TMP_FOLDER/installnode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/installnode/$COIN_SUBFOLDER && chmod +x * && sudo cp -f * /usr/local/bin ; fi
-	   if [ $? -ne 0 ]; then cd $TMP_FOLDER/installnode/ && chmod +x * && sudo cp -f * /usr/local/bin  ; fi
+	   if [ ! -d "$TMP_FOLDER/installnode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/installnode/ && chmod +x * && sudo cp -f * /usr/local/bin ; fi
+	   if [ $? -ne 0 ]; then cd $TMP_FOLDER/installnode/$COIN_SUBFOLDER && chmod +x * && sudo cp -f * /usr/local/bin ; fi
 	clear
 }
 
