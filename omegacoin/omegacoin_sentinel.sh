@@ -8,7 +8,6 @@
 COIN_NAME=OmegaCoin
 COIN_DAEMON=omegacoind
 CONFIG_FOLDER=~/.omegacoincore
-SENTINEL_FOLDER=~/
 COIN_PATH=/usr/local/bin/
 TMP_FOLDER=~/temp_masternodes
 NODEIP=$(curl -s4 icanhazip.com)
@@ -32,8 +31,8 @@ if [ ! -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
   echo -e "${RED}First install $COIN_NAME before install Sentinel.${NC}"
   exit 1
 fi
-if [ -d "~/$SENTINEL_FOLDER" ] && [ -d "~/$CONFIG_FOLDER" ] ; then
-  echo -e "${RED}SENTINEL is detected. Need to be stoped and remove folder '$HOMEFOLDER'/sentinel_omegacoin.${NC}"
+if [ -d "$HOMEFOLDER/sentinel" ] || [ -d "$HOMEFOLDER/sentinel" ] && [ -d "$HOMEFOLDER/$CONFIG_FOLDER" ] ; then
+  echo -e "${RED}SENTINEL is detected. Need to be stoped and remove folder '$HOMEFOLDER'/sentinel.${NC}"
   exit 1
 fi
 }
@@ -77,12 +76,10 @@ function prepare_dependencies() { #TODO: add error detection
 function check_version() {   
    echo -e "Check if OmegaCoin is at least version 12.1 (120100)"
    omegacoin-cli getinfo | grep version
-
 }
 
-
 function install_sentinel() {
-    cd ~
+    cd $HOMEFOLDER
     git clone https://github.com/omegacoinnetwork/sentinel.git && cd sentinel
     virtualenv ./venv
     ./venv/bin/pip install -r requirements.txt
@@ -114,6 +111,12 @@ function testing_sentinel() {
       ./venv/bin/py.test ./test
 }
 
+function remove() {
+      echo -e "${RED}Preparing to uninstall Sentinel${NC}"
+      sudo rm -rvf $HOMEFOLDER/sentinel
+      install
+}
+      
 install() {
     checks
     check_version
