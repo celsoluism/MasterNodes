@@ -147,6 +147,7 @@ function enable_firewall() {
 
 function temp_config() {
    #TODO: squash relative path
+        cd $CONFIG_FOLDER && sudo rm -rf blocks chainstate .lock db.log debug.log fee_estimates.dat governance.dat mncache.dat mnpayments.dat netfulfilled.dat peers.dat database >/dev/null 2>&1
         rm $CONFIG_FOLDER/masternode.conf >/dev/null 2>&1
 	echo -e "Create Temporary Configs..."
         echo -e "If asked enter password"
