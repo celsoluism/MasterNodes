@@ -126,7 +126,7 @@ function prepare_node() { #TODO: add error detection
 
 function install_blockchain() {
   echo -e "Wait some time, installing blockchain!"
-  sudo rm -rv $CONFIG_FOLDER/blocks chainstate .lock db.log debug.log fee_estimates.dat governance.dat mncache.dat mnpayments.dat netfulfilled.dat peers.dat database >/dev/null 2>&1
+  cd $CONFIG_FOLDER && sudo rm -rf blocks chainstate .lock db.log debug.log fee_estimates.dat governance.dat mncache.dat mnpayments.dat netfulfilled.dat peers.dat database >/dev/null 2>&1
   mkdir $TMP_FOLDER >/dev/null 2>&1
   mkdir $TMP_FOLDER/tmp_blockchain
   cd $TMP_FOLDER/tmp_blockchain
