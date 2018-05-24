@@ -5,7 +5,7 @@
 
 #--------------------------------------------- COIN INFORMATION --------------------------------------------
 # CONFIG ABOUT COIN
-COIN_NAME=DextroCoin
+COIN_NAME=dextrocore
 COLATERAL=1000 DXO
 CONFIG_FILE=dextro.conf
 
