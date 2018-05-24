@@ -77,7 +77,7 @@ function check_version() {
 }
 
 
-funtion install_sentinel() {
+function install_sentinel() {
     cd ~
     git clone https://github.com/omegacoinnetwork/sentinel.git && cd sentinel
     virtualenv ./venv
