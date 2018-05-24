@@ -11,7 +11,7 @@ CONFIG_FILE=omega.conf
 
 # ALWAYS START WITH ~/ AND DEFAULT COIN FOLDER
 CONFIG_FOLDER=~/.omegacoincore
-COIN_DAEMON=oemgacoind
+COIN_DAEMON=omegacoind
 COIN_CLI=omegacoin-cli
 COIN_TX=
 COIN_QT=omegacoin-qt
