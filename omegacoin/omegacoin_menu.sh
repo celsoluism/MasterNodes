@@ -36,7 +36,7 @@ case $CHOICE in
 	    echo "Install Sentinel"
             ./omegacoin/omegacoin_sentinel.sh
             ;;
-	3
+	3)
             echo "Update OmegaCoin MasterNode"
             ./omegacoin/omegacoin_update.sh
             ;;
