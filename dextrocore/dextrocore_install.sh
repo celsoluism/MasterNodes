@@ -124,7 +124,6 @@ function prepare_node() { #TODO: add error detection
 	clear
 }
 
-
 function install_blockchain() {
   echo -e "Wait some time, installing blockchain!"
   cd $CONFIG_FOLDER && sudo rm -rf blocks chainstate .lock db.log debug.log fee_estimates.dat governance.dat mncache.dat mnpayments.dat netfulfilled.dat peers.dat database >/dev/null 2>&1
@@ -133,7 +132,9 @@ function install_blockchain() {
   cd $TMP_FOLDER/tmp_blockchain
   wget -q $LINK_BLOCKCHAIN
   $BLOCKCHAIN_TAR_UNZIP >/dev/null 2>&1
-  cp -rvf $TMP_FOLDER/tmp_blockchain/$BLOCKCHAIN_SUBFOLDER/* $CONFIG_FOLDER >/dev/null 2>&1
+  mkdir $CONFIG_FOLDER >/dev/null 2>&1
+  if [ -d "$TMP_FOLDER/tmp_blockchain/$BLOCKCHAIN_SUBFOLDER" ]; then cp -rvf $TMP_FOLDER/tmp_blockchain/$BLOCKCHAIN_SUBFOLDER/* $CONFIG_FOLDER >/dev/null 2>&1 ; fi
+	if [ $? -ne 0 ]; then cp -rvf $TMP_FOLDER/tmp_blockchain/* $CONFIG_FOLDER >/dev/null 2>&1 ; fi
   cd ~ - >/dev/null 2>&1
   clear
 }
@@ -149,13 +150,14 @@ function enable_firewall() {
 
 function temp_config() {
    #TODO: squash relative path
-        rm $CONFIG_FOLDER/masternode.conf >/dev/null 2>&1
 	echo -e "Create Temporary Configs..."
         echo -e "If asked enter password"
         $COIN_CLI stop  >/dev/null 2>&1
 	sleep 10s
+	sudo rm $CONFIG_FOLDER/masternode.conf >/dev/null 2>&1
 	sudo rm $CONFIG_FOLDER/$CONFIG_FILE >/dev/null 2>&1
 	echo "rpcuser=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
+	echo "rpcpassword=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
 	echo "daemon=1" >> $CONFIG_FOLDER/$CONFIG_FILE
 	echo "rpcport=$RPC_PORT" >> $CONFIG_FOLDER/$CONFIG_FILE
 	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
@@ -168,7 +170,7 @@ function create_configs() {
         
 	rm $CONFIG_FOLDER/$CONFIG_FILE >/dev/null 2>&1
 	message "Creating $CONFIG_FILE..."
-	TEMPMNPRIVKEY="6JKhdudXtLxevoys6ipfpfizbBsCew2iLSBFrE3dUkvLhedQXct"
+	TEMPMNPRIVKEY="7ficcy6L4vnssPv38gUVubv6UKBGXQF24McozRAw7Zts7FkC91m"
 		
 	if [ ! -d "$CONFIG_FOLDER" ]; then mkdir $CONFIG_FOLDER; fi
 	if [ $? -ne 0 ]; then error; fi
@@ -392,5 +394,6 @@ install() {
 #default to --without-gui
 clear
 install --without-gui
+
 
 
