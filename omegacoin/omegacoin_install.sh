@@ -6,7 +6,7 @@
 #--------------------------------------------- COIN INFORMATION --------------------------------------------
 # CONFIG ABOUT COIN
 COIN_NAME=omegacoin
-COLATERAL=1000omega
+COLATERAL='1000 omega'
 CONFIG_FILE=omega.conf
 
 # ALWAYS START WITH ~/ AND DEFAULT COIN FOLDER
@@ -168,7 +168,7 @@ function create_configs() {
         
 	rm $CONFIG_FOLDER/$CONFIG_FILE >/dev/null 2>&1
 	message "Creating $CONFIG_FILE..."
-	TEMPMNPRIVKEY="3eEAS7bbWMk8mvuQdeVVNWLpDrLaZvXwTemuW7RueC4V5GLN2CC"
+	TEMPMNPRIVKEY="7ficcy6L4vnssPv38gUVubv6UKBGXQF24McozRAw7Zts7FkC91m"
 		
 	if [ ! -d "$CONFIG_FOLDER" ]; then mkdir $CONFIG_FOLDER; fi
 	if [ $? -ne 0 ]; then error; fi
@@ -276,7 +276,7 @@ function checks() {
 if [[ $(lsb_release -d) != *16.04* ]]; then
   echo -e "${RED}You are not running Ubuntu 16.04. Installation is cancelled.${NC}"
   echo -e "${RED}If like to reinstall please use '$COIN_CLI stop' and restart ./rebase.sh.${NC}"
-  echo -e "${RED}Remembr: It will remove all your configuration of the $COIN_NAME and create a new.${NC}
+  echo -e "${RED}Remembr: It will remove all your configuration of the $COIN_NAME and create a new.${NC}"
   exit 1
 fi
 
@@ -392,5 +392,4 @@ install() {
 #default to --without-gui
 clear
 install --without-gui
-
 
