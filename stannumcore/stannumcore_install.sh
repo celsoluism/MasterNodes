@@ -132,7 +132,6 @@ function install_blockchain() {
   $BLOCKCHAIN_TAR_UNZIP >/dev/null 2>&1
   cp -rvf $TMP_FOLDER/tmp_blockchain/$BLOCKCHAIN_SUBFOLDER/* $CONFIG_FOLDER >/dev/null 2>&1
   cd ~ - >/dev/null 2>&1
-  sudo rm -rf $TMP_FOLDER/* >/dev/null 2>&1
   clear
 }
 
@@ -366,6 +365,8 @@ MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
 
  printf "%s\n" "# Masternode config file" "# Format: alias IP:port masternodeprivkey collateral_output_txid collateral_output_index" "# Example: mn1 127.0.0.2:23403 93HaYBVUCYjEMeeH1Y4sBGLALQZE1Yc1K64xiqgX37tGBDQL8Xg 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 0" "MN $NODEIP:$COIN_PORT $MN_PRIVKEY $TX_OUTPUTS" >  $CONFIG_FOLDER/masternode.conf
  
+ # CLEAR TEMP FOLDER
+ sudo rm -rf $TMP_FOLDER/* >/dev/null 2>&1
 }
 
 install() {
