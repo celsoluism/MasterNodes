@@ -61,9 +61,9 @@ noflags() {
 }
 
 message() {
-	echo "+-------------------------------------------------------------------------------->>"
-	echo "| $1"
-	echo "+--------------------------------------------<<<"
+	echo -e "+-------------------------------------------------------------------------------->>"
+	echo -e "| $1"
+	echo -e "+--------------------------------------------<<<"
 }
 
 error() {
@@ -182,8 +182,8 @@ function create_configs() {
 	echo -e "Wait $COIN_NAME Daemon load wallet."
 	sleep 30s
 
-        COIN_ADDRESS=$($COIN_CLI getaddressesbyaccount '' )
-        echo -e "Send exactly ${GREEN}$COLATERAL ${NC} to this address:${GREEN} $COIN_ADDRESS ${NC}wait complete ${GREEN} 1 confirmation ${NC}, check it in explorer and back here"  |  sed 's/"//g' | sed 's/[//g' |  sed 's/]//g' 
+        COIN_ADDRESS=$($COIN_CLI getaddressesbyaccount ''  |  sed 's/"//g' | sed 's/[//g' |  sed 's/]//g' )
+        echo -e "Send exactly ${GREEN}$COLATERAL ${NC} to this address:${GREEN} $COIN_ADDRESS ${NC}wait complete ${GREEN} 1 confirmation ${NC}, check it in explorer and back here" 
         echo -e "Obs.: Wait 1 confirmation is necessary to create masternode file with all informations or continue and will create partial file. "
         echo -n "Press key [ENTER] to continue..."
         read var_name
@@ -328,7 +328,7 @@ function last_commits() {
 	echo -e "Obs: $COIN_NAME need to be sync completed!"
         echo -e " "
 	echo -e " "
-	echo -e "Outputs: ${GREEN} $TXOUTPUTS ${NC}"  |  sed 's/"//g' | sed 's/{//g' |  sed 's/}//g' |  sed 's/://g'
+	echo -e "Outputs: ${GREEN} $TXOUTPUTS ${NC}" 
 	echo -e " "
 	echo -e " "
 	echo -e "If show none you need to complete informations in $CONFIG_FOLDER/masternode.conf manualy"
