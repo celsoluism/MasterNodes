@@ -152,6 +152,10 @@ function create_configs() {
 	#TODO: Can check for flag and skip this
 	#TODO: Random generate the user and password
         echo -e "Preparing to create config files."
+	
+	if [ ! -d "$TMP_FOLDER" ]; then mkdir $TMP_FOLDER; fi
+	if [ $? -ne 0 ]; then error; fi
+	
 	sudo systemctl stop $COIN_NAME.service >/dev/null 2>&1
         $COIN_CLI stop >/dev/null 2>&1
 	sleep 10s
