@@ -16,8 +16,9 @@ COIN_CLI=dextro-cli
 COIN_TX=dextro-tx
 COIN_QT=dextro-qt
 MAX_CONNECTIONS=30
+LOGINTIMESTAMPS=1
 COIN_PORT=39320
-RPC_PORT=1271
+RPC_PORT=39321
 
 # FILE WITH NODES IN MASTERNODE INSTALL FOLDER
 FILE_NODES=~/MasterNodes/dextrocore/dextrocore_nodes.txt
@@ -174,7 +175,7 @@ function create_configs() {
 	mnip=$(curl -s https://api.ipify.org)
 	rpcuser=$(date +%s | sha256sum | base64 | head -c 64 ; echo)
 	rpcpass=$(openssl rand -base64 46)
-	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=$MAX_CONNECTIONS" "rpcport=$RPC_PORT" "externalip=$mnip" "port=$COIN_PORT" "bind=$mnip:$COIN_PORT" "masternode=1" "masternodeprivkey=$TEMPMNPRIVKEY" >  $CONFIG_FOLDER/$CONFIG_FILE
+	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=$MAX_CONNECTIONS" "logintimestamps=$LOGINTIMESTAMPS" "rpcport=$RPC_PORT" "externalip=$mnip" "port=$COIN_PORT" "bind=$mnip:$COIN_PORT" "masternode=1" "masternodeprivkey=$TEMPMNPRIVKEY" >  $CONFIG_FOLDER/$CONFIG_FILE
 	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
 	
         message "Closing stannumcore Daemon"
@@ -204,7 +205,7 @@ function create_configs() {
         sleep 10s
         sudo rm $CONFIG_FILE
 	message "Updating $CONFIG_FILE..."
-        printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=$MAX_CONNECTIONS" "rpcport=$RPC_PORT" "externalip=$mnip" "port=$COIN_PORT" "bind=$mnip:$COIN_PORT" "masternode=1" "masternodeprivkey=$MNPRIVKEY" >  $CONFIG_FOLDER/$CONFIG_FILE
+        printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=$MAX_CONNECTIONS" "logintimestamps=$LOGINTIMESTAMPS" "rpcport=$RPC_PORT" "externalip=$mnip:$COIN_PORT" "port=$COIN_PORT" "bind=$mnip:$COIN_PORT" "masternode=1" "masternodeprivkey=$MNPRIVKEY" >  $CONFIG_FOLDER/$CONFIG_FILE
 	if [ ! -d "$TMP_FOLDER" ]; then mkdir $TMP_FOLDER; fi
 	if [ $? -ne 0 ]; then error; fi
 	echo -e "Save masternode private key"
