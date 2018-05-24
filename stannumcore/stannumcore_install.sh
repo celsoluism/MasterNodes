@@ -118,8 +118,8 @@ function prepare_node() { #TODO: add error detection
 	   if [ -d "$TMP_FOLDER/installnode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/installnode/$COIN_SUBFOLDER && strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
 	   if [ $? -ne 0 ]; then strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
 	compile_error
-	chmod +x *
-	sudo cp -f * /usr/local/bin
+	   if [ -d "$TMP_FOLDER/installnode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/installnode/$COIN_SUBFOLDER && chmod +x * && sudo cp -f * /usr/local/bin ; fi
+	   if [ $? -ne 0 ]; then cd $TMP_FOLDER/installnode && chmod +x * && sudo cp -f * /usr/local/bin ; fi
     clear
 }
 
