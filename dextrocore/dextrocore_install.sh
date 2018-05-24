@@ -351,12 +351,12 @@ MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
 
 # TO FILE
  echo -e "================================================================================================================================" >> ~/$COIN_NAME.txt
- echo -e "$COIN_NAME Masternode is up and running listening on port ${RED}$COIN_PORT${NC}." >> ~/$COIN_NAME.txt
+ echo -e "$COIN_NAME Masternode is up and running listening on port $COIN_PORT." >> ~/$COIN_NAME.txt
  echo -e "Configuration file is: $CONFIG_FOLDER/$CONFIG_FILE" >> ~/$COIN_NAME.txt
- echo -e "Start: systemctl start $COIN_NAME.service$" >> ~/$COIN_NAME.txt
- echo -e "Stop: systemctl stop $COIN_NAME.service$" >> ~/$COIN_NAME.txt
+ echo -e "Start: systemctl start $COIN_NAME.service" >> ~/$COIN_NAME.txt
+ echo -e "Stop: systemctl stop $COIN_NAME.service" >> ~/$COIN_NAME.txt
  echo -e "NODE_IP:PORT $NODEIP:$COIN_PORT" >> ~/$COIN_NAME.txt
- echo -e "MASTERNODE PRIVATEKEY is: $MN_PRIVKEY$" >> ~/$COIN_NAME.txt
+ echo -e "MASTERNODE PRIVATEKEY is: $MN_PRIVKEY" >> ~/$COIN_NAME.txt
  echo -e "MASTERNODE file: $CONFIG_FOLDER/masternode.conf " >> ~/$COIN_NAME.txt
  echo -e "MASTERNODE configuration bellow:" >> ~/$COIN_NAME.txt
  echo -e "MN $NODEIP:$COIN_PORT $MN_PRIVKEY $TX_OUTPUTS" >> ~/$COIN_NAME.txt
