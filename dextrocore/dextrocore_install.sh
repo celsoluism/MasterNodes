@@ -176,11 +176,11 @@ function create_configs() {
 	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=$MAX_CONNECTIONS" "logintimestamps=$LOGINTIMESTAMPS" "rpcport=$RPC_PORT" "externalip=$mnip:$COIN_PORT" "port=$COIN_PORT" "bind=$mnip:$COIN_PORT" "masternode=1" "masternodeprivkey=$TEMPMNPRIVKEY" >  $CONFIG_FOLDER/$CONFIG_FILE
 	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
 	
-        message "Closing stannumcore Daemon"
+        message "Closing $COIN_NAMEe Daemon"
         $COIN_CLI stop  >/dev/null 2>&1
         sleep 15s
         
-	message "Starting stannumcore Daemon"
+	message "Starting $COIN_NAME Daemon"
         $COIN_DAEMON
         sleep 15s
 	echo -e "Wait $COIN_NAME Daemon load wallet."
