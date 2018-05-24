@@ -101,7 +101,8 @@ install() {
 
 #main
 #default to --without-gui
-    clear
-    install --without-gui
+clear
+install --without-gui
+exit 0
     
     
