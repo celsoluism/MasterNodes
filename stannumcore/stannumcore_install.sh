@@ -181,7 +181,7 @@ function create_configs() {
         sleep 15s
         
 	message "Starting stannumcore Daemon"
-        $COIN_DAEMON
+        $COIN_DAEMON --reindex
         sleep 15s
 	echo -e "Wait $COIN_NAME Daemon load wallet."
 	sleep 30s
