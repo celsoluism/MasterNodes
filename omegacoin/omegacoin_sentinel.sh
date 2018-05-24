@@ -3,29 +3,10 @@
 #PerfilConectado.NET MasterNodes Installer
 #TODO: to run you need to use ./Install.sh from MasterNodes folder.
 
-#--------------------------------------------- COIN INFORMATION --------------------------------------------
-# CONFIG ABOUT COIN
-COIN_NAME=DextroCoin
-COLATERAL=1000 DXO
-CONFIG_FILE=dextro.conf
-
-# ALWAYS START WITH ~/ AND DEFAULT COIN FOLDER
-CONFIG_FOLDER=~/.dextro
-COIN_DAEMON=dextrod
-COIN_CLI=dextro-cli
-COIN_TX=dextro-tx
-COIN_QT=dextro-qt
-MAX_CONNECTIONS=30
-LOGINTIMESTAMPS=1
-COIN_PORT=39320
-RPC_PORT=39321
-
-# TO CONFIG
-COIN_PATH=/usr/local/bin/
-TMP_FOLDER=~/temp_masternodes
 
 # DONT TOUCH
-COIN_ZIP=$(echo $COIN_TGZ_ZIP | awk -F'/' '{print $NF}')
+COIN_PATH=/usr/local/bin/
+TMP_FOLDER=~/temp_masternodes
 NODEIP=$(curl -s4 icanhazip.com)
 
 #SET COLORS
