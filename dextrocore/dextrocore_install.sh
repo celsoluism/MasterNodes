@@ -111,15 +111,13 @@ function prepare_node() { #TODO: add error detection
         cd $TMP_FOLDER
 	mkdir installnode
 	cd $TMP_FOLDER/installnode
-	mkdir $TMP_FOLDER/installnode/dextro
-	cp ~/rota/* $TMP_FOLDER/installnode/dextro
-	#wget $COIN_TGZ_ZIP
-        #$COIN_TAR_UNZIP
+	wget $COIN_TGZ_ZIP
+        $COIN_TAR_UNZIP
         rm *.gz >/dev/null 2>&1
         rm *.zip >/dev/null 2>&1
 	   if [ ! -d "$TMP_FOLDER/installnode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/installnode/$COIN_SUBFOLDER && strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
 	   if [ $? -ne 0 ]; then strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
-		compile_error
+	compile_error
 	chmod +x *
 	sudo cp -f * /usr/local/bin
     clear
@@ -175,7 +173,7 @@ function create_configs() {
 	mnip=$(curl -s https://api.ipify.org)
 	rpcuser=$(date +%s | sha256sum | base64 | head -c 64 ; echo)
 	rpcpass=$(openssl rand -base64 46)
-	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=$MAX_CONNECTIONS" "logintimestamps=$LOGINTIMESTAMPS" "rpcport=$RPC_PORT" "externalip=$mnip" "port=$COIN_PORT" "bind=$mnip:$COIN_PORT" "masternode=1" "masternodeprivkey=$TEMPMNPRIVKEY" >  $CONFIG_FOLDER/$CONFIG_FILE
+	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=$MAX_CONNECTIONS" "logintimestamps=$LOGINTIMESTAMPS" "rpcport=$RPC_PORT" "externalip=$mnip:$COIN_PORT" "port=$COIN_PORT" "bind=$mnip:$COIN_PORT" "masternode=1" "masternodeprivkey=$TEMPMNPRIVKEY" >  $CONFIG_FOLDER/$CONFIG_FILE
 	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
 	
         message "Closing stannumcore Daemon"
