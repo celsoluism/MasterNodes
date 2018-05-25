@@ -9,7 +9,7 @@ COIN_NAME=dextrocore
 COLATERAL=1000DXO
 CONFIG_FILE=dextro.conf
 
-# ALWAYS START WITH ~/ AND DEFAULT COIN FOLDER
+# ALWAYS START WITH ~/. AND DEFAULT COIN FOLDER
 CONFIG_FOLDER=~/.dextro
 COIN_DAEMON=dextrod
 COIN_CLI=dextro-cli
@@ -40,11 +40,12 @@ BLOCKCHAIN_TAR_UNZIP=$(echo 'unzip -o *.zip')
 # TO CONFIG
 COIN_PATH=/usr/local/bin/
 TMP_FOLDER=~/temp_masternodes
-
+HOME_FOLDER=$(echo $HOME)
 
 # DONT TOUCH
 COIN_ZIP=$(echo $COIN_TGZ_ZIP | awk -F'/' '{print $NF}')
 NODEIP=$(curl -s4 icanhazip.com)
+HOME_FOLDER=$(echo $HOME)
 
 #SET COLORS
 RED='\033[0;31m'
@@ -371,15 +372,12 @@ MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
  echo -e "Please check ${RED}$COIN_NAME${NC} is running with the following command: ${GREEN}systemctl status $COIN_NAME.service${NC}" 
  echo -e "================================================================================================================================" 
  echo -e " "
- echo -e "${GREEN}Copy of MASTERNODE file: $CONFIG_FOLDER/masternode.conf ${NC}"
  echo -e "================================================================================================================================" 
- cat -A "$CONFIG_FOLDER/masternode.conf"
+ echo -e "A copy of MASTERNODE file ${GREEN}$CONFIG_FOLDER/masternode.conf${NC} and"
+ echo -e "a copy of CONFIG file ${GREEN}$CONFIG_FOLDER/$CONFIG_FILE ${NC}"
+ echo -e "are saved in ${GREEN}$HOME_FOLDER/$COIN_NAME.txt${NC}
  echo -e "================================================================================================================================" 
- echo -e " "
- echo -e "${GREEN}Copy of CONFIG file: $CONFIG_FOLDER/$CONFIG_FILE ${NC}"
- echo -e "================================================================================================================================" 
- cat -A "$CONFIG_FOLDER/$CONFIG_FILE"
- echo -e "================================================================================================================================" 
+ 
  
 # TO FILE
  echo -e "================================================================================================================================" >> ~/$COIN_NAME.txt
