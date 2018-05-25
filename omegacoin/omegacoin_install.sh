@@ -214,6 +214,7 @@ function create_configs() {
 	clear
 	if [ -d "$TMP_FOLDER/$CONFIG_FILE" ]; then install_service ; fi
 	if [ $? -ne 0 ]; then configfile_error ; fi
+	sleep 5s
 }
 
 function configfile_error() {
