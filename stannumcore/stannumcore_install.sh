@@ -62,9 +62,9 @@ noflags() {
 }
 
 message() {
-	echo "+-------------------------------------------------------------------------------->>"
-	echo "| $1"
-	echo "+--------------------------------------------<<<"
+	echo -e "+-------------------------------------------------------------------------------->>"
+	echo -e "| $1"
+	echo -e "+--------------------------------------------<<<"
 }
 
 error() {
@@ -88,8 +88,9 @@ function prepare_dependencies() { #TODO: add error detection
       sudo apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" make software-properties-common \
       build-essential libtool autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev libboost-program-options-dev \
       libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git wget curl libdb4.8-dev bsdmainutils libdb4.8++-dev \
-      libminiupnpc-dev libgmp3-dev ufw pkg-config libevent-dev  libdb5.3++>/dev/null 2>&1 
+      libminiupnpc-dev libgmp3-dev ufw pkg-config libevent-dev  libdb5.3++ >/dev/null 2>&1 
       sudo apt-get install -y libzmq3-dev
+      sudo apt-get install -y unzip
    if [ "$?" -gt "0" ];
       then
       echo -e "${RED}Not all required packages were installed properly. Try to install them manually by running the following commands:${NC}\n"
@@ -99,7 +100,7 @@ function prepare_dependencies() { #TODO: add error detection
       echo "sudo apt-get update"
       echo "sudo apt install -y make build-essential libtool software-properties-common autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev \
             libboost-program-options-dev libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git curl libdb4.8-dev \
-            bsdmainutils libdb4.8++-dev libminiupnpc-dev libgmp3-dev ufw fail2ban pkg-config libevent-dev"
+            bsdmainutils libdb4.8++-dev libminiupnpc-dev libgmp3-dev ufw fail2ban pkg-config libevent-dev unzip"
       exit 1
    fi
    clear
@@ -120,18 +121,20 @@ function prepare_node() { #TODO: add error detection
 	compile_error
 	   if [ -d "$TMP_FOLDER/installnode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/installnode/$COIN_SUBFOLDER && chmod +x * && sudo cp -f * /usr/local/bin ; fi
 	   if [ $? -ne 0 ]; then cd $TMP_FOLDER/installnode && chmod +x * && sudo cp -f * /usr/local/bin ; fi
-    clear
+	clear
 }
 
 function install_blockchain() {
   echo -e "Wait some time, installing blockchain!"
-  sudo rm -rv $CONFIG_FOLDER/blocks chainstate .lock db.log debug.log fee_estimates.dat governance.dat mncache.dat mnpayments.dat netfulfilled.dat peers.dat database >/dev/null 2>&1
+  cd $CONFIG_FOLDER && sudo rm -rf blocks chainstate .lock db.log debug.log fee_estimates.dat governance.dat mncache.dat mnpayments.dat netfulfilled.dat peers.dat database >/dev/null 2>&1
   mkdir $TMP_FOLDER >/dev/null 2>&1
   mkdir $TMP_FOLDER/tmp_blockchain
   cd $TMP_FOLDER/tmp_blockchain
   wget -q $LINK_BLOCKCHAIN
   $BLOCKCHAIN_TAR_UNZIP >/dev/null 2>&1
-  cp -rvf $TMP_FOLDER/tmp_blockchain/$BLOCKCHAIN_SUBFOLDER/* $CONFIG_FOLDER >/dev/null 2>&1
+  mkdir $CONFIG_FOLDER >/dev/null 2>&1
+  if [ -d "$TMP_FOLDER/tmp_blockchain/$BLOCKCHAIN_SUBFOLDER" ]; then cp -rvf $TMP_FOLDER/tmp_blockchain/$BLOCKCHAIN_SUBFOLDER/* $CONFIG_FOLDER >/dev/null 2>&1 ; fi
+	if [ $? -ne 0 ]; then cp -rvf $TMP_FOLDER/tmp_blockchain/* $CONFIG_FOLDER >/dev/null 2>&1 ; fi
   cd ~ - >/dev/null 2>&1
   clear
 }
@@ -143,32 +146,28 @@ function enable_firewall() {
   sudo ufw limit ssh/tcp >/dev/null 2>&1
   sudo ufw default allow outgoing >/dev/null 2>&1
   echo "y" | ufw enable >/dev/null 2>&1
-}
-
-function temp_config() {
-   #TODO: squash relative path
-        cd $CONFIG_FOLDER && sudo rm -rf blocks chainstate .lock db.log debug.log fee_estimates.dat governance.dat mncache.dat mnpayments.dat netfulfilled.dat peers.dat database >/dev/null 2>&1
-        rm $CONFIG_FOLDER/masternode.conf >/dev/null 2>&1
-	echo -e "Create Temporary Configs..."
-        echo -e "If asked enter password"
-        $COIN_CLI stop  >/dev/null 2>&1
-	sleep 10s
-	sudo rm $CONFIG_FOLDER/$CONFIG_FILE >/dev/null 2>&1
-	echo "rpcuser=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
-	echo "rpcpassword=temp" >> $CONFIG_FOLDER/$CONFIG_FILE
-	echo "daemon=1" >> $CONFIG_FOLDER/$CONFIG_FILE
-	echo "rpcport=$RPC_PORT" >> $CONFIG_FOLDER/$CONFIG_FILE
-	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
-   clear
+  clear
 }
 
 function create_configs() {
 	#TODO: Can check for flag and skip this
 	#TODO: Random generate the user and password
-        
-	rm $CONFIG_FOLDER/$CONFIG_FILE >/dev/null 2>&1
+        echo -e "Preparing to create config files."
+	
+	if [ ! -d "$TMP_FOLDER" ]; then mkdir $TMP_FOLDER; fi
+	if [ $? -ne 0 ]; then error; fi
+	
+	sudo systemctl stop $COIN_NAME.service >/dev/null 2>&1
+        $COIN_CLI stop >/dev/null 2>&1
+	sleep 10s
+	message "Closing $COIN_NAMEe Daemon"
+        sleep 10s
+	
+	sudo rm $CONFIG_FOLDER/masternode.conf >/dev/null 2>&1
+	sudo rm $CONFIG_FOLDER/$CONFIG_FILE >/dev/null 2>&1
+	
 	message "Creating $CONFIG_FILE..."
-	TEMPMNPRIVKEY="7faP7K1bBWYJt2MivDnTgEU3ZggSgteDuC4fSMkZiMowWS3Bmfn"
+	TEMPMNPRIVKEY="5CA13pAP9TNTrQKVPLjY8ZuhDE7rZULf2tdv7Q3CC5uxtCjm3KY"
 		
 	if [ ! -d "$CONFIG_FOLDER" ]; then mkdir $CONFIG_FOLDER; fi
 	if [ $? -ne 0 ]; then error; fi
@@ -176,45 +175,58 @@ function create_configs() {
 	mnip=$(curl -s https://api.ipify.org)
 	rpcuser=$(date +%s | sha256sum | base64 | head -c 64 ; echo)
 	rpcpass=$(openssl rand -base64 46)
-	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=$MAX_CONNECTIONS" "logintimestamps=$LOGINTIMESTAMPS" "rpcport=$RPC_PORT" "externalip=$mnip:$COIN_PORT" "port=$COIN_PORT" "bind=$mnip:$COIN_PORT" "masternode=1" "masternodeprivkey=$TEMPMNPRIVKEY" >  $CONFIG_FOLDER/$CONFIG_FILE
+	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=$MAX_CONNECTIONS" "logintimestamps=$LOGINTIMESTAMPS" "rpcport=$RPC_PORT" "externalip=$mnip:$COIN_PORT" "port=$COIN_PORT" "bind=$mnip:$COIN_PORT" >  $CONFIG_FOLDER/$CONFIG_FILE
+	sudo rm $TMP_FOLDER/$CONFIG_FILE  >/dev/null 2>&1
+	cp $CONFIG_FOLDER/$CONFIG_FILE $TMP_FOLDER
 	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
 	
-        message "Closing stannumcore Daemon"
-        $COIN_CLI stop  >/dev/null 2>&1
-        sleep 15s
-        
-	message "Starting stannumcore Daemon"
-        $COIN_DAEMON --reindex
+        sleep 2s
+	message "Starting $COIN_NAME Daemon"
+        $COIN_DAEMON
         sleep 15s
 	echo -e "Wait $COIN_NAME Daemon load wallet."
 	sleep 30s
-
-        COIN_ADDRESS=$($COIN_CLI getaddressesbyaccount '' )
-        message "Send exactly $COLATERAL to this address: $COIN_ADDRESS wait complete 1 confirmation and back here"
-        message "No continue if have no confirmation, is to much important!"
-        echo -n "after 1 confirmation press key [ENTER] to continue..."
+        
+	GET_ADDRESS=$($COIN_CLI getaddressesbyaccount '' )
+        COIN_ADDRESS=$(echo $GET_ADDRESS | sed 's/\"//g' | sed 's/\[//g' |  sed 's/\]//g' )
+        message "Send exactly ${GREEN}$COLATERAL ${NC} to this address:${GREEN} $COIN_ADDRESS ${NC}wait complete ${GREEN} 1 confirmation ${NC}, check it in explorer and back here" 
+        echo -e "Obs.: Wait 1 confirmation is necessary to create masternode file with all informations or continue now and will create partial file. "
+        echo -n "Press key [ENTER] to continue..."
         read var_name
  
         message "Wait 10 seconds for daemon to load..."
-        sleep 20s
+        sleep 10s
         MNPRIVKEY=$($COIN_CLI masternode genkey)
 	$COIN_CLI stop  >/dev/null 2>&1
-	message "wait 10 seconds for deamon to stop..."
+	message "Wait daemon stop..."
         sleep 10s
-        $COIN_CLI stop >/dev/null 2>&1
         message "Closing $COIN_NAME Daemon"
         sleep 10s
-        sudo rm $CONFIG_FILE >/dev/null 2>&1
+        sudo rm $CONFIG_FOLDER/$CONFIG_FILE >/dev/null 2>&1
 	message "Updating $CONFIG_FILE..."
-        printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=$MAX_CONNECTIONS" "logintimestamps=$LOGINTIMESTAMPS" "rpcport=$RPC_PORT" "externalip=$mnip:$COIN_PORT" "port=$COIN_PORT" "bind=$mnip:$COIN_PORT" "masternode=1" "masternodeprivkey=$MNPRIVKEY" >  $CONFIG_FOLDER/$CONFIG_FILE
+        printf "%s\n" "masternode=1" "masternodeprivkey=$MNPRIVKEY" >>  $TMP_FOLDER/$CONFIG_FILE
+	cat $FILE_NODES >> $TMP_FOLDER/$CONFIG_FILE
+	cp -f $TMP_FOLDER/$CONFIG_FILE $CONFIG_FOLDER
+	
 	if [ ! -d "$TMP_FOLDER" ]; then mkdir $TMP_FOLDER; fi
 	if [ $? -ne 0 ]; then error; fi
 	echo -e "Save masternode private key"
 	echo $MNPRIVKEY >> $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt
-	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
 	clear
+	if [ -d "$TMP_FOLDER/$CONFIG_FILE" ]; then install_service ; fi
+	if [ $? -ne 0 ]; then configfile_error ; fi
+	sleep 5s
 }
 
+function configfile_error() {
+        echo -e " "
+	echo -e "${RED}Error in create $CONFIG_FILE! ${NC}"
+	echo -e " "
+	echo -e "Installer will try to repair!"
+	sleep 10s
+	create_configs
+}
+	
 function install_service() {
   echo -e "${GREEN}Install Service ${NC}"
    	if [ ! -d "$TMP_FOLDER" ]; then mkdir $TMP_FOLDER; fi
@@ -292,40 +304,47 @@ function last_commits() {
         echo -e "Commit lasts configs of $COIN_NAME Daemon!"
         sleep 2s
         echo -e "Starting $COIN_NAME Daemon"
-	$COIN_DAEMON >/dev/null 2>&1
+	$COIN_DAEMON -daemon >/dev/null 2>&1
         sleep 15s
         message "Wait 120 seconds to $COIN_NAME start sync"
         sleep 120s
         clear
 
-        echo "Checking $COIN_NAME sync progress"
-        $COIN_CLI getinfo
+        message "Checking $COIN_NAME sync progress"
+        GET_INFO=$(echo $COIN_CLI getinfo)
+	echo -e "${GREEN} $GET_INFO ${NC}"
+	
+	message "Preparing masternode.conf file."
         echo -e "Obs: Only work if you have send ${GREEN}$COLATERAL${NC} to address ${GREEN}$COIN_ADDRESS ${NC}of ${GREEN}$COIN_NAME ${NC}and alrely get ${GREEN}1 confirmation!${NC}" 
 	echo -e " "
 	echo -e " " 
-	echo -e "If like try to create masternode.conf you can wait sync complete or "
-	echo -n "Press key [ENTER] to continue and create it manualy..."
+	echo -e "To create masternode.file ${GREEN}$COIN_DAEMON${NC} need ${GREEN}full sync${NC}"
+	echo -e "To check it you need to open a new ssh conection and check using this command:"
+	echo -e " " 
+	echo -e " $COIN_CLI getinfo "
+	echo -e " " 
+	echo -e "Or you can press [ENTER] now and continue without complete masternode.conf if sync is not completed!" 
+	echo -e "Obs.: You need to edit $CONF_FOLDER/masternode.conf and insert TXID INDEX after install complete and reboot server."
+	echo -e " " 
+	echo -n "Press key [ENTER] to continue..."
         read var_name
         sleep 2s
 	clear
 
         TXOUTPUTS=$($COIN_CLI masternode outputs )
-        echo -e "If have send ammount $COLATERAL and get 1 confirmed to the $COIN_ADDRESS the OUTPUTS show now:"
+        echo -e "If you have send ammount $COLATERAL and get 1 confirmed to the $COIN_ADDRESS the OUTPUTS show now:"
 	echo -e "Obs: $COIN_NAME need to be sync completed!"
         echo -e " "
 	echo -e " "
-	echo -e "Outputs: $TXOUTPUTS "
+	echo -e "Outputs: ${GREEN} $TXOUTPUTS ${NC}" 
 	echo -e " "
 	echo -e " "
-	echo -e "If show none you need to create masternode.conf manualy"
+	echo -e "If show none you need to complete informations in $CONFIG_FOLDER/masternode.conf manualy (TXID and INDEX)"
 	sleep 10s
 clear        
 }
 
 function success() {
-        if [ ! -e "~/$TMP_FOLDER/txouts.txt" ]; then rm ~/$TMP_FOLDER/txouts.txt; fi
-        if [ $? -ne 0 ]; then clear; fi
-	
 TXID_INDEX=$($COIN_CLI masternode outputs)
 TX_OUTPUTS=$(echo $TXID_INDEX  |  sed 's/"//g' | sed 's/{//g' |  sed 's/}//g' |  sed 's/://g')
 
@@ -334,7 +353,7 @@ MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
         if [ ! -e "~/$COIN_NAME.txt" ]; then rm ~/$COIN_NAME.txt; fi
         if [ $? -ne 0 ]; then clear; fi
 
- echo "SUCCESS! Your ${GREE}$COIN_NAME ${CN}has started. All your configs are"
+ echo -e "SUCCESS! Your ${GREEN}$COIN_NAME ${NC}has started. All your configs are"
  # TO SHOW
  echo -e "Obs: All informations are saved in /home/userfolder/$COIN_NAME.txt or in /root/$COIN_NAME.txt if run as root!"
  echo -e "================================================================================================================================" 
@@ -372,7 +391,7 @@ MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
  printf "%s\n" "# Masternode config file" "# Format: alias IP:port masternodeprivkey collateral_output_txid collateral_output_index" "# Example: mn1 127.0.0.2:23403 93HaYBVUCYjEMeeH1Y4sBGLALQZE1Yc1K64xiqgX37tGBDQL8Xg 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 0" "MN $NODEIP:$COIN_PORT $MN_PRIVKEY $TX_OUTPUTS" >  $CONFIG_FOLDER/masternode.conf
  
  # CLEAR TEMP FOLDER
- sudo rm -rf $TMP_FOLDER/* >/dev/null 2>&1
+ #sudo rm -rf $TMP_FOLDER/* >/dev/null 2>&1
 }
 
 install() {
@@ -381,7 +400,6 @@ install() {
 	prepare_node
 	install_blockchain
 	enable_firewall
-	temp_config
 	create_configs
 	install_service
 	last_commits
@@ -392,5 +410,3 @@ install() {
 #default to --without-gui
 clear
 install --without-gui
-
-
