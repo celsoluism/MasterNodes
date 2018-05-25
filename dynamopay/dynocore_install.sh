@@ -19,6 +19,7 @@ MAX_CONNECTIONS=30
 LOGINTIMESTAMPS=1
 COIN_PORT=40822
 RPC_PORT=29998
+ALIAS=$(echo $HOSTNAME)
 
 # FILE WITH NODES IN MASTERNODE INSTALL FOLDER
 FILE_NODES=~/MasterNodes/dynamopay/dynocore_nodes.txt
@@ -344,14 +345,14 @@ clear
 }
 
 function success() {
-# TO MASTERNODE CONFIG FILE
 TXID_INDEX=$($COIN_CLI masternode outputs)
 TX_OUTPUTS=$(echo $TXID_INDEX  |  sed 's/"//g' | sed 's/{//g' |  sed 's/}//g' |  sed 's/://g')
 MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
 
+# TO MASTERNODE CONFIG FILE
 if [ ! -e "$CONFIG_FOLDER/masternode.conf" ]; then rm $CONFIG_FOLDER/masternode.conf; fi
         if [ $? -ne 0 ]; then echo -e "masternode.conf created!" ; fi
- printf "%s\n" "# Masternode config file" "# Format: alias IP:port masternodeprivkey collateral_output_txid collateral_output_index" "# Example: mn1 127.0.0.2:23403 93HaYBVUCYjEMeeH1Y4sBGLALQZE1Yc1K64xiqgX37tGBDQL8Xg 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 0" "MN $NODEIP:$COIN_PORT $MN_PRIVKEY $TX_OUTPUTS" >  $CONFIG_FOLDER/masternode.conf
+ printf "%s\n" "# Masternode config file" "# Format: alias IP:port masternodeprivkey collateral_output_txid collateral_output_index" "# Example: mn1 127.0.0.2:23403 93HaYBVUCYjEMeeH1Y4sBGLALQZE1Yc1K64xiqgX37tGBDQL8Xg 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 0" "$ALIAS $NODEIP:$COIN_PORT $MN_PRIVKEY $TX_OUTPUTS" >  $CONFIG_FOLDER/masternode.conf
  
  # TO SHOW
  echo -e "SUCCESS! Your ${GREEN}$COIN_NAME ${NC}has started. All your configs are"
@@ -367,7 +368,7 @@ if [ ! -e "$CONFIG_FOLDER/masternode.conf" ]; then rm $CONFIG_FOLDER/masternode.
  echo -e "MASTERNODE PRIVATEKEY is: ${RED} $MN_PRIVKEY ${NC}"
  echo -e "MASTERNODE file: $CONFIG_FOLDER/masternode.conf"
  echo -e "MASTERNODE configuration, copy this line bellow and paste in your windows wallet masternode file:"
- echo -e "MN $NODEIP:$COIN_PORT $MN_PRIVKEY $TX_OUTPUTS"
+ echo -e "$ALIAS $NODEIP:$COIN_PORT $MN_PRIVKEY $TX_OUTPUTS"
  echo -e "Please check ${RED}$COIN_NAME${NC} is running with the following command: ${GREEN}systemctl status $COIN_NAME.service${NC}" 
  echo -e "================================================================================================================================" 
  echo -e " "
@@ -378,7 +379,7 @@ if [ ! -e "$CONFIG_FOLDER/masternode.conf" ]; then rm $CONFIG_FOLDER/masternode.
  echo -e "================================================================================================================================" 
 
 # TO COINFILE TXT
-        if [ -e "~/$COIN_NAME.txt" ]; then rm ~/$COIN_NAME.txt; fi
+        if [ -e "$HOME_FOLDER/$COIN_NAME.txt" ]; then rm $HOME_FOLDER/$COIN_NAME.txt; fi
         if [ $? -ne 0 ]; then clear; fi
  echo -e "================================================================================================================================" >> ~/$COIN_NAME.txt
  echo -e "$COIN_NAME Masternode is up and running listening on port $COIN_PORT." >> ~/$COIN_NAME.txt
@@ -389,7 +390,7 @@ if [ ! -e "$CONFIG_FOLDER/masternode.conf" ]; then rm $CONFIG_FOLDER/masternode.
  echo -e "MASTERNODE PRIVATEKEY is: $MN_PRIVKEY" >> ~/$COIN_NAME.txt
  echo -e "MASTERNODE file: $CONFIG_FOLDER/masternode.conf " >> ~/$COIN_NAME.txt
  echo -e "MASTERNODE configuration bellow:" >> ~/$COIN_NAME.txt
- echo -e "MN $NODEIP:$COIN_PORT $MN_PRIVKEY $TX_OUTPUTS" >> ~/$COIN_NAME.txt
+ echo -e "$ALIAS $NODEIP:$COIN_PORT $MN_PRIVKEY $TX_OUTPUTS" >> ~/$COIN_NAME.txt
  echo -e "Please check $COIN_NAME$ is running with the following command: systemctl status $COIN_NAME.service" >> ~/$COIN_NAME.txt
  echo -e "================================================================================================================================" >> ~/$COIN_NAME.txt
  echo -e " " >> ~/$COIN_NAME.txt
@@ -406,7 +407,8 @@ if [ ! -e "$CONFIG_FOLDER/masternode.conf" ]; then rm $CONFIG_FOLDER/masternode.
 
 
  # CLEAR TEMP FOLDER
- #sudo rm -rf $TMP_FOLDER/* >/dev/null 2>&1
+ sudo rm -rf cache
+ sudo rm -rf $TMP_FOLDER/* >/dev/null 2>&1
 }
 
 install() {
