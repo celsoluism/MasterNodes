@@ -18,7 +18,8 @@ COIN_QT=
 MAX_CONNECTIONS=30
 LOGINTIMESTAMPS=1
 COIN_PORT=23403
-RPC_PORT=12454
+# STANNUM DONT WORK WITH DEFAULT RPCPORT, USE ANY OTHER RPCPORT
+RPC_PORT=23404
 
 # FILE WITH NODES IN MASTERNODE INSTALL FOLDER
 FILE_NODES=~/MasterNodes/stannumcore/stannumcore_nodes.txt
@@ -136,6 +137,7 @@ function prepare_dependencies() { #TODO: add error detection
       libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git wget curl libdb4.8-dev bsdmainutils libdb4.8++-dev \
       libminiupnpc-dev libgmp3-dev ufw pkg-config libevent-dev  libdb5.3++ >/dev/null 2>&1 
       sudo apt-get install -y libzmq3-dev
+      sudo apt-get install python-zmq
       sudo apt-get install -y unzip
    if [ "$?" -gt "0" ];
       then
@@ -144,6 +146,7 @@ function prepare_dependencies() { #TODO: add error detection
       echo "sudo apt -y install software-properties-common"
       echo "sudo apt-add-repository -y ppa:bitcoin/bitcoin"
       echo "sudo apt-get update"
+      echo "sudo apt-get install python-zmq"
       echo "sudo apt install -y make build-essential libtool software-properties-common autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev \
             libboost-program-options-dev libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git curl libdb4.8-dev \
             bsdmainutils libdb4.8++-dev libminiupnpc-dev libgmp3-dev ufw fail2ban pkg-config libevent-dev unzip"
