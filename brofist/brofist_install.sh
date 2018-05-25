@@ -373,12 +373,12 @@ MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
  echo -e " "
  echo -e "${GREEN}Copy of MASTERNODE file: $CONFIG_FOLDER/masternode.conf ${NC}"
  echo -e "================================================================================================================================" 
- cat $CONFIG_FOLDER/masternode.conf
+ cat -A "$CONFIG_FOLDER/masternode.conf"
  echo -e "================================================================================================================================" 
  echo -e " "
- echo -e "${GREEN}Copy of CONFIG file: $CONFIG_FOLDER/$CONFIG_FILE$ ${NC}"
+ echo -e "${GREEN}Copy of CONFIG file: $CONFIG_FOLDER/$CONFIG_FILE ${NC}"
  echo -e "================================================================================================================================" 
- cat $CONFIG_FOLDER/$CONFIG_FILE$
+ cat -A "$CONFIG_FOLDER/$CONFIG_FILE"
  echo -e "================================================================================================================================" 
  
 # TO FILE
@@ -397,12 +397,12 @@ MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
  echo -e " " >> ~/$COIN_NAME.txt
  echo -e "Copy of MASTERNODE file: $CONFIG_FOLDER/masternode.conf" >> ~/$COIN_NAME.txt
  echo -e "================================================================================================================================"  >> ~/$COIN_NAME.txt
- cat $CONFIG_FOLDER/masternode.conf >> ~/$COIN_NAME.txt
+ cat -A $CONFIG_FOLDER/masternode.conf >> ~/$COIN_NAME.txt
  echo -e "================================================================================================================================"  >> ~/$COIN_NAME.txt
  echo -e " " >> ~/$COIN_NAME.txt
- echo -e "Copy of CONFIG file: $CONFIG_FOLDER/$CONFIG_FILE$" >> ~/$COIN_NAME.txt
+ echo -e "Copy of CONFIG file: $CONFIG_FOLDER/$CONFIG_FILE" >> ~/$COIN_NAME.txt
  echo -e "================================================================================================================================"  >> ~/$COIN_NAME.txt
- cat $CONFIG_FOLDER/$CONFIG_FILE$ >> ~/$COIN_NAME.txt
+ cat -A "$CONFIG_FOLDER/$CONFIG_FILE" >> ~/$COIN_NAME.txt
  echo -e "================================================================================================================================"  >> ~/$COIN_NAME.txt
  
 
