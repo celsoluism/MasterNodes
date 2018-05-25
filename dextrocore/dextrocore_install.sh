@@ -400,7 +400,7 @@ MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
  echo -e " " >> ~/$COIN_NAME.txt
  echo -e "Copy of CONFIG file: $CONFIG_FOLDER/$CONFIG_FILE" >> ~/$COIN_NAME.txt
  echo -e "================================================================================================================================"  >> ~/$COIN_NAME.txt
- cat -A "$CONFIG_FOLDER/$CONFIG_FILE" >> ~/$COIN_NAME.txt
+ cat -A "$CONFIG_FOLDER/$CONFIG_FILE" >> ~/$COIN_NAME.txt"
  echo -e "================================================================================================================================"  >> ~/$COIN_NAME.txt
  
 
