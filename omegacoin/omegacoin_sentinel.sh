@@ -92,7 +92,6 @@ function configure_sentinel() {
 function crontab_insert() {
     echo -e "Create cronjob..."
     CRON_USER=$(echo $USER)
-    line=" "
     line="* * * * * cd $HOMEFOLDER/sentinel && ./venv/bin/python bin/sentinel.py >/dev/null 2>&1"
     (crontab -u $CRON_USER -l; echo "$line" ) | crontab -u $CRON_USER -
     sleep 5s
