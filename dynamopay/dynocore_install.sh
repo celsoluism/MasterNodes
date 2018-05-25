@@ -373,7 +373,7 @@ MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
  echo -e "================================================================================================================================" 
  echo -e "A copy of MASTERNODE file ${GREEN}$CONFIG_FOLDER/masternode.conf${NC} and"
  echo -e "a copy of CONFIG file ${GREEN}$CONFIG_FOLDER/$CONFIG_FILE ${NC}"
- echo -e "are saved in ${GREEN}$HOME_FOLDER/$COIN_NAME.txt${NC}
+ echo -e "are saved in ${GREEN}$HOME_FOLDER/$COIN_NAME.txt${NC}"
  echo -e "================================================================================================================================" 
  
  
