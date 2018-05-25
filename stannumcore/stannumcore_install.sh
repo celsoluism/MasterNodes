@@ -5,8 +5,8 @@
 
 #--------------------------------------------- COIN INFORMATION --------------------------------------------
 # CONFIG ABOUT COIN
-COIN_NAME=Stannum
-COLATERAL=1000
+COIN_NAME=stannum
+COLATERAL=1000SNC
 CONFIG_FILE=stannum.conf
 
 # ALWAYS START WITH ~/ AND DEFAULT COIN FOLDER
@@ -51,6 +51,53 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
+#--------------------------------------------- COIN INFORMATION --------------------------------------------
+# CONFIG ABOUT COIN
+COIN_NAME=omegacoin
+COLATERAL='1000 omega'
+CONFIG_FILE=omegacoin.conf
+
+# ALWAYS START WITH ~/ AND DEFAULT COIN FOLDER
+CONFIG_FOLDER=~/.omegacoincore
+COIN_DAEMON=omegacoind
+COIN_CLI=omegacoin-cli
+COIN_TX=
+COIN_QT=omegacoin-qt
+MAX_CONNECTIONS=30
+LOGINTIMESTAMPS=1
+COIN_PORT=7777
+RPC_PORT=7778
+
+# FILE WITH NODES IN MASTERNODE INSTALL FOLDER
+FILE_NODES=~/MasterNodes/omegacoin/omegacoin_nodes.txt
+# LINK TO DOWNLOAD DAEMON
+COIN_TGZ_ZIP='https://github.com/omegacoinnetwork/omegacoin/releases/download/0.12.5.1/omagecoincore-0.12.5.1-linux64.zip'
+# SET FOLDER IF UNZIP DAEMON IS ON SUBFOLDER?
+COIN_SUBFOLDER=
+# SET $(echo 'tar -xvzf *.gz') IF FILE IS TAR.GZ OR $(echo 'unzip -o *.zip')  TO ZIP FILE.
+COIN_TAR_UNZIP=$(echo 'unzip -o *.zip')
+
+# LINK TO DOWNLOAD BLOCKCHAIN
+LINK_BLOCKCHAIN=
+# SET FOLDER IF UNZIP BLOCKCHAIN IS ON SUBFOLDER?
+BLOCKCHAIN_SUBFOLDER=data
+# SET $(echo 'tar -xvzf *.gz') IF FILE IS TAR.GZ OR $(echo 'unzip -o *.zip'  TO ZIP FILE.)
+BLOCKCHAIN_TAR_UNZIP=$(echo 'unzip -o *.zip')
+
+# TO CONFIG
+COIN_PATH=/usr/local/bin/
+TMP_FOLDER=~/temp_masternodes
+
+
+# DONT TOUCH
+COIN_ZIP=$(echo $COIN_TGZ_ZIP | awk -F'/' '{print $NF}')
+NODEIP=$(curl -s4 icanhazip.com)
+
+#SET COLORS
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
 #-------------------------------------------- LETS START ----------------------------------------
 
 noflags() {
@@ -71,7 +118,6 @@ error() {
 	message "An error occured, you must fix it to continue!"
 	exit 1
 }
-
 
 function prepare_dependencies() { #TODO: add error detection
    PS3='Need to Install Depedencies and Libraries'
@@ -235,24 +281,19 @@ function install_service() {
 [Unit]
 Description=$COIN_NAME service
 After=network.target
-
 [Service]
 User=root
 Group=root
-
 Type=forking
 #PIDFile=$CONFIG_FOLDER/$COIN_NAME.pid
-
 ExecStart=$COIN_PATH$COIN_DAEMON -daemon -conf=$CONFIG_FOLDER/$CONFIG_FILE -datadir=$CONFIG_FOLDER
 ExecStop=-$COIN_PATH$COIN_CLI -conf=$CONFIG_FOLDER/$CONFIG_FILE -datadir=$CONFIG_FOLDER stop
-
 Restart=always
 PrivateTmp=true
 TimeoutStopSec=60s
 TimeoutStartSec=10s
 StartLimitInterval=120s
 StartLimitBurst=5
-
 [Install]
 WantedBy=multi-user.target
 EOF
