@@ -19,6 +19,7 @@ MAX_CONNECTIONS=30
 LOGINTIMESTAMPS=1
 COIN_PORT=11113
 RPC_PORT=12454
+ALIAS=$(echo $HOSTNAME)
 
 # FILE WITH NODES IN MASTERNODE INSTALL FOLDER
 FILE_NODES=~/MasterNodes/brofist/brofist_nodes.txt
@@ -40,7 +41,7 @@ BLOCKCHAIN_TAR_UNZIP=$(echo 'unzip -o *.zip')
 # TO CONFIG
 COIN_PATH=/usr/local/bin/
 TMP_FOLDER=~/temp_masternodes
-
+HOME_FOLDER=$(echo $HOME)
 
 # DONT TOUCH
 COIN_ZIP=$(echo $COIN_TGZ_ZIP | awk -F'/' '{print $NF}')
@@ -347,15 +348,16 @@ clear
 function success() {
 TXID_INDEX=$($COIN_CLI masternode outputs)
 TX_OUTPUTS=$(echo $TXID_INDEX  |  sed 's/"//g' | sed 's/{//g' |  sed 's/}//g' |  sed 's/://g')
-
 MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
 
-        if [ ! -e "~/$COIN_NAME.txt" ]; then rm ~/$COIN_NAME.txt; fi
-        if [ $? -ne 0 ]; then clear; fi
-
- echo -e "SUCCESS! Your ${GREEN}$COIN_NAME ${NC}has started. All your configs are"
+# TO MASTERNODE CONFIG FILE
+if [ ! -e "$CONFIG_FOLDER/masternode.conf" ]; then rm $CONFIG_FOLDER/masternode.conf; fi
+        if [ $? -ne 0 ]; then echo -e "masternode.conf created!" ; fi
+ printf "%s\n" "# Masternode config file" "# Format: alias IP:port masternodeprivkey collateral_output_txid collateral_output_index" "# Example: mn1 127.0.0.2:23403 93HaYBVUCYjEMeeH1Y4sBGLALQZE1Yc1K64xiqgX37tGBDQL8Xg 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 0" "$ALIAS $NODEIP:$COIN_PORT $MN_PRIVKEY $TX_OUTPUTS" >  $CONFIG_FOLDER/masternode.conf
+ 
  # TO SHOW
- echo " "
+ echo -e "SUCCESS! Your ${GREEN}$COIN_NAME ${NC}has started. All your configs are"
+ echo -e " "
  echo -e "Obs: All informations are saved in /home/userfolder/$COIN_NAME.txt or in /root/$COIN_NAME.txt if run as root!"
  message "${GREEN}CONGRATULATIONS, YOUR MASTERNODE IS INSTALLED AND CONFIGURED! ${NC}"
  echo -e "================================================================================================================================" 
@@ -366,22 +368,20 @@ MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
  echo -e "NODE_IP:PORT ${RED}$NODEIP:$COIN_PORT ${NC}"
  echo -e "MASTERNODE PRIVATEKEY is: ${RED} $MN_PRIVKEY ${NC}"
  echo -e "MASTERNODE file: $CONFIG_FOLDER/masternode.conf"
- echo -e "MASTERNODE configuration bellow:"
- echo -e "MN $NODEIP:$COIN_PORT $MN_PRIVKEY $TX_OUTPUTS"
+ echo -e "MASTERNODE configuration, copy this line bellow and paste in your windows wallet masternode file:"
+ echo -e "$ALIAS $NODEIP:$COIN_PORT $MN_PRIVKEY $TX_OUTPUTS"
  echo -e "Please check ${RED}$COIN_NAME${NC} is running with the following command: ${GREEN}systemctl status $COIN_NAME.service${NC}" 
  echo -e "================================================================================================================================" 
  echo -e " "
- echo -e "${GREEN}Copy of MASTERNODE file: $CONFIG_FOLDER/masternode.conf ${NC}"
  echo -e "================================================================================================================================" 
- cat -A "$CONFIG_FOLDER/masternode.conf"
+ echo -e "A copy of MASTERNODE file ${GREEN}$CONFIG_FOLDER/masternode.conf${NC} and"
+ echo -e "a copy of CONFIG file ${GREEN}$CONFIG_FOLDER/$CONFIG_FILE ${NC}"
+ echo -e "are saved in ${GREEN}$HOME_FOLDER/$COIN_NAME.txt${NC}"
  echo -e "================================================================================================================================" 
- echo -e " "
- echo -e "${GREEN}Copy of CONFIG file: $CONFIG_FOLDER/$CONFIG_FILE ${NC}"
- echo -e "================================================================================================================================" 
- cat -A "$CONFIG_FOLDER/$CONFIG_FILE"
- echo -e "================================================================================================================================" 
- 
-# TO FILE
+
+# TO COINFILE TXT
+        if [ -e "$HOME_FOLDER/$COIN_NAME.txt" ]; then rm $HOME_FOLDER/$COIN_NAME.txt; fi
+        if [ $? -ne 0 ]; then clear; fi
  echo -e "================================================================================================================================" >> ~/$COIN_NAME.txt
  echo -e "$COIN_NAME Masternode is up and running listening on port $COIN_PORT." >> ~/$COIN_NAME.txt
  echo -e "Configuration file is: $CONFIG_FOLDER/$CONFIG_FILE" >> ~/$COIN_NAME.txt
@@ -391,30 +391,25 @@ MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
  echo -e "MASTERNODE PRIVATEKEY is: $MN_PRIVKEY" >> ~/$COIN_NAME.txt
  echo -e "MASTERNODE file: $CONFIG_FOLDER/masternode.conf " >> ~/$COIN_NAME.txt
  echo -e "MASTERNODE configuration bellow:" >> ~/$COIN_NAME.txt
- echo -e "MN $NODEIP:$COIN_PORT $MN_PRIVKEY $TX_OUTPUTS" >> ~/$COIN_NAME.txt
+ echo -e "$ALIAS $NODEIP:$COIN_PORT $MN_PRIVKEY $TX_OUTPUTS" >> ~/$COIN_NAME.txt
  echo -e "Please check $COIN_NAME$ is running with the following command: systemctl status $COIN_NAME.service" >> ~/$COIN_NAME.txt
  echo -e "================================================================================================================================" >> ~/$COIN_NAME.txt
  echo -e " " >> ~/$COIN_NAME.txt
  echo -e "Copy of MASTERNODE file: $CONFIG_FOLDER/masternode.conf" >> ~/$COIN_NAME.txt
  echo -e "================================================================================================================================"  >> ~/$COIN_NAME.txt
- cat -A $CONFIG_FOLDER/masternode.conf >> ~/$COIN_NAME.txt
+ cat "$CONFIG_FOLDER/masternode.conf" >> ~/$COIN_NAME.txt
  echo -e "================================================================================================================================"  >> ~/$COIN_NAME.txt
  echo -e " " >> ~/$COIN_NAME.txt
  echo -e "Copy of CONFIG file: $CONFIG_FOLDER/$CONFIG_FILE" >> ~/$COIN_NAME.txt
  echo -e "================================================================================================================================"  >> ~/$COIN_NAME.txt
- cat -A "$CONFIG_FOLDER/$CONFIG_FILE" >> ~/$COIN_NAME.txt
+ cat "$CONFIG_FOLDER/$CONFIG_FILE" >> ~/$COIN_NAME.txt
  echo -e "================================================================================================================================"  >> ~/$COIN_NAME.txt
  
 
-# TO MASTERNODE CONFIG FILE
 
-        if [ ! -e "$CONFIG_FOLDER/masternode.conf" ]; then rm $CONFIG_FOLDER/masternode.conf; fi
-        if [ $? -ne 0 ]; then echo -e "masternode.conf created!" ; fi
-
- printf "%s\n" "# Masternode config file" "# Format: alias IP:port masternodeprivkey collateral_output_txid collateral_output_index" "# Example: mn1 127.0.0.2:23403 93HaYBVUCYjEMeeH1Y4sBGLALQZE1Yc1K64xiqgX37tGBDQL8Xg 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 0" "MN $NODEIP:$COIN_PORT $MN_PRIVKEY $TX_OUTPUTS" >  $CONFIG_FOLDER/masternode.conf
- 
  # CLEAR TEMP FOLDER
- #sudo rm -rf $TMP_FOLDER/* >/dev/null 2>&1
+ sudo rm -rf cache
+ sudo rm -rf $TMP_FOLDER/* >/dev/null 2>&1
 }
 
 install() {
