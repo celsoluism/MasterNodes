@@ -6,7 +6,7 @@
 #--------------------------------------------- COIN INFORMATION --------------------------------------------
 # CONFIG ABOUT COIN
 COIN_NAME=brofist
-COLATERAL='1250 PEW'
+COLATERAL=1250PEW
 CONFIG_FILE=brofist.conf
 
 # ALWAYS START WITH ~/ AND DEFAULT COIN FOLDER
