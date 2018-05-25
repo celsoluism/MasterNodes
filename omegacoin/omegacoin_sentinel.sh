@@ -89,22 +89,13 @@ function install_sentinel() {
 function configure_sentinel() {
     echo -e "Configuring sentinel and cronjob"
 
-function cronjob_creator () {
-          # usage: cronjob_creator '<interval>' '<command>'
-
-            if [[ -z $1 ]] ;then
-                printf " no interval specified\n"
-            elif [[ -z $2 ]] ;then
-                printf " no command specified\n"
-            else
-                CRONIN="/tmp/cti_tmp"
-                crontab -l | grep -vw "$1 $2" > "$CRONIN"
-                echo "$1 $2" >> $CRONIN
-                crontab "$CRONIN"
-            rm $CRONIN
-            fi
-}
-cronjob_creator '* * * * * ' 'cd '$HOMEFOLDER'/sentinel && ./venv/bin/python bin/sentinel.py >/dev/null 2>&1'
+function crontab_insert() {
+    echo -e "Create cronjob..."
+    CRON_USER=$(echo $USER)
+    line=" "
+    line="* * * * * cd $HOMEFOLDER/sentinel && ./venv/bin/python bin/sentinel.py >/dev/null 2>&1"
+    (crontab -u $CRON_USER -l; echo "$line" ) | crontab -u $CRON_USER -
+    sleep 5s
 }
 
 function testing_sentinel() {
