@@ -319,7 +319,7 @@ function last_commits() {
 	echo -e "To create masternode.file ${GREEN}$COIN_DAEMON${NC} need ${GREEN}full sync${NC}"
 	echo -e "To check it you need to open a new ssh conection and check using this command:"
 	echo -e " " 
-	echo -e "${RED} $COIN_CLI getinfo ${NC}"
+	echo -e " $COIN_CLI getinfo "
 	echo -e " " 
 	echo -e "Or you can press [ENTER] now and continue without complete masternode.conf if sync is not completed!" 
 	echo -e "Obs.: You need to edit $CONF_FOLDER/masternode.conf and insert TXID INDEX after install complete and reboot server."
@@ -337,7 +337,7 @@ function last_commits() {
 	echo -e "Outputs: ${GREEN} $TXOUTPUTS ${NC}" 
 	echo -e " "
 	echo -e " "
-	echo -e "If show none you need to complete informations in $CONFIG_FOLDER/masternode.conf manualy"
+	echo -e "If show none you need to complete informations in $CONFIG_FOLDER/masternode.conf manualy (TXID and INDEX)"
 	sleep 10s
 clear        
 }
@@ -351,7 +351,7 @@ MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
         if [ ! -e "~/$COIN_NAME.txt" ]; then rm ~/$COIN_NAME.txt; fi
         if [ $? -ne 0 ]; then clear; fi
 
- echo "SUCCESS! Your ${GREEN}$COIN_NAME ${NC}has started. All your configs are"
+ echo -e "SUCCESS! Your ${GREEN}$COIN_NAME ${NC}has started. All your configs are"
  # TO SHOW
  echo -e "Obs: All informations are saved in /home/userfolder/$COIN_NAME.txt or in /root/$COIN_NAME.txt if run as root!"
  echo -e "================================================================================================================================" 
