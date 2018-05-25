@@ -30,7 +30,7 @@ OPTIONS=(1 "Brofist"
 	 5 "StannumCoin"
          6 "Install Libraries and Dependences..."
          7 "Quit")
-
+ 
 CHOICE=$(dialog --clear \
                 --backtitle "$BACKTITLE" \
                 --title "$TITLE" \
