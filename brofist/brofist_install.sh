@@ -355,7 +355,9 @@ MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
 
  echo -e "SUCCESS! Your ${GREEN}$COIN_NAME ${NC}has started. All your configs are"
  # TO SHOW
+ echo " "
  echo -e "Obs: All informations are saved in /home/userfolder/$COIN_NAME.txt or in /root/$COIN_NAME.txt if run as root!"
+ message "${GREEN}CONGRATULATIONS, YOUR MASTERNODE IS INSTALLED AND CONFIGURED! ${NC}"
  echo -e "================================================================================================================================" 
  echo -e "$COIN_NAME Masternode is up and running listening on port ${RED}$COIN_PORT${NC}." 
  echo -e "Configuration file is: ${RED}$CONFIG_FOLDER/$CONFIG_FILE${NC}"
@@ -368,7 +370,17 @@ MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
  echo -e "MN $NODEIP:$COIN_PORT $MN_PRIVKEY $TX_OUTPUTS"
  echo -e "Please check ${RED}$COIN_NAME${NC} is running with the following command: ${GREEN}systemctl status $COIN_NAME.service${NC}" 
  echo -e "================================================================================================================================" 
-
+ echo -e " "
+ echo -e "${GREEN}Copy of MASTERNODE file: $CONFIG_FOLDER/masternode.conf ${NC}"
+ echo -e "================================================================================================================================" 
+ cat $CONFIG_FOLDER/masternode.conf
+ echo -e "================================================================================================================================" 
+ echo -e " "
+ echo -e "${GREEN}Copy of CONFIG file: $CONFIG_FOLDER/$CONFIG_FILE$ ${NC}"
+ echo -e "================================================================================================================================" 
+ cat $CONFIG_FOLDER/$CONFIG_FILE$
+ echo -e "================================================================================================================================" 
+ 
 # TO FILE
  echo -e "================================================================================================================================" >> ~/$COIN_NAME.txt
  echo -e "$COIN_NAME Masternode is up and running listening on port $COIN_PORT." >> ~/$COIN_NAME.txt
@@ -382,6 +394,17 @@ MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
  echo -e "MN $NODEIP:$COIN_PORT $MN_PRIVKEY $TX_OUTPUTS" >> ~/$COIN_NAME.txt
  echo -e "Please check $COIN_NAME$ is running with the following command: systemctl status $COIN_NAME.service" >> ~/$COIN_NAME.txt
  echo -e "================================================================================================================================" >> ~/$COIN_NAME.txt
+ echo -e " " >> ~/$COIN_NAME.txt
+ echo -e "Copy of MASTERNODE file: $CONFIG_FOLDER/masternode.conf" >> ~/$COIN_NAME.txt
+ echo -e "================================================================================================================================"  >> ~/$COIN_NAME.txt
+ cat $CONFIG_FOLDER/masternode.conf >> ~/$COIN_NAME.txt
+ echo -e "================================================================================================================================"  >> ~/$COIN_NAME.txt
+ echo -e " " >> ~/$COIN_NAME.txt
+ echo -e "Copy of CONFIG file: $CONFIG_FOLDER/$CONFIG_FILE$" >> ~/$COIN_NAME.txt
+ echo -e "================================================================================================================================"  >> ~/$COIN_NAME.txt
+ cat $CONFIG_FOLDER/$CONFIG_FILE$ >> ~/$COIN_NAME.txt
+ echo -e "================================================================================================================================"  >> ~/$COIN_NAME.txt
+ 
 
 # TO MASTERNODE CONFIG FILE
 
