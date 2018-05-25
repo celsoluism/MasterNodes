@@ -6,7 +6,7 @@
 #--------------------------------------------- COIN INFORMATION --------------------------------------------
 # CONFIG ABOUT COIN
 COIN_NAME=dextrocore
-COLATERAL=1000 DXO
+COLATERAL=1000DXO
 CONFIG_FILE=dextro.conf
 
 # ALWAYS START WITH ~/ AND DEFAULT COIN FOLDER
