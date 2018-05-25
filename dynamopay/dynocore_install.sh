@@ -6,7 +6,7 @@
 #--------------------------------------------- COIN INFORMATION --------------------------------------------
 # CONFIG ABOUT COIN
 COIN_NAME=dynocore
-COLATERAL=1000 DYO
+COLATERAL=1000DYO
 CONFIG_FILE=dyno.conf
 
 # ALWAYS START WITH ~/ AND DEFAULT COIN FOLDER
