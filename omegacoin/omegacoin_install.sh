@@ -21,7 +21,7 @@ COIN_PORT=7777
 RPC_PORT=7778
 
 # FILE WITH NODES IN MASTERNODE INSTALL FOLDER
-FILE_NODES=~/MasterNodes/dynamopay/dynocore_nodes.txt
+FILE_NODES=~/MasterNodes/omegacoin/omegacoin_nodes.txt
 # LINK TO DOWNLOAD DAEMON
 COIN_TGZ_ZIP='https://github.com/omegacoinnetwork/omegacoin/releases/download/0.12.5.1/omagecoincore-0.12.5.1-linux64.zip'
 # SET FOLDER IF UNZIP DAEMON IS ON SUBFOLDER?
