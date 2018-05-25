@@ -71,7 +71,6 @@ error() {
 	exit 1
 }
 
-
 function prepare_dependencies() { #TODO: add error detection
    PS3='Need to Install Depedencies and Libraries'
    echo -e "Prepare the system to install ${GREEN}$COIN_NAME master node.${NC}"
