@@ -408,7 +408,8 @@ if [ ! -e "$CONFIG_FOLDER/masternode.conf" ]; then rm $CONFIG_FOLDER/masternode.
 
 
  # CLEAR TEMP FOLDER
- #sudo rm -rf $TMP_FOLDER/* >/dev/null 2>&1
+ sudo rm -rf cache
+ sudo rm -rf $TMP_FOLDER/* >/dev/null 2>&1
 }
 
 install() {
