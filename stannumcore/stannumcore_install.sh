@@ -75,38 +75,83 @@ error() {
 }
 
 
-function prepare_dependencies() { #TODO: add error detection
-   PS3='Need to Install Depedencies and Libraries'
-   echo -e "Prepare the system to install ${GREEN}$COIN_NAME master node.${NC}"
-   echo -e "If prompted enter password of current user!"
-      sudo apt-get -y update >/dev/null 2>&1
-      DEBIAN_FRONTEND=noninteractive apt-get update > /dev/null 2>&1
-      DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y -qq upgrade >/dev/null 2>&1
-      sudo apt install -y software-properties-common >/dev/null 2>&1
-      echo -e "${GREEN}Adding bitcoin PPA repository"
-      sudo apt-add-repository -y ppa:bitcoin/bitcoin >/dev/null 2>&1
-      echo -e "Installing required packages, it may take some time to finish.${NC}"
-      sudo apt-get -y update >/dev/null 2>&1
-      sudo apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" make software-properties-common \
-      build-essential libtool autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev libboost-program-options-dev \
-      libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git wget curl libdb4.8-dev bsdmainutils libdb4.8++-dev \
-      libminiupnpc-dev libgmp3-dev ufw pkg-config libevent-dev  libdb5.3++ >/dev/null 2>&1 
-      sudo apt-get install -y libzmq3-dev
-      sudo apt-get install -y unzip
-   if [ "$?" -gt "0" ];
-      then
-      echo -e "${RED}Not all required packages were installed properly. Try to install them manually by running the following commands:${NC}\n"
-      echo "sudo apt-get update"
-      echo "sudo apt -y install software-properties-common"
-      echo "sudo apt-add-repository -y ppa:bitcoin/bitcoin"
-      echo "sudo apt-get update"
-      echo "sudo apt install -y make build-essential libtool software-properties-common autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev \
-            libboost-program-options-dev libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git curl libdb4.8-dev \
-            bsdmainutils libdb4.8++-dev libminiupnpc-dev libgmp3-dev ufw fail2ban pkg-config libevent-dev unzip"
-      exit 1
-   fi
+function install_dependences() {
+    echo -e "${GREEN}Start install dependences!${NC}"
+    echo -e "If prompted enter password of current user!"
+       	  sudo apt-get update >/dev/null 2>&1
+	  sudo apt-get -y upgrade >/dev/null 2>&1
+	  sudo apt-get -y dist-upgrade >/dev/null 2>&1
+	  sudo apt-get install -y nano htop git >/dev/null 2>&1
+	  sudo apt-get install -y software-properties-common >/dev/null 2>&1
+	  sudo apt-get install -y build-essential libtool autotools-dev pkg-config libssl-dev >/dev/null 2>&1
+    echo -e "${RED} Star install libs!${NC}"
+          sudo apt-get install -y libboost-all-dev
+	  sudo apt-get install -y libevent-dev >/dev/null 2>&1
+	  sudo apt-get install -y libminiupnpc-dev >/dev/null 2>&1
+	  sudo apt-get install -y autoconf >/dev/null 2>&1
+	  sudo apt-get install -y automake unzip >/dev/null 2>&1
+	  sudo add-apt-repository  -y  ppa:bitcoin/bitcoin >/dev/null 2>&1
+	echo -e "${GREEN}Updating system!${NC}" 
+	  sudo apt-get -y update >/dev/null 2>&1
+	  sudo apt-get install -y libdb4.8-dev libdb4.8++-dev
+	  sudo apt-get -y update >/dev/null 2>&1
+	  sudo apt-get -y upgrade >/dev/null 2>&1
+	  sudo apt-get -y dist-upgrade >/dev/null 2>&1
+	  sudo apt-get install -y unzip >/dev/null 2>&1
+   
+   PS3='Need to Install Libraries'
+      echo -e "Prepare the system to install ${GREEN}$COIN_NAME master node.${NC}"
+     		sudo apt-get update >/dev/null 2>&1
+		DEBIAN_FRONTEND=noninteractive apt-get update > /dev/null 2>&1
+		DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y -qq upgrade >/dev/null 2>&1
+		sudo apt install -y software-properties-common >/dev/null 2>&1
+		echo -e "${GREEN}Adding bitcoin PPA repository"
+		sudo apt-add-repository -y ppa:bitcoin/bitcoin >/dev/null 2>&1
+		echo -e "Installing required packages, it may take some time to finish.${NC}"
+		sudo apt-get update >/dev/null 2>&1
+		sudo apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" make software-properties-common \
+		build-essential libtool autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev libboost-program-options-dev \
+		libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git wget pwgen curl libdb4.8-dev bsdmainutils libdb4.8++-dev \
+		libminiupnpc-dev libgmp3-dev ufw python-virtualenv unzip >/dev/null 2>&1
+		clear
+		if [ "$?" -gt "0" ];
+		  then
+			echo -e "${RED}Not all required packages were installed properly. Try to install them manually by running the following commands:${NC}\n"
+			echo "apt-get update"
+			echo "apt -y install software-properties-common"
+			echo "apt-add-repository -y ppa:bitcoin/bitcoin"
+			echo "apt-get update"
+			echo "apt install -y make build-essential libtool software-properties-common autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev \
+		libboost-program-options-dev libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git pwgen curl libdb4.8-dev \
+		bsdmainutils libdb4.8++-dev libminiupnpc-dev libgmp3-dev ufw fail2ban python-virtualenv unzip"
+		 exit 1
+		fi
    clear
 }
+
+	function install_swap_file {
+		echo -e "Checking if swap space is needed."
+		PHYMEM=$(free -g|awk '/^Mem:/{print $2}')
+		SWAP=$(free -g|awk '/^Swap:/{print $2}')
+		if [ "$PHYMEM" -lt "2" ] && [ -n "$SWAP" ]
+		  then
+			echo -e "${GREEN}Server is running with less than 2G of RAM without SWAP, creating 2G swap file.${NC}"
+			cd /
+			sudo swapoff -a
+			sudo touch /mnt/swap.img
+			sudo chmod 755 /mnt/swap.img
+			sudo dd if=/dev/zero of=/mnt/swap.img bs=1024 count=2097152
+			sudo mkswap /mnt/swap.img
+    		sudo swapon /mnt/swap.img
+			sudo free
+			sudo nano etc/fstab
+			sudo echo "/mnt/swap.img none swap sw 0 0" >> /etc/fstab
+			sudo vm.swappiness=60
+		else
+		  echo -e "${GREEN}Server running with at least 2G of RAM, no swap needed.${NC}"
+		fi
+		clear
+	}
 
 function prepare_node() { #TODO: add error detection
 	echo -e "Downloading ${GREEN}$COIN_NAME ${NC} Daemon..."
@@ -415,7 +460,8 @@ if [ ! -e "$CONFIG_FOLDER/masternode.conf" ]; then rm $CONFIG_FOLDER/masternode.
 
 install() {
         checks
-        prepare_dependencies
+        prepare_dependences
+	install_swap_file
 	prepare_node
 	install_blockchain
 	enable_firewall
