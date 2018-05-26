@@ -6,7 +6,7 @@
 #TODO: make script less "ubuntu" or add other linux flavors
 #TODO: dont run as root and run withou sudo privilegies.
 #TODO: if prompted need to enter password of sudo user.
-VERSION=v0.0.3.1
+VERSION=$(cat -n "changelog.md" | grep "1".md")
 
 chmod +x rebase.sh
 cp -f rebase.sh ~
