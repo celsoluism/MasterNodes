@@ -30,7 +30,7 @@ COIN_TGZ_ZIP='https://github.com/omegacoinnetwork/omegacoin/releases/download/0.
 COIN_SUBFOLDER=
 # SET $(echo 'tar -xvzf *.gz') IF FILE IS TAR.GZ OR $(echo 'unzip -o *.zip')  TO ZIP FILE.
 COIN_TAR_UNZIP=$(echo 'unzip -o *.zip')
-
+ 
 # LINK TO DOWNLOAD BLOCKCHAIN
 LINK_BLOCKCHAIN=
 # SET FOLDER IF UNZIP BLOCKCHAIN IS ON SUBFOLDER?
