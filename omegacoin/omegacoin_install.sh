@@ -408,6 +408,8 @@ function install_sentinel() {
   sed -i "s/19998/$SENTINELPORT/g" $HOME_FOLDER/sentinel/test/unit/test_dash_config.py
     CRON_LINE="* * * * * cd $HOME_FOLDER/sentinel && ./venv/bin/python bin/sentinel.py >> $HOME_FOLDER/sentinel.log >/dev/null 2>&1"
     (crontab -u $HOME_USER -l; echo "$CRON_LINE" ) | crontab -u $HOME_USER -
+    chown -R $HOME_USER: $HOME_FOLDER/
+    chown -R $HOME_USER: $HOME_FOLDER/sentinel
 }
 
 function success() {
