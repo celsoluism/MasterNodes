@@ -78,28 +78,29 @@ error() {
 function install_dependences() {
     echo -e "${GREEN}Start install dependences!${NC}"
     echo -e "If prompted enter password of current user!"
-       	  sudo apt-get update >/dev/null 2>&1
+       	  sudo apt-get -y update >/dev/null 2>&1
 	  sudo apt-get -y upgrade >/dev/null 2>&1
 	  sudo apt-get -y dist-upgrade >/dev/null 2>&1
 	  sudo apt-get install -y nano htop git >/dev/null 2>&1
 	  sudo apt-get install -y software-properties-common >/dev/null 2>&1
 	  sudo apt-get install -y build-essential libtool autotools-dev pkg-config libssl-dev >/dev/null 2>&1
-    echo -e "${RED} Star install libs!${NC}"
+    echo -e "${RED} Start install libs!${NC}"
           sudo apt-get install -y libboost-all-dev
 	  sudo apt-get install -y libevent-dev >/dev/null 2>&1
 	  sudo apt-get install -y libminiupnpc-dev >/dev/null 2>&1
 	  sudo apt-get install -y autoconf >/dev/null 2>&1
 	  sudo apt-get install -y automake unzip >/dev/null 2>&1
 	  sudo add-apt-repository  -y  ppa:bitcoin/bitcoin >/dev/null 2>&1
-	echo -e "${GREEN}Updating system!${NC}" 
 	  sudo apt-get -y update >/dev/null 2>&1
 	  sudo apt-get install -y libdb4.8-dev libdb4.8++-dev
+	  echo -e "${GREEN}Updating system!${NC}" 
 	  sudo apt-get -y update >/dev/null 2>&1
 	  sudo apt-get -y upgrade >/dev/null 2>&1
 	  sudo apt-get -y dist-upgrade >/dev/null 2>&1
 	  sudo apt-get install -y unzip >/dev/null 2>&1
-   
-   PS3='Need to Install Libraries'
+      
+      clear
+      PS3='Need to Install Libraries'
       echo -e "Prepare the system to install ${GREEN}$COIN_NAME master node.${NC}"
      		sudo apt-get update >/dev/null 2>&1
 		DEBIAN_FRONTEND=noninteractive apt-get update > /dev/null 2>&1
@@ -152,7 +153,7 @@ function install_dependences() {
 		fi
 		clear
 	}
-
+	
 function prepare_node() { #TODO: add error detection
 	echo -e "Downloading ${GREEN}$COIN_NAME ${NC} Daemon..."
   	mkdir $TMP_FOLDER >/dev/null 2>&1
@@ -391,6 +392,24 @@ function last_commits() {
 clear        
 }
 
+function install_sentinel() {
+  SENTINELPORT=$[10001+$COIN_PORT]
+  echo -e "${GREEN}Install sentinel.${NC}"
+  apt-get install virtualenv >/dev/null 2>&1
+  git clone $SENTINEL_REPO $HOME_FOLDER/sentinel >/dev/null 2>&1
+  cd $HOME_FOLDER/sentinel
+  virtualenv ./venv >/dev/null 2>&1  
+  ./venv/bin/pip install -r requirements.txt >/dev/null 2>&1
+  cd $HOME_FOLDER
+  sed -i "s/19998/$SENTINELPORT/g" $HOME_FOLDER/sentinel/test/unit/test_dash_config.py
+  echo  "* * * * * cd $HOME_FOLDER/sentinel && ./venv/bin/python bin/sentinel.py >> ~/sentinel.log 2>&1" > $HOME_FOLDER/omega_cron
+  chown -R $HOME_USER: $HOME_FOLDER/
+  sentinel >/dev/null 2>&1
+  chown $HOME_USER: $HOME_FOLDER/omega_cron
+  crontab -u $HOME_USER $HOME_FOLDER/omega_cron
+  rm omega_cron >/dev/null 2>&1
+}
+
 function success() {
 TXID_INDEX=$($COIN_CLI masternode outputs)
 TX_OUTPUTS=$(echo $TXID_INDEX  |  sed 's/"//g' | sed 's/{//g' |  sed 's/}//g' |  sed 's/://g')
@@ -404,7 +423,8 @@ if [ ! -e "$CONFIG_FOLDER/masternode.conf" ]; then rm $CONFIG_FOLDER/masternode.
  # TO SHOW
  echo -e "SUCCESS! Your ${GREEN}$COIN_NAME ${NC}has started. All your configs are"
  echo -e " "
- echo -e "Obs: All informations are saved in /home/userfolder/$COIN_NAME.txt or in /root/$COIN_NAME.txt if run as root!"
+ echo -e "Obs: All informations are saved in $HOME_FOLDER/$COIN_NAME.txt !"
+ echo -e " "
  message "${GREEN}CONGRATULATIONS, YOUR MASTERNODE IS INSTALLED AND CONFIGURED! ${NC}"
  echo -e "================================================================================================================================" 
  echo -e "$COIN_NAME Masternode is up and running listening on port ${RED}$COIN_PORT${NC}." 
@@ -460,7 +480,7 @@ if [ ! -e "$CONFIG_FOLDER/masternode.conf" ]; then rm $CONFIG_FOLDER/masternode.
 
 install() {
         checks
-        install_dependences
+        install_dependences 
 	install_swap_file
 	prepare_node
 	install_blockchain
@@ -468,6 +488,7 @@ install() {
 	create_configs
 	install_service
 	last_commits
+	#install_sentinel
 	success
 }
 
@@ -475,4 +496,3 @@ install() {
 #default to --without-gui
 clear
 install --without-gui
-
