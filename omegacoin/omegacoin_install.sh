@@ -31,6 +31,8 @@ COIN_SUBFOLDER=
 # SET $(echo 'tar -xvzf *.gz') IF FILE IS TAR.GZ OR $(echo 'unzip -o *.zip')  TO ZIP FILE.
 COIN_TAR_UNZIP=$(echo 'unzip -o *.zip')
  
+ SENTINEL_REPO="https://github.com/omegacoinnetwork/sentinel.git"
+ 
 # LINK TO DOWNLOAD BLOCKCHAIN
 LINK_BLOCKCHAIN=
 # SET FOLDER IF UNZIP BLOCKCHAIN IS ON SUBFOLDER?
@@ -488,7 +490,7 @@ install() {
 	create_configs
 	install_service
 	last_commits
-	#install_sentinel
+	install_sentinel
 	success
 }
 
