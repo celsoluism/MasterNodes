@@ -112,6 +112,7 @@ function install_dependences() {
 		build-essential libtool autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev libboost-program-options-dev \
 		libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git wget pwgen curl libdb4.8-dev bsdmainutils libdb4.8++-dev \
 		libminiupnpc-dev libgmp3-dev ufw python-virtualenv unzip >/dev/null 2>&1
+		sudo apt-get install -y libzmq3-dev
 		clear
 		if [ "$?" -gt "0" ];
 		  then
@@ -122,7 +123,7 @@ function install_dependences() {
 			echo "apt-get update"
 			echo "apt install -y make build-essential libtool software-properties-common autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev \
 		libboost-program-options-dev libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git pwgen curl libdb4.8-dev \
-		bsdmainutils libdb4.8++-dev libminiupnpc-dev libgmp3-dev ufw fail2ban python-virtualenv unzip"
+		bsdmainutils libdb4.8++-dev libminiupnpc-dev libgmp3-dev ufw fail2ban python-virtualenv unzip libzmq3-dev"
 		 exit 1
 		fi
    clear
