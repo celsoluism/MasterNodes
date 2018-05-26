@@ -1,6 +1,6 @@
 # Automated MasterNodes Installer
 
-Install MasterNodes By Selector... It is most automated possible, many masternodes automatic start and work completely after install without much intervention...
+Install MasterNodes By Selector... It is most automated possible with easy-to-understand graphical user interface , many masternodes automatic start and work completely after install without much intervention...
 
 DEPENDENCES:
 
@@ -23,6 +23,8 @@ HOW TO UPDATE
 Run this command and wait:
 
         ./rebase.sh
+        
+        
 
 If like send donations:
 
