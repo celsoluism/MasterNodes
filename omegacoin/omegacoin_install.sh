@@ -399,7 +399,7 @@ function install_sentinel() {
   cd $HOME_FOLDER
   echo -e "${GREEN}Install sentinel.${NC}"
   sudo apt-get install virtualenv >/dev/null 2>&1
-  git clone $SENTINEL_REPO $HOME_FOLDER/sentinel >/dev/null 2>&1
+  git clone $SENTINEL_REPO # $HOME_FOLDER/sentinel >/dev/null 2>&1
   cd $HOME_FOLDER/sentinel
   virtualenv ./venv >/dev/null 2>&1  
   ./venv/bin/pip install -r requirements.txt >/dev/null 2>&1
@@ -478,17 +478,17 @@ if [ ! -e "$CONFIG_FOLDER/masternode.conf" ]; then rm $CONFIG_FOLDER/masternode.
 }
 
 install() {
-        checks
-        install_dependences 
-	install_swap_file
-	prepare_node
-	install_blockchain
-	enable_firewall
-	create_configs
-	install_service
-	last_commits
+        #checks
+        #install_dependences 
+	#install_swap_file
+	#prepare_node
+	#install_blockchain
+	#enable_firewall
+	#create_configs
+	#install_service
+	#last_commits
 	install_sentinel
-	success
+	#success
 }
 
 #main
