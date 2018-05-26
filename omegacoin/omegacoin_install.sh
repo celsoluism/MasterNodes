@@ -397,6 +397,7 @@ clear
 function install_sentinel() {
   SENTINELPORT=$[10001+$COIN_PORT]
   cd $HOME_FOLDER
+  sudo rm -rf $HOME_FOLDER/sentinel
   echo -e "${GREEN}Install sentinel.${NC}"
   sudo apt-get install virtualenv >/dev/null 2>&1
   git clone $SENTINEL_REPO # $HOME_FOLDER/sentinel >/dev/null 2>&1
