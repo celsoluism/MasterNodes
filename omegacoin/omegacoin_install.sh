@@ -28,7 +28,7 @@ USE_BIND=n
 
 # SENTINEL CONFIGURATIONS
 SENTINEL_REPO='https://github.com/omegacoinnetwork/sentinel.git'
-SENTINEL_CONF=$(echo "$COIN_NAME_conf=$HOME_FOLDER/.omegacoincore/omegacoin.conf")
+SENTINEL_CONF="$COIN_NAME_conf=$HOME_FOLDER/.omegacoincore/omegacoin.conf"
 
 # FILE WITH NODES IN MASTERNODE INSTALL FOLDER
 FILE_NODES=~/MasterNodes/omegacoin/omegacoin_nodes.txt
