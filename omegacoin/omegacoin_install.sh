@@ -196,6 +196,7 @@ function install_blockchain() {
 function enable_firewall() {
   echo -e "Installing and setting up firewall to allow ingress on port ${GREEN}$COIN_PORT${NC}"
   sudo ufw allow $COIN_PORT/tcp comment "$COIN_NAME MN port" >/dev/null
+  sudo ufw allow $RPC_PORT/tcp comment "$COIN_NAME MN RPC port" >/dev/null
   sudo ufw allow ssh comment "SSH" >/dev/null 2>&1
   sudo ufw limit ssh/tcp >/dev/null 2>&1
   sudo ufw default allow outgoing >/dev/null 2>&1
@@ -400,11 +401,11 @@ clear
 
 function install_sentinel() {
   SENTINELPORT=$[10001+$COIN_PORT]
-  cd $HOME_FOLDER
-  sudo rm -rf $HOME_FOLDER/sentinel
+  cd $HOME_FOLDER  >/dev/null 2>&1
+  sudo rm -rf $HOME_FOLDER/sentinel_$COIN_NAME  >/dev/null 2>&1 
   echo -e "${GREEN}Install sentinel.${NC}"
-  sudo apt-get install virtualenv #>/dev/null 2>&1
-  git clone $SENTINEL_REPO $HOME_FOLDER/sentinel_$COIN_NAME 
+  sudo apt-get install virtualenv >/dev/null 2>&1
+  git clone $SENTINEL_REPO $HOME_FOLDER/sentinel_$COIN_NAME  >/dev/null 2>&1
   cd $HOME_FOLDER/sentinel_$COIN_NAME
   virtualenv ./venv 
   ./venv/bin/pip install -r requirements.txt 
