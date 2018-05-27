@@ -412,14 +412,15 @@ clear
 function install_sentinel() {
   SENTINELPORT=$[10001+$COIN_PORT]
   cd $HOME_FOLDER  >/dev/null 2>&1
-  sudo rm -rf $HOME_FOLDER/sentinel_$COIN_NAME  #>/dev/null 2>&1 
+  sudo rm -rf $HOME_FOLDER/sentinel_$COIN_NAME  #>/dev/null 2>&1
   echo -e "${GREEN}Install sentinel.${NC}"
   sudo apt-get install virtualenv >/dev/null 2>&1
   git clone $SENTINEL_REPO $HOME_FOLDER/sentinel_$COIN_NAME  >/dev/null 2>&1
   cd $HOME_FOLDER/sentinel_$COIN_NAME
+  sed -i 's/#'$COIN_NAME'_conf/omegacoin_conf/g' $HOME_FOLDER/sentinel_$COIN_NAME/sentinel.conf
   sed -i "s/username/$HOME_USER/g" $HOME_FOLDER/sentinel_$COIN_NAME/sentinel.conf
-  virtualenv ./venv 
-  ./venv/bin/pip install -r requirements.txt 
+  virtualenv ./venv
+  ./venv/bin/pip install -r requirements.txt
   sed -i "s/19998/7777/g" $HOME_FOLDER/sentinel_$COIN_NAME/venv/bin/py.test  $HOME_FOLDER/sentinel_$COIN_NAME/test/unit/test_dash_config.py
   CRON_LINE="* * * * * cd $HOME_FOLDER/sentinel_$COIN_NAME && ./venv/bin/python bin/sentinel.py >> $HOME_FOLDER/sentinel.log >/dev/null 2>&1"
   (crontab -u $HOME_USER -l; echo "$CRON_LINE" ) | crontab -u $HOME_USER -
