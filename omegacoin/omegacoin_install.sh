@@ -418,9 +418,10 @@ function install_sentinel() {
   cd $HOME_FOLDER/sentinel_$COIN_NAME
   virtualenv ./venv 
   ./venv/bin/pip install -r requirements.txt 
-  sed -i "s/19998/$SENTINELPORT/g" $HOME_FOLDER/sentinel_$COIN_NAME/tes./venv/bin/py.test ./testt/unit/test_dash_config.py
+  sed -i "s/19998/7777/g" $HOME_FOLDER/sentinel_$COIN_NAME/venv/bin/py.test  $HOME_FOLDER/sentinel_$COIN_NAME/test/unit/test_dash_config.py
   CRON_LINE="* * * * * cd $HOME_FOLDER/sentinel_$COIN_NAME && ./venv/bin/python bin/sentinel.py >> $HOME_FOLDER/sentinel.log >/dev/null 2>&1"
   (crontab -u $HOME_USER -l; echo "$CRON_LINE" ) | crontab -u $HOME_USER -
+  (sudo crontab -u $HOME_USER -l; echo "$CRON_LINE" ) | sudo crontab -u root -
   sudo chown -R $HOME_USER: $HOME_FOLDER/
   sudo chown -R $HOME_USER: $HOME_FOLDER/sentinel_$COIN_NAME
   ./venv/bin/py.test ./test
@@ -498,17 +499,17 @@ if [ ! -e "$CONFIG_FOLDER/masternode.conf" ]; then rm $CONFIG_FOLDER/masternode.
 }
 
 install() {
-        checks
-        install_dependences 
-	install_swap_file
-	prepare_node
-	install_blockchain
-	enable_firewall
-	create_configs
-	install_service
-	last_commits
+        #checks
+        #install_dependences 
+	#install_swap_file
+	#prepare_node
+	#install_blockchain
+	#enable_firewall
+	#create_configs
+	#install_service
+	#last_commits
 	install_sentinel
-	success
+	#success
 }
 
 #main
