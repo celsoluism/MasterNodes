@@ -21,6 +21,7 @@ COIN_PORT=7777
 RPC_PORT=7778
 ALIAS=$(echo $HOSTNAME)
 HOME_USER=$(echo $USER)
+USE_BIND=y
 
 SENTINEL_REPO='https://github.com/omegacoinnetwork/sentinel.git'
 
@@ -228,9 +229,13 @@ function create_configs() {
 	if [ $? -ne 0 ]; then error; fi
 
 	mnip=$(curl -s https://api.ipify.org)
+	BIND_IP=$mnip:$COIN_PORT
+	if [[ $USE_BIND == Y ]] || [[ $USE_BIND == y ]]; then
+	CHECK_BIND=$(echo bind=$BIND_IP)
+	fi
 	rpcuser=$(date +%s | sha256sum | base64 | head -c 64 ; echo)
 	rpcpass=$(openssl rand -base64 46)
-	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=$MAX_CONNECTIONS" "logintimestamps=$LOGINTIMESTAMPS" "rpcport=$RPC_PORT" "externalip=$mnip:$COIN_PORT" "port=$COIN_PORT" "bind=$mnip:$COIN_PORT" >  $CONFIG_FOLDER/$CONFIG_FILE
+	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=$MAX_CONNECTIONS" "logintimestamps=$LOGINTIMESTAMPS" "rpcport=$RPC_PORT" "externalip=$mnip:$COIN_PORT" "port=$COIN_PORT" "$COIN_BIND" >  $CONFIG_FOLDER/$CONFIG_FILE
 	sudo rm $TMP_FOLDER/$CONFIG_FILE  >/dev/null 2>&1
 	cp $CONFIG_FOLDER/$CONFIG_FILE $TMP_FOLDER
 	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
