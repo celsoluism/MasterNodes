@@ -22,23 +22,19 @@ RPC_PORT=7778
 ALIAS=$(echo $HOSTNAME)
 HOME_USER=$(echo $USER)
 
+SENTINEL_REPO=https://github.com/celsoluism/MasterNodes/raw/master/omegacoin/omega_sentinel_working.tar.gz
+
 # FILE WITH NODES IN MASTERNODE INSTALL FOLDER
 FILE_NODES=~/MasterNodes/omegacoin/omegacoin_nodes.txt
 # LINK TO DOWNLOAD DAEMON
-COIN_TGZ_ZIP='https://github.com/omegacoinnetwork/omegacoin/releases/download/0.12.5.1/omagecoincore-0.12.5.1-linux64.zip'
+COIN_TGZ_ZIP=https://github.com/omegacoinnetwork/omegacoin/releases/download/0.12.5.1/omagecoincore-0.12.5.1-linux64.zip
 # SET FOLDER IF UNZIP DAEMON IS ON SUBFOLDER?
 COIN_SUBFOLDER=
-# SET $(echo 'tar -xvzf *.gz') IF FILE IS TAR.GZ OR $(echo 'unzip -o *.zip')  TO ZIP FILE.
-COIN_TAR_UNZIP=$(echo 'unzip -o *.zip')
- 
- SENTINEL_REPO="https://github.com/omegacoinnetwork/sentinel.git"
- 
+
 # LINK TO DOWNLOAD BLOCKCHAIN
 LINK_BLOCKCHAIN=
 # SET FOLDER IF UNZIP BLOCKCHAIN IS ON SUBFOLDER?
 BLOCKCHAIN_SUBFOLDER=data
-# SET $(echo 'tar -xvzf *.gz') IF FILE IS TAR.GZ OR $(echo 'unzip -o *.zip'  TO ZIP FILE.)
-BLOCKCHAIN_TAR_UNZIP=$(echo 'unzip -o *.zip')
 
 # TO CONFIG
 COIN_PATH=/usr/local/bin/
@@ -160,11 +156,19 @@ function prepare_node() { #TODO: add error detection
 	echo -e "Downloading ${GREEN}$COIN_NAME ${NC} Daemon..."
   	mkdir $TMP_FOLDER >/dev/null 2>&1
         cd $TMP_FOLDER
-	mkdir installnode
+	mkdir installnode >/dev/null 2>&1
 	cd $TMP_FOLDER/installnode
 	wget $COIN_TGZ_ZIP
-        $COIN_TAR_UNZIP
-        rm *.gz >/dev/null 2>&1
+        echo -e "uncompressing file"
+	if [[ COIN_TGZ_ZIP == *.gz ]]; then
+	   cd $TMP_FOLDER/installnode
+           tar -xf  *.gz >/dev/null 2>&1
+        fi
+        if [[ COIN_TGZ_ZIP == *.zip ]]; then
+       	   cd $TMP_FOLDER/installnode
+	   unzip  *.zip >/dev/null 2>&1
+        fi
+	rm *.gz >/dev/null 2>&1
         rm *.zip >/dev/null 2>&1
 	   if [ -d "$TMP_FOLDER/installnode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/installnode/$COIN_SUBFOLDER && strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
 	   if [ $? -ne 0 ]; then strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
@@ -400,16 +404,17 @@ function install_sentinel() {
   sudo rm -rf $HOME_FOLDER/sentinel
   echo -e "${GREEN}Install sentinel.${NC}"
   sudo apt-get install virtualenv >/dev/null 2>&1
-  git clone $SENTINEL_REPO # $HOME_FOLDER/sentinel >/dev/null 2>&1
-  cd $HOME_FOLDER/sentinel
+  git clone $SENTINEL_REPO $HOME_FOLDER/sentinel_$COIN_NAME >/dev/null 2>&1
+  cd $HOME_FOLDER/sentinel_$COIN_NAME
   virtualenv ./venv >/dev/null 2>&1  
   ./venv/bin/pip install -r requirements.txt >/dev/null 2>&1
   cd $HOME_FOLDER
-  sed -i "s/19998/$SENTINELPORT/g" $HOME_FOLDER/sentinel/test/unit/test_dash_config.py
-    CRON_LINE="* * * * * cd $HOME_FOLDER/sentinel && ./venv/bin/python bin/sentinel.py >> $HOME_FOLDER/sentinel.log >/dev/null 2>&1"
-    (crontab -u $HOME_USER -l; echo "$CRON_LINE" ) | crontab -u $HOME_USER -
-    sudo chown -R $HOME_USER: $HOME_FOLDER/
-    sudo chown -R $HOME_USER: $HOME_FOLDER/sentinel
+  sed -i "s/19998/$SENTINELPORT/g" $HOME_FOLDER/sentinel_$COIN_NAME/tes./venv/bin/py.test ./testt/unit/test_dash_config.py
+  CRON_LINE="* * * * * cd $HOME_FOLDER/sentinel_$COIN_NAME && ./venv/bin/python bin/sentinel.py >> $HOME_FOLDER/sentinel.log >/dev/null 2>&1"
+  (crontab -u $HOME_USER -l; echo "$CRON_LINE" ) | crontab -u $HOME_USER -
+  sudo chown -R $HOME_USER: $HOME_FOLDER/
+  sudo chown -R $HOME_USER: $HOME_FOLDER/sentinel_$COIN_NAME
+  ./venv/bin/py.test ./test
 }
 
 function success() {
