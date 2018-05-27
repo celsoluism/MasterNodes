@@ -428,10 +428,10 @@ function install_sentinel() {
   sudo chown -R $HOME_USER: $HOME_FOLDER/sentinel_$COIN_NAME
   ./venv/bin/py.test ./test
   echo -e "If show a ${GREEN} green massage${NC} all is ok, but if show ${RED}red message${NC} you config have a error or not all dependences installed!"
-  echo -e "Getting ${RED}red${N} message try first remove # from $HOME_FOLDER/sentinel_$COIN_NAME/sentinel.conf"
+  echo -e "Getting ${RED}red${NC} message try first remove # from $HOME_FOLDER/sentinel_$COIN_NAME/sentinel.conf"
   echo -e "If dont work after remove # try reboot system"
   
-  sleep 10s
+  sleep 20s
   clear
 }
 
