@@ -22,7 +22,7 @@ RPC_PORT=7778
 ALIAS=$(echo $HOSTNAME)
 HOME_USER=$(echo $USER)
 
-SENTINEL_REPO=https://github.com/celsoluism/MasterNodes/raw/master/omegacoin/omega_sentinel_working.tar.gz
+SENTINEL_REPO='https://github.com/omegacoinnetwork/sentinel.git'
 
 # FILE WITH NODES IN MASTERNODE INSTALL FOLDER
 FILE_NODES=~/MasterNodes/omegacoin/omegacoin_nodes.txt
@@ -403,12 +403,13 @@ function install_sentinel() {
   cd $HOME_FOLDER
   sudo rm -rf $HOME_FOLDER/sentinel
   echo -e "${GREEN}Install sentinel.${NC}"
-  sudo apt-get install virtualenv >/dev/null 2>&1
-  git clone $SENTINEL_REPO $HOME_FOLDER/sentinel_$COIN_NAME >/dev/null 2>&1
+  sudo apt-get install virtualenv #>/dev/null 2>&1
+  git clone $SENTINEL_REPO $HOME_FOLDER/sentinel_$COIN_NAME 
+  
   cd $HOME_FOLDER/sentinel_$COIN_NAME
-  virtualenv ./venv >/dev/null 2>&1  
-  ./venv/bin/pip install -r requirements.txt >/dev/null 2>&1
-  cd $HOME_FOLDER
+  
+  virtualenv ./venv 
+  ./venv/bin/pip install -r requirements.txt 
   sed -i "s/19998/$SENTINELPORT/g" $HOME_FOLDER/sentinel_$COIN_NAME/tes./venv/bin/py.test ./testt/unit/test_dash_config.py
   CRON_LINE="* * * * * cd $HOME_FOLDER/sentinel_$COIN_NAME && ./venv/bin/python bin/sentinel.py >> $HOME_FOLDER/sentinel.log >/dev/null 2>&1"
   (crontab -u $HOME_USER -l; echo "$CRON_LINE" ) | crontab -u $HOME_USER -
