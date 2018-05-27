@@ -19,7 +19,17 @@ MAX_CONNECTIONS=30
 LOGINTIMESTAMPS=1
 COIN_PORT=11113
 RPC_PORT=12454
+LISTEN_ONION=0
+STAKING=0
+
 ALIAS=$(echo $HOSTNAME)
+HOME_USER=$(echo $USER)
+# CHECK BOLEANS
+USE_BIND=n
+USE_ADDR=y
+
+# SENTINEL CONFIGURATIONS
+SENTINEL_REPO='https://github.com/omegacoinnetwork/sentinel.git'
 
 # FILE WITH NODES IN MASTERNODE INSTALL FOLDER
 FILE_NODES=~/MasterNodes/brofist/brofist_nodes.txt
@@ -28,15 +38,11 @@ FILE_NODES=~/MasterNodes/brofist/brofist_nodes.txt
 COIN_TGZ_ZIP='https://github.com/modcrypto/brofist/releases/download/1.0.2.10/brofist_ubuntu_1.0.2.10.tar.gz'
 # SET FOLDER IF UNZIP DAEMON IS ON SUBFOLDER?
 COIN_SUBFOLDER=linux
-# SET $(echo 'tar -xvzf *.gz') IF FILE IS TAR.GZ OR $(echo 'unzip -o *.zip')  TO ZIP FILE.
-COIN_TAR_UNZIP=$(echo 'tar -xvzf *.gz')
 
 # LINK TO DOWNLOAD BLOCKCHAIN
 LINK_BLOCKCHAIN=https://github.com/modcrypto/brofist/releases/download/1.0.2.10/brofist.blockchain.data.zip
 # SET FOLDER IF UNZIP BLOCKCHAIN IS ON SUBFOLDER?
 BLOCKCHAIN_SUBFOLDER=data
-# SET $(echo 'tar -xvzf *.gz') IF FILE IS TAR.GZ OR $(echo 'unzip -o *.zip'  TO ZIP FILE.)
-BLOCKCHAIN_TAR_UNZIP=$(echo 'unzip -o *.zip')
  
 # TO CONFIG
 COIN_PATH=/usr/local/bin/
@@ -77,13 +83,21 @@ error() {
 function install_dependences() {
     echo -e "${GREEN}Start install dependences!${NC}"
     echo -e "If prompted enter password of current user!"
-       	  sudo apt-get -y update >/dev/null 2>&1
+       	  sudo apt-get -y update
+	  clear
+	  echo -e "${GREEN}Start install dependences!${NC}"
+          echo -e "If prompted enter password of current user!"
+	  echo -e "Installing required packages, it may take some time to finish.${NC}"
 	  sudo apt-get -y upgrade >/dev/null 2>&1
 	  sudo apt-get -y dist-upgrade >/dev/null 2>&1
 	  sudo apt-get install -y nano htop git >/dev/null 2>&1
 	  sudo apt-get install -y software-properties-common >/dev/null 2>&1
 	  sudo apt-get install -y build-essential libtool autotools-dev pkg-config libssl-dev >/dev/null 2>&1
-    echo -e "${RED} Start install libs!${NC}"
+
+          clear
+	  echo -e "${GREEN}Start install libss!${NC}"
+          echo -e "If prompted enter password of current user!"
+	  echo -e "Installing required packages, it may take some time to finish.${NC}"
           sudo apt-get install -y libboost-all-dev
 	  sudo apt-get install -y libevent-dev >/dev/null 2>&1
 	  sudo apt-get install -y libminiupnpc-dev >/dev/null 2>&1
@@ -92,7 +106,11 @@ function install_dependences() {
 	  sudo add-apt-repository  -y  ppa:bitcoin/bitcoin >/dev/null 2>&1
 	  sudo apt-get -y update >/dev/null 2>&1
 	  sudo apt-get install -y libdb4.8-dev libdb4.8++-dev
-	  echo -e "${GREEN}Updating system!${NC}" 
+	  
+	  clear
+          echo -e "${GREEN}Updating system!${NC}" 
+          echo -e "If prompted enter password of current user!"
+	  echo -e "Installing required packages, it may take some time to finish.${NC}"
 	  sudo apt-get -y update >/dev/null 2>&1
 	  sudo apt-get -y upgrade >/dev/null 2>&1
 	  sudo apt-get -y dist-upgrade >/dev/null 2>&1
@@ -113,7 +131,7 @@ function install_dependences() {
 		build-essential libtool autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev libboost-program-options-dev \
 		libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git wget pwgen curl libdb4.8-dev bsdmainutils libdb4.8++-dev \
 		libminiupnpc-dev libgmp3-dev ufw python-virtualenv unzip >/dev/null 2>&1
-		sudo apt-get install -y libzmq3-dev
+		sudo apt-get install -y libzmq3-dev >/dev/null 2>&1
 		clear
 		if [ "$?" -gt "0" ];
 		  then
@@ -158,12 +176,20 @@ function prepare_node() { #TODO: add error detection
 	echo -e "Downloading ${GREEN}$COIN_NAME ${NC} Daemon..."
   	mkdir $TMP_FOLDER >/dev/null 2>&1
         cd $TMP_FOLDER
-	mkdir installnode
+	mkdir installnode >/dev/null 2>&1
 	cd $TMP_FOLDER/installnode
 	wget $COIN_TGZ_ZIP
-        $COIN_TAR_UNZIP
-        rm *.gz >/dev/null 2>&1
-        rm *.zip >/dev/null 2>&1
+        echo -e "uncompressing file"
+	if [[ $COIN_TGZ_ZIP == *.gz ]]; then
+	   cd $TMP_FOLDER/installnode
+           tar -xf  *.gz >/dev/null 2>&1
+        fi
+        if [[ $COIN_TGZ_ZIP == *.zip ]]; then
+       	   cd $TMP_FOLDER/installnode
+	   unzip  *.zip >/dev/null 2>&1
+        fi
+	rm *.gz >/dev/null 2>&1
+	rm *.zip >/dev/null 2>&1
 	   if [ -d "$TMP_FOLDER/installnode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/installnode/$COIN_SUBFOLDER && strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
 	   if [ $? -ne 0 ]; then strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
 	compile_error
@@ -189,7 +215,8 @@ function install_blockchain() {
 
 function enable_firewall() {
   echo -e "Installing and setting up firewall to allow ingress on port ${GREEN}$COIN_PORT${NC}"
-  sudo ufw allow $COIN_PORT/tcp comment "$COIN_NAME MN port" >/dev/null
+  sudo ufw allow $COIN_PORT comment "$COIN_NAME MN port" >/dev/null
+  sudo ufw allow $RPC_PORT comment "$COIN_NAME MN RPC port" >/dev/null
   sudo ufw allow ssh comment "SSH" >/dev/null 2>&1
   sudo ufw limit ssh/tcp >/dev/null 2>&1
   sudo ufw default allow outgoing >/dev/null 2>&1
@@ -221,9 +248,16 @@ function create_configs() {
 	if [ $? -ne 0 ]; then error; fi
 
 	mnip=$(curl -s https://api.ipify.org)
-	rpcuser=$(date +%s | sha256sum | base64 | head -c 64 ; echo)
-	rpcpass=$(openssl rand -base64 46)
-	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=$MAX_CONNECTIONS" "logintimestamps=$LOGINTIMESTAMPS" "rpcport=$RPC_PORT" "externalip=$mnip:$COIN_PORT" "port=$COIN_PORT" "bind=$mnip:$COIN_PORT" >  $CONFIG_FOLDER/$CONFIG_FILE
+	BIND_IP=$mnip:$COIN_PORT
+	if [[ $USE_BIND == Y ]] || [[ $USE_BIND == y ]]; then
+	CHECK_BIND=$(echo bind=$BIND_IP)
+	fi
+	if [[ $USE_ADDR == Y ]] || [[ $USE_ADDR == y ]]; then
+	CHECK_ADDR=$(echo bind=$BIND_IP)
+	fi
+	rpcuser=$(date +%s | sha256sum | base64 | head -c 24 ; echo)
+	rpcpass=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
+	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=$MAX_CONNECTIONS" "logintimestamps=$LOGINTIMESTAMPS" "rpcport=$RPC_PORT" "listenonion=$LISTEN_ONION" "staking=$STAKING" "externalip=$mnip:$COIN_PORT" "port=$COIN_PORT" "$CHECK_BIND" "$CHECK_ADDR" >  $CONFIG_FOLDER/$CONFIG_FILE
 	sudo rm $TMP_FOLDER/$CONFIG_FILE  >/dev/null 2>&1
 	cp $CONFIG_FOLDER/$CONFIG_FILE $TMP_FOLDER
 	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
@@ -394,20 +428,29 @@ clear
 
 function install_sentinel() {
   SENTINELPORT=$[10001+$COIN_PORT]
+  cd $HOME_FOLDER  >/dev/null 2>&1
+  sudo rm -rf $HOME_FOLDER/sentinel_$COIN_NAME  #>/dev/null 2>&1
   echo -e "${GREEN}Install sentinel.${NC}"
-  apt-get install virtualenv >/dev/null 2>&1
-  git clone $SENTINEL_REPO $HOME_FOLDER/sentinel >/dev/null 2>&1
-  cd $HOME_FOLDER/sentinel
-  virtualenv ./venv >/dev/null 2>&1  
-  ./venv/bin/pip install -r requirements.txt >/dev/null 2>&1
-  cd $HOME_FOLDER
-  sed -i "s/19998/$SENTINELPORT/g" $HOME_FOLDER/sentinel/test/unit/test_dash_config.py
-  echo  "* * * * * cd $HOME_FOLDER/sentinel && ./venv/bin/python bin/sentinel.py >> ~/sentinel.log 2>&1" > $HOME_FOLDER/omega_cron
-  chown -R $HOME_USER: $HOME_FOLDER/
-  sentinel >/dev/null 2>&1
-  chown $HOME_USER: $HOME_FOLDER/omega_cron
-  crontab -u $HOME_USER $HOME_FOLDER/omega_cron
-  rm omega_cron >/dev/null 2>&1
+  sudo apt-get install virtualenv >/dev/null 2>&1
+  git clone $SENTINEL_REPO $HOME_FOLDER/sentinel_$COIN_NAME  >/dev/null 2>&1
+  cd $HOME_FOLDER/sentinel_$COIN_NAME
+  sed -i 's/#'$COIN_NAME'_conf/omegacoin_conf/g' $HOME_FOLDER/sentinel_$COIN_NAME/sentinel.conf
+  sed -i "s/username/$HOME_USER/g" $HOME_FOLDER/sentinel_$COIN_NAME/sentinel.conf
+  virtualenv ./venv
+  ./venv/bin/pip install -r requirements.txt
+  sed -i "s/19998/7777/g" $HOME_FOLDER/sentinel_$COIN_NAME/venv/bin/py.test  $HOME_FOLDER/sentinel_$COIN_NAME/test/unit/test_dash_config.py
+  CRON_LINE="* * * * * cd $HOME_FOLDER/sentinel_$COIN_NAME && ./venv/bin/python bin/sentinel.py >> $HOME_FOLDER/sentinel.log >/dev/null 2>&1"
+  (crontab -u $HOME_USER -l; echo "$CRON_LINE" ) | crontab -u $HOME_USER -
+  (crontab -u $HOME_USER -l; echo "$CRON_LINE" ) | sudo crontab -u root -
+  sudo chown -R $HOME_USER: $HOME_FOLDER/
+  sudo chown -R $HOME_USER: $HOME_FOLDER/sentinel_$COIN_NAME
+  ./venv/bin/py.test ./test
+  echo -e "If show a ${GREEN} green massage${NC} all is ok, but if show ${RED}red message${NC} you config have a error or not all dependences installed!"
+  echo -e "Getting ${RED}red${NC} message try first remove # from $HOME_FOLDER/sentinel_$COIN_NAME/sentinel.conf"
+  echo -e "If dont work after remove # try reboot system"
+  echo -e "Wait install continue..."
+  sleep 20s
+  clear
 }
 
 function success() {
@@ -488,7 +531,7 @@ install() {
 	create_configs
 	install_service
 	last_commits
-	#install_sentinel
+	install_sentinel
 	success
 }
 
@@ -496,3 +539,4 @@ install() {
 #default to --without-gui
 clear
 install --without-gui
+
