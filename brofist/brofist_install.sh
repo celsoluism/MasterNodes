@@ -522,7 +522,7 @@ if [ ! -e "$CONFIG_FOLDER/masternode.conf" ]; then rm $CONFIG_FOLDER/masternode.
 }
 
 install() {
-        #checks
+        checks
         install_dependences 
 	install_swap_file
 	prepare_node
