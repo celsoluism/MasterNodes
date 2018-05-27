@@ -201,8 +201,8 @@ function install_blockchain() {
 
 function enable_firewall() {
   echo -e "Installing and setting up firewall to allow ingress on port ${GREEN}$COIN_PORT${NC}"
-  sudo ufw allow $COIN_PORT/tcp comment "$COIN_NAME MN port" >/dev/null
-  sudo ufw allow $RPC_PORT/tcp comment "$COIN_NAME MN RPC port" >/dev/null
+  sudo ufw allow $COIN_PORT comment "$COIN_NAME MN port" >/dev/null
+  sudo ufw allow $RPC_PORT comment "$COIN_NAME MN RPC port" >/dev/null
   sudo ufw allow ssh comment "SSH" >/dev/null 2>&1
   sudo ufw limit ssh/tcp >/dev/null 2>&1
   sudo ufw default allow outgoing >/dev/null 2>&1
@@ -504,17 +504,17 @@ if [ ! -e "$CONFIG_FOLDER/masternode.conf" ]; then rm $CONFIG_FOLDER/masternode.
 }
 
 install() {
-        #checks
-        #install_dependences 
-	#install_swap_file
-	#prepare_node
-	#install_blockchain
-	#enable_firewall
-	#create_configs
-	#install_service
-	#last_commits
+        checks
+        install_dependences 
+	install_swap_file
+	prepare_node
+	install_blockchain
+	enable_firewall
+	create_configs
+	install_service
+	last_commits
 	install_sentinel
-	#success
+	success
 }
 
 #main
