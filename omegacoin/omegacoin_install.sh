@@ -19,9 +19,12 @@ MAX_CONNECTIONS=30
 LOGINTIMESTAMPS=1
 COIN_PORT=7777
 RPC_PORT=7778
+LISTEN_ONION=0
+STAKING=0
+
 ALIAS=$(echo $HOSTNAME)
 HOME_USER=$(echo $USER)
-USE_BIND=y
+USE_BIND=n
 
 SENTINEL_REPO='https://github.com/omegacoinnetwork/sentinel.git'
 
@@ -235,7 +238,7 @@ function create_configs() {
 	fi
 	rpcuser=$(date +%s | sha256sum | base64 | head -c 64 ; echo)
 	rpcpass=$(openssl rand -base64 46)
-	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=$MAX_CONNECTIONS" "logintimestamps=$LOGINTIMESTAMPS" "rpcport=$RPC_PORT" "externalip=$mnip:$COIN_PORT" "port=$COIN_PORT" "$COIN_BIND" >  $CONFIG_FOLDER/$CONFIG_FILE
+	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=$MAX_CONNECTIONS" "logintimestamps=$LOGINTIMESTAMPS" "rpcport=$RPC_PORT" "listenonion=$LISTEN_ONION" "staking=$STAKING" "externalip=$mnip:$COIN_PORT" "port=$COIN_PORT" "$CHECK_BIND"  >  $CONFIG_FOLDER/$CONFIG_FILE
 	sudo rm $TMP_FOLDER/$CONFIG_FILE  >/dev/null 2>&1
 	cp $CONFIG_FOLDER/$CONFIG_FILE $TMP_FOLDER
 	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
