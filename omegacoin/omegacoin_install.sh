@@ -80,12 +80,13 @@ function install_dependences() {
     echo -e "${GREEN}Start install dependences!${NC}"
     echo -e "If prompted enter password of current user!"
        	  sudo apt-get -y update >/dev/null 2>&1
+	  echo -e "Installing required packages, it may take some time to finish.${NC}"
 	  sudo apt-get -y upgrade >/dev/null 2>&1
 	  sudo apt-get -y dist-upgrade >/dev/null 2>&1
 	  sudo apt-get install -y nano htop git >/dev/null 2>&1
 	  sudo apt-get install -y software-properties-common >/dev/null 2>&1
 	  sudo apt-get install -y build-essential libtool autotools-dev pkg-config libssl-dev >/dev/null 2>&1
-    echo -e "${RED} Start install libs!${NC}"
+    echo -e "${GREEN} Start install libs!${NC}"
           sudo apt-get install -y libboost-all-dev
 	  sudo apt-get install -y libevent-dev >/dev/null 2>&1
 	  sudo apt-get install -y libminiupnpc-dev >/dev/null 2>&1
