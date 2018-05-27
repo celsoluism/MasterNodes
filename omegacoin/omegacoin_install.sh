@@ -28,7 +28,6 @@ USE_BIND=n
 
 # SENTINEL CONFIGURATIONS
 SENTINEL_REPO='https://github.com/omegacoinnetwork/sentinel.git'
-SENTINEL_CONF="$COIN_NAME_conf=$HOME_FOLDER/.omegacoincore/omegacoin.conf"
 
 # FILE WITH NODES IN MASTERNODE INSTALL FOLDER
 FILE_NODES=~/MasterNodes/omegacoin/omegacoin_nodes.txt
@@ -418,7 +417,7 @@ function install_sentinel() {
   sudo apt-get install virtualenv >/dev/null 2>&1
   git clone $SENTINEL_REPO $HOME_FOLDER/sentinel_$COIN_NAME  >/dev/null 2>&1
   cd $HOME_FOLDER/sentinel_$COIN_NAME
-  echo "$SENTINEL_CONF" >> $HOME_FOLDER/sentinel_$COIN_NAME/sentinel.conf
+  sed -i "s/username/$USER_NAME/g" $HOME_FOLDER/sentinel_$COIN_NAME/sentinel.conf
   virtualenv ./venv 
   ./venv/bin/pip install -r requirements.txt 
   sed -i "s/19998/7777/g" $HOME_FOLDER/sentinel_$COIN_NAME/venv/bin/py.test  $HOME_FOLDER/sentinel_$COIN_NAME/test/unit/test_dash_config.py
@@ -429,8 +428,11 @@ function install_sentinel() {
   sudo chown -R $HOME_USER: $HOME_FOLDER/sentinel_$COIN_NAME
   ./venv/bin/py.test ./test
   echo -e "If show a ${GREEN} green massage${NC} all is ok, but if show ${RED}red message${NC} you config have a error or not all dependences installed!"
-  sleep 6s
-  #clear
+  echo -e "Getting ${RED}red${N} message try first remove # from $HOME_FOLDER/sentinel_$COIN_NAME/sentinel.conf"
+  echo -e "If dont work after remove # try reboot system"
+  
+  sleep 10s
+  clear
 }
 
 function success() {
