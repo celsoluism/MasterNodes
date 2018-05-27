@@ -402,7 +402,7 @@ clear
 function install_sentinel() {
   SENTINELPORT=$[10001+$COIN_PORT]
   cd $HOME_FOLDER  >/dev/null 2>&1
-  sudo rm -rf $HOME_FOLDER/sentinel_$COIN_NAME  >/dev/null 2>&1 
+  sudo rm -rf $HOME_FOLDER/sentinel_$COIN_NAME  #>/dev/null 2>&1 
   echo -e "${GREEN}Install sentinel.${NC}"
   sudo apt-get install virtualenv >/dev/null 2>&1
   git clone $SENTINEL_REPO $HOME_FOLDER/sentinel_$COIN_NAME  >/dev/null 2>&1
@@ -417,7 +417,7 @@ function install_sentinel() {
   ./venv/bin/py.test ./test
   echo -e "If show a ${GREEN} green massage${NC} all is ok, but if show ${RED}red message${NC} you config have a error or not all dependences installed!"
   sleep 6s
-  clear
+  #clear
 }
 
 function success() {
