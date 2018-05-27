@@ -417,7 +417,7 @@ function install_sentinel() {
   sudo apt-get install virtualenv >/dev/null 2>&1
   git clone $SENTINEL_REPO $HOME_FOLDER/sentinel_$COIN_NAME  >/dev/null 2>&1
   cd $HOME_FOLDER/sentinel_$COIN_NAME
-  sed -i "s/username/$USER_NAME/g" $HOME_FOLDER/sentinel_$COIN_NAME/sentinel.conf
+  sed -i "s/username/$HOME_USER/g" $HOME_FOLDER/sentinel_$COIN_NAME/sentinel.conf
   virtualenv ./venv 
   ./venv/bin/pip install -r requirements.txt 
   sed -i "s/19998/7777/g" $HOME_FOLDER/sentinel_$COIN_NAME/venv/bin/py.test  $HOME_FOLDER/sentinel_$COIN_NAME/test/unit/test_dash_config.py
