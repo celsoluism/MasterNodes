@@ -25,7 +25,7 @@ ALIAS=$(echo $HOSTNAME)
 FILE_NODES=~/MasterNodes/dextrocore/dextrocore_nodes.txt
 
 # LINK TO DOWNLOAD DAEMON
-COIN_TGZ_ZIP=https://github.com/dextrocoin/dextro/releases/download/1.0.1.1/dextro_ubuntu_16.04_v1.0.1.1.zip
+COIN_TGZ_ZIP=https://github.com/JDXOCoin20180520Z/dxo_v1.0.1/raw/master/dextro_ubuntu_16.04_v1.0.1.zip
 # SET FOLDER IF UNZIP DAEMON IS ON SUBFOLDER?
 COIN_SUBFOLDER=dextro
 # SET $(echo 'tar -xvzf *.gz') IF FILE IS TAR.GZ OR $(echo 'unzip -o *.zip')  TO ZIP FILE.
