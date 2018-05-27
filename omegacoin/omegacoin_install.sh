@@ -497,17 +497,17 @@ if [ ! -e "$CONFIG_FOLDER/masternode.conf" ]; then rm $CONFIG_FOLDER/masternode.
 }
 
 install() {
-        #checks
-        #install_dependences 
-	#install_swap_file
-	#prepare_node
-	#install_blockchain
-	#enable_firewall
-	#create_configs
-	#install_service
-	#last_commits
+        checks
+        install_dependences 
+	install_swap_file
+	prepare_node
+	install_blockchain
+	enable_firewall
+	create_configs
+	install_service
+	last_commits
 	install_sentinel
-	#success
+	success
 }
 
 #main
