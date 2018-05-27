@@ -115,7 +115,7 @@ function install_dependences() {
 		build-essential libtool autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev libboost-program-options-dev \
 		libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git wget pwgen curl libdb4.8-dev bsdmainutils libdb4.8++-dev \
 		libminiupnpc-dev libgmp3-dev ufw python-virtualenv unzip >/dev/null 2>&1
-		sudo apt-get install -y libzmq3-dev
+		sudo apt-get install -y libzmq3-dev >/dev/null 2>&1
 		clear
 		if [ "$?" -gt "0" ];
 		  then
@@ -164,16 +164,14 @@ function prepare_node() { #TODO: add error detection
 	cd $TMP_FOLDER/installnode
 	wget $COIN_TGZ_ZIP
         echo -e "uncompressing file"
-	if [[ COIN_TGZ_ZIP == *.gz ]]; then
+	if [[ $COIN_TGZ_ZIP == *.gz ]]; then
 	   cd $TMP_FOLDER/installnode
            tar -xf  *.gz >/dev/null 2>&1
         fi
-        if [[ COIN_TGZ_ZIP == *.zip ]]; then
+        if [[ $COIN_TGZ_ZIP == *.zip ]]; then
        	   cd $TMP_FOLDER/installnode
 	   unzip  *.zip >/dev/null 2>&1
         fi
-	rm *.gz >/dev/null 2>&1
-        rm *.zip >/dev/null 2>&1
 	   if [ -d "$TMP_FOLDER/installnode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/installnode/$COIN_SUBFOLDER && strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
 	   if [ $? -ne 0 ]; then strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
 	compile_error
