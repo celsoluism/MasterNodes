@@ -405,9 +405,7 @@ function install_sentinel() {
   echo -e "${GREEN}Install sentinel.${NC}"
   sudo apt-get install virtualenv #>/dev/null 2>&1
   git clone $SENTINEL_REPO $HOME_FOLDER/sentinel_$COIN_NAME 
-  
   cd $HOME_FOLDER/sentinel_$COIN_NAME
-  
   virtualenv ./venv 
   ./venv/bin/pip install -r requirements.txt 
   sed -i "s/19998/$SENTINELPORT/g" $HOME_FOLDER/sentinel_$COIN_NAME/tes./venv/bin/py.test ./testt/unit/test_dash_config.py
@@ -416,6 +414,9 @@ function install_sentinel() {
   sudo chown -R $HOME_USER: $HOME_FOLDER/
   sudo chown -R $HOME_USER: $HOME_FOLDER/sentinel_$COIN_NAME
   ./venv/bin/py.test ./test
+  echo -e "If show a ${GREEN} green massage${NC} all is ok, but if show ${RED}red message${NC} you config have a error or not all dependences installed!"
+  sleep 6s
+  clear
 }
 
 function success() {
