@@ -24,7 +24,9 @@ STAKING=0
 
 ALIAS=$(echo $HOSTNAME)
 HOME_USER=$(echo $USER)
+# CHECK BOLEANS
 USE_BIND=n
+USE_ADDR=y
 
 # SENTINEL CONFIGURATIONS
 SENTINEL_REPO='https://github.com/omegacoinnetwork/sentinel.git'
@@ -249,9 +251,12 @@ function create_configs() {
 	if [[ $USE_BIND == Y ]] || [[ $USE_BIND == y ]]; then
 	CHECK_BIND=$(echo bind=$BIND_IP)
 	fi
+	if [[ $USE_ADDR == Y ]] || [[ $USE_ADDR == y ]]; then
+	CHECK_ADDR=$(echo bind=$BIND_IP)
+	fi
 	rpcuser=$(date +%s | sha256sum | base64 | head -c 24 ; echo)
 	rpcpass=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
-	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=$MAX_CONNECTIONS" "logintimestamps=$LOGINTIMESTAMPS" "rpcport=$RPC_PORT" "listenonion=$LISTEN_ONION" "staking=$STAKING" "externalip=$mnip:$COIN_PORT" "port=$COIN_PORT" "$CHECK_BIND"  >  $CONFIG_FOLDER/$CONFIG_FILE
+	printf "%s\n" "rpcuser=$rpcuser" "rpcpassword=$rpcpass" "rpcallowip=127.0.0.1" "listen=1" "server=1" "daemon=1" "maxconnections=$MAX_CONNECTIONS" "logintimestamps=$LOGINTIMESTAMPS" "rpcport=$RPC_PORT" "listenonion=$LISTEN_ONION" "staking=$STAKING" "externalip=$mnip:$COIN_PORT" "port=$COIN_PORT" "$CHECK_BIND" "$CHECK_ADDR" >  $CONFIG_FOLDER/$CONFIG_FILE
 	sudo rm $TMP_FOLDER/$CONFIG_FILE  >/dev/null 2>&1
 	cp $CONFIG_FOLDER/$CONFIG_FILE $TMP_FOLDER
 	cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
