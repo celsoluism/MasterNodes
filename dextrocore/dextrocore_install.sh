@@ -146,11 +146,11 @@ function install_dependences() {
 			sudo chmod 755 /mnt/swap.img
 			sudo dd if=/dev/zero of=/mnt/swap.img bs=1024 count=2097152
 			sudo mkswap /mnt/swap.img
-    		sudo swapon /mnt/swap.img
+    		        sudo swapon /mnt/swap.img
+			sudo echo "/mnt/swap.img none swap sw 0 0" | sudo tee -a /etc/fstab
+			sudo sysctl vm.swappiness=60
 			sudo free
-			sudo nano etc/fstab
-			sudo echo "/mnt/swap.img none swap sw 0 0" >> /etc/fstab
-			sudo vm.swappiness=60
+			sleep 6s
 		else
 		  echo -e "${GREEN}Server running with at least 2G of RAM, no swap needed.${NC}"
 		fi
