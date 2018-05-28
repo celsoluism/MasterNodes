@@ -209,7 +209,7 @@ function configfile_error() {
         echo -e " "
 	echo -e "${RED}Error in create $CONFIG_FILE! ${NC}"
 	echo -e " "
-	echo -e "Try use this command:
+	echo -e "Try use this command:"
 	echo -e " "
 	echo -e " unzip -o $HOME_FOLDER/$COIN_NAME_backup*.zip $HOME_FOLDER/$CONFIG_FOLDER "
 	echo -e " "
