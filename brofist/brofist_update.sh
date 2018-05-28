@@ -116,7 +116,7 @@ function install_dependences() {
 		  echo -e "${GREEN}Server running with at least 2G of RAM, no swap needed.${NC}"
 		fi
 		clear
-	}
+    }
 	
 function backup_configs() {
    echo "Stop Service (work if you have installed with ./rebase)"
@@ -207,7 +207,7 @@ function update_blockchain() {
   clear
 }
 
-function back_configs() {
+function rollback_configs() {
   echo -e "${GREEN}Back with your wallet and cofigurations${NC}"
   cp -f $TMP_FOLDER/backup_files/*.conf $CONFIG_FOLDER
   cp -f $TMP_FOLDER/backup_files/wallet.dat $CONFIG_FOLDER
@@ -217,16 +217,12 @@ function back_configs() {
   fi
   if [ ! -f $CONFIG_FOLDER/$CONFIG_FILE ] || [ ! -f $CONFIG_FOLDER/masternode.conf ] || [ ! -f $CONFIG_FOLDER/wallet.dat ]; then 
   configfile_error
+  exit 1
   fi
   clear
  }
 	
 function install_service() {
-  echo -e "Checking if service alrely installed"
-   if [ -f "/etc/systemd/system/$COIN_NAME.service" ]; then
-   clear
-   last_commits
-   fi
   clear   
   echo -e "${GREEN}Install Service ${NC}"
    	if [ ! -d "$TMP_FOLDER" ]; then mkdir $TMP_FOLDER; fi
@@ -273,7 +269,6 @@ EOF
   fi
   sleep 10s
   clear
-  last_commits
 }
 
 # -------------------------------- GLOBAL CHECKS --------------------------------
@@ -313,6 +308,7 @@ function configfile_error() {
     echo -e "and restart $COIN_NAME daemon"
 	sleep 10s
 	install_service
+	exit 0
 }
 
 # ----------------------------- CONGRATULATIONS ---------------------------------
@@ -420,6 +416,7 @@ install() {
 	last_commits
 	success
 	last_check
+	exit 0
 }
 
 #main
