@@ -120,12 +120,15 @@ function install_dependences() {
 	
 function backup_configs() {
    echo "Stop Service (work if you have installed with ./rebase)"
-   sudo systemctl stop brofist.service
+   sudo systemctl stop brofist.service >/dev/null 2>&1
    sleep 5s
-   brofist-cli stop
+   brofist-cli stop  >/dev/null 2>&1
    echo "Wait $COIN_NAME daemon stop"
    sleep 10s
-   check_daemon
+   if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
+       echo -e "${RED}$COIN_NAME is already run with other command, you need to stop daemon before start update.${NC}"
+    exit 1
+   fi
    echo -e "Making backup of ${GREEN}$COIN_NAME ${NC} Wallet and Files..."  
    mkdir $TMP_FOLDER >/dev/null 2>&1
    mkdir $TMP_FOLDER/backup_files >/dev/null 2>&1
@@ -169,7 +172,10 @@ function prepare_node() { #TODO: add error detection
 
 function update_blockchain() {
   echo -e "Wait some time, update blockchain!"
-  check_daemon
+  if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
+       echo -e "${RED}$COIN_NAME is already run with other command, you need to stop daemon before start update.${NC}"
+    exit 1
+  fi
   cd $HOME_FOLDER/$CONFIG_FOLDER 
   cd $CONFIG_FOLDER && sudo rm -rf blocks chainstate .lock db.log debug.log fee_estimates.dat governance.dat mncache.dat mnpayments.dat netfulfilled.dat peers.dat database >/dev/null 2>&1
   mkdir $TMP_FOLDER >/dev/null 2>&1
@@ -289,13 +295,13 @@ if [[ $(lsb_release -d) != *16.04* ]]; then
 fi
 }
 
+
 function check_daemon() {
 if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
   echo -e "${RED}$COIN_NAME is already run with other command, you need to stop daemon before start update.${NC}"
   exit 1
 fi
 }
-
 
 # ----------------------------- CONGRATULATIONS ---------------------------------
 function last_commits() {
@@ -377,7 +383,7 @@ function success() {
 install() {
     install_dependences 
 	install_swap_file
-    backup_configs
+        backup_configs
 	prepare_node
 	update_blockchain
 	back_configs
