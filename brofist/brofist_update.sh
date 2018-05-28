@@ -287,6 +287,7 @@ if [[ $(lsb_release -d) != *16.04* ]]; then
   echo -e "${RED}Remembr: It will remove all your configuration of the $COIN_NAME and create a new.${NC}"
   exit 1
 fi
+}
 
 function check_daemon() {
 if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
@@ -301,7 +302,7 @@ function last_commits() {
         echo -e "Commit lasts configs of $COIN_NAME Daemon!"
         sleep 5s
         message "Preparing $COIN_NAME Daemon to work."
-	$COIN_DAEMON -daemon >/dev/null 2>&1
+	    $COIN_DAEMON -daemon >/dev/null 2>&1
         sleep 15s
         message "Wait 120 seconds to $COIN_NAME start sync"
         sleep 120s
@@ -309,8 +310,8 @@ function last_commits() {
 
         message "Checking $COIN_NAME sync progress"
         GET_INFO=$($COIN_CLI getinfo)
-	GET_MNSYNC=$($COIN_CLI mnsync status)
-	GET_LISTCONF=$($COIN_CLI masternode list-conf)
+	    GET_MNSYNC=$($COIN_CLI mnsync status)
+	    GET_LISTCONF=$($COIN_CLI masternode list-conf)
         TXOUTPUTS=$($COIN_CLI masternode outputs )
         echo -e "${GREEN} $GET_INFO ${NC}"
 	echo -e " "
@@ -374,9 +375,9 @@ function success() {
 }
 
 install() {
-        install_dependences 
+    install_dependences 
 	install_swap_file
-        backup_configs
+    backup_configs
 	prepare_node
 	update_blockchain
 	back_configs
