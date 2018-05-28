@@ -2,16 +2,17 @@
 #Info: Install or Update MasterNode Daemons, Masternode based on privkey.
 #PerfilConectado.NET MasterNodes Installer
 #TODO: to run you need to use ./Install.sh from MasterNodes folder.
+VERSION=$(cat "changelog.md" | grep -n ^ | grep ^1: | cut -d: -f2)
 
 COINNAME="Brosfit"
 INSTALLFILE=./brofist/brofist_install.sh
-UPDATEFILE=./dextrocore/dextrocore_update.sh
-DEPENDENCEFILE=./dextrocore/dextrocore_dependences.sh
+UPDATEFILE=./brofist/brofist_update.sh
+DEPENDENCEFILE=./brofist/brofist_dependences.sh
 
 HEIGHT=15
 WIDTH=60
 CHOICE_HEIGHT=4
-BACKTITLE="Created By PerfilConectado.NET"
+BACKTITLE="Created By PerfilConectado.NET - $VERSION "
 TITLE="Masternode Installer And Update"
 MENU="Choose one of the following options:"
 
@@ -39,9 +40,9 @@ case $CHOICE in
             echo "You chose Update DextroCore MasterNode..."
             $UPDATEFILE
             ;;
-	      3)  
-	          echo "You select to Install Libraries and Dependences..."
-	          $DEPENDENCEFILE
+	3)  
+	    echo "You select to Install Libraries and Dependences..."
+	    $DEPENDENCEFILE
             ;;
         4)
             echo "You chose Quit!"
