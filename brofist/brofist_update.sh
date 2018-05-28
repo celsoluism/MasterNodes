@@ -134,11 +134,12 @@ function backup_configs() {
    echo -e "Making backup of ${GREEN}$COIN_NAME ${NC} Wallet and Files..."  
    mkdir $TMP_FOLDER >/dev/null 2>&1
    mkdir $TMP_FOLDER/backup_files >/dev/null 2>&1
-   cp $CONFIG_FOLDER/*.conf $TMP_FOLDER/backup_files
-   cp $CONFIG_FOLDER/wallet.dat $TMP_FOLDER/backup_files
+   cp -f $CONFIG_FOLDER/*.conf $TMP_FOLDER/backup_files
+   cp -f $CONFIG_FOLDER/wallet.dat $TMP_FOLDER/backup_files
    cp -rf $CONFIG_FOLDER/backups $TMP_FOLDER/backup_files
    cd $CONFIG_FOLDER
-   zip -r "$COIN_NAME_backup-$(date +"%Y-%m-%d %H-%M-%S").zip" *.conf wallet.dat
+   CREATE_BACKUP=$(echo '$COIN_NAME_backup-$(date +"%Y-%m-%d %H-%M-%S").zip')
+   zip -r $CREATE_BACKUP *.conf wallet.dat
    cp $COIN_NAME_backup*.zip $HOME_FOLDER
 }
 
@@ -383,15 +384,15 @@ function success() {
 }
 
 install() {
-    install_dependences 
-	install_swap_file
+        #install_dependences 
+	#install_swap_file
         backup_configs
-	prepare_node
-	update_blockchain
-	back_configs
-	install_service
-	last_commits
-	success
+	#prepare_node
+	#update_blockchain
+	#back_configs
+	#install_service
+	#last_commits
+	#success
 }
 
 #main
