@@ -326,7 +326,7 @@ function last_commits() {
         sleep 15s
         echo -e "${GREEN} $GET_INFO ${NC}"
         message "Wait 120 seconds to $COIN_NAME start sync"
-        #sleep 120s
+        sleep 120s
         clear
         message "Checking $COIN_NAME sync progress"
         echo -e "${GREEN} $GET_INFO ${NC}"
@@ -350,9 +350,8 @@ function last_commits() {
 	echo -e "${GREEN} $GET_LISTCONF ${NC}"
 	echo -e " "
 	echo -e "If show none information you need 15 minutes or more at listed"
-        sleep 10s
+    sleep 10s
 	clear
-    sucess
 }
 
 function success() {
@@ -386,6 +385,7 @@ function success() {
  sudo rm -rf cache
  sudo rm -rf $TMP_FOLDER/* >/dev/null 2>&1
  last_check
+ exit 0
 }
 
 function last_check() {
