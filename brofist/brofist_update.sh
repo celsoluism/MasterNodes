@@ -121,10 +121,10 @@ function install_dependences() {
 function backup_configs() {
    echo "Stop Service (work if you have installed with ./rebase)"
    sudo systemctl stop brofist.service >/dev/null 2>&1
-   sleep 5s
-   $COIN_CLI stop  >/dev/null 2>&1
+   #sleep 5s
+   #$COIN_CLI stop  >/dev/null 2>&1
    echo "Wait $COIN_NAME daemon stop"
-   sleep 10s
+   #sleep 10s
    if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
        echo -e "${RED}$COIN_NAME is already run with other command, you need to stop daemon before start update.${NC}"
     exit 1
@@ -134,42 +134,46 @@ function backup_configs() {
    echo -e "Making backup of ${GREEN}$COIN_NAME ${NC} Wallet and Files..."  
    mkdir $TMP_FOLDER >/dev/null 2>&1
    mkdir $TMP_FOLDER/backup_files >/dev/null 2>&1
-   cp -f $CONFIG_FOLDER/*.conf $TMP_FOLDER/backup_files
-   cp -f $CONFIG_FOLDER/wallet.dat $TMP_FOLDER/backup_files
-   cp -rf $CONFIG_FOLDER/backups $TMP_FOLDER/backup_files
+   cp -f $CONFIG_FOLDER/*.conf $TMP_FOLDER/backup_files  >/dev/null 2>&1
+   cp -f $CONFIG_FOLDER/wallet.dat $TMP_FOLDER/backup_files  >/dev/null 2>&1
+   cp -rf $CONFIG_FOLDER/backups $TMP_FOLDER/backup_files  >/dev/null 2>&1
    cd $CONFIG_FOLDER
-   CREATE_BACKUP=$(echo '$COIN_NAME_backup-$(date +"%Y-%m-%d %H-%M-%S").zip')
-   zip -r $CREATE_BACKUP *.conf wallet.dat
-   cp $COIN_NAME_backup*.zip $HOME_FOLDER
+   FILE_BACKUP=$(echo $(date +"%Y-%m-%d")_$(date +"%H-%M-%S"))
+   zip -r backup_"$COIN_NAME"_"$FILE_BACKUP".zip *.conf wallet.dat >/dev/null 2>&1
+   cp backup_"$COIN_NAME"_*.zip $HOME_FOLDER
+   cp backup_"$COIN_NAME"_*.zip $TMP_FOLDER/backup_files
+   rm backup_"$COIN_NAME"_*.zip
+   cd ~
+   clear
 }
 
-function prepare_node() { #TODO: add error detection
+function update_node() { #TODO: add error detection
 	echo -e "Preparing to update ${GREEN}$COIN_NAME ${NC} Daemon..."
-  mkdir $TMP_FOLDER >/dev/null 2>&1
-  cd $TMP_FOLDER
+    mkdir $TMP_FOLDER >/dev/null 2>&1
+    cd $TMP_FOLDER
 	mkdir updatenode >/dev/null 2>&1
 	cd $TMP_FOLDER/updatenode
 	wget $COIN_TGZ_ZIP
-  clear
-  echo -e "uncompressing file"
+    clear
+    echo -e "uncompressing file"
 	if [[ $COIN_TGZ_ZIP == *.gz ]]; then
 	   cd $TMP_FOLDER/updatenode
      tar -xf  *.gz >/dev/null 2>&1
-  fi
-  if [[ $COIN_TGZ_ZIP == *.zip ]]; then
-     cd $TMP_FOLDER/updatenode
+    fi
+    if [[ $COIN_TGZ_ZIP == *.zip ]]; then
+       cd $TMP_FOLDER/updatenode
 	   unzip  *.zip >/dev/null 2>&1
-  fi
-  cd $TMP_FOLDER/updatenode
+    fi
+    cd $TMP_FOLDER/updatenode
 	rm *.gz >/dev/null 2>&1
 	rm *.zip >/dev/null 2>&1
-  RM_COINS=$(echo $COIN_PATH/$COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT)
-  sudo rm -f $RM_COINS
-  if [ -d "$TMP_FOLDER/updatenode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/updatenode/$COIN_SUBFOLDER && strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
-	   if [ $? -ne 0 ]; then strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
+		RM_COINS=$(echo $COIN_PATH/$COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT)
+    sudo rm -f $RM_COINS
+    if [ -d "$TMP_FOLDER/updatenode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/updatenode/$COIN_SUBFOLDER && strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
+	    if [ $? -ne 0 ]; then strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
 	compile_error
-	   if [ -d "$TMP_FOLDER/updatenode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/updatenode/$COIN_SUBFOLDER && chmod +x * && sudo cp -f * /usr/local/bin ; fi
-	   if [ $? -ne 0 ]; then cd $TMP_FOLDER/updatenode && chmod +x * && sudo cp -f * /usr/local/bin ; fi
+	if [ -d "$TMP_FOLDER/updatenode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/updatenode/$COIN_SUBFOLDER && chmod +x * && sudo cp -f * /usr/local/bin ; fi
+	if [ $? -ne 0 ]; then cd $TMP_FOLDER/updatenode && chmod +x * && sudo cp -f * /usr/local/bin ; fi
 	clear
 }
 
@@ -179,10 +183,10 @@ function update_blockchain() {
        echo -e "${RED}$COIN_NAME is already run with other command, you need to stop daemon before start update.${NC}"
     exit 1
   fi
-  cd $HOME_FOLDER/$CONFIG_FOLDER 
+  cd $CONFIG_FOLDER 
   cd $CONFIG_FOLDER && sudo rm -rf blocks chainstate .lock db.log debug.log fee_estimates.dat governance.dat mncache.dat mnpayments.dat netfulfilled.dat peers.dat database >/dev/null 2>&1
   mkdir $TMP_FOLDER >/dev/null 2>&1
-  mkdir $TMP_FOLDER/tmp_blockchain
+  mkdir $TMP_FOLDER/tmp_blockchain >/dev/null 2>&1
   cd $TMP_FOLDER/tmp_blockchain
   wget -q $LINK_BLOCKCHAIN
  	if [[ $LINK_BLOCKCHAIN == *.gz ]]; then
@@ -196,6 +200,9 @@ function update_blockchain() {
   mkdir $CONFIG_FOLDER >/dev/null 2>&1
   if [ -d "$TMP_FOLDER/tmp_blockchain/$BLOCKCHAIN_SUBFOLDER" ]; then cp -rvf $TMP_FOLDER/tmp_blockchain/$BLOCKCHAIN_SUBFOLDER/* $CONFIG_FOLDER >/dev/null 2>&1 ; fi
 	if [ $? -ne 0 ]; then cp -rvf $TMP_FOLDER/tmp_blockchain/* $CONFIG_FOLDER >/dev/null 2>&1 ; fi
+	
+  rm -rf $TMP_FOLDER/tmp_blockchain/*
+	
   cd ~ - >/dev/null 2>&1
   clear
 }
@@ -204,35 +211,23 @@ function back_configs() {
   echo -e "${GREEN}Back with your wallet and cofigurations${NC}"
   cp -f $TMP_FOLDER/backup_files/*.conf $CONFIG_FOLDER
   cp -f $TMP_FOLDER/backup_files/wallet.dat $CONFIG_FOLDER
-  if [ ! -f "$CONFIG_FOLDER/$CONFIG_FILE" ] && [ ! -f "$CONFIG_FOLDER/masternode.conf" ] && [ ! -f "$CONFIG_FOLDER/wallet.dat" ]; then 
-  unzip -o $TMP_FOLDER/backup_files/$COIN_NAME_backup*.zip $CONFIG_FOLDER
+  
+  if [ ! -f $CONFIG_FOLDER/$CONFIG_FILE ] || [ ! -f $CONFIG_FOLDER/masternode.conf ] || [ ! -f $CONFIG_FOLDER/wallet.dat ]; then 
+  unzip -o $TMP_FOLDER/backup_files/backup_'$COIN_NAME'*.zip $CONFIG_FOLDER
   fi
-  if [ ! -f "$CONFIG_FOLDER/$CONFIG_FILE" ] && [ ! -f "$CONFIG_FOLDER/masternode.conf" ] && [ ! -f "$CONFIG_FOLDER/wallet.dat" ]; then 
+  if [ ! -f $CONFIG_FOLDER/$CONFIG_FILE ] || [ ! -f $CONFIG_FOLDER/masternode.conf ] || [ ! -f $CONFIG_FOLDER/wallet.dat ]; then 
   configfile_error
   fi
   clear
-  install_service
-}
-
-function configfile_error() {
-        echo -e " "
-	echo -e "${RED}Error in create $CONFIG_FILE roll back! ${NC}"
-	echo -e " "
-	echo -e "Try use this command:"
-	echo -e " "
-	echo -e " unzip -o $HOME_FOLDER/$COIN_NAME_backup*.zip $HOME_FOLDER/$CONFIG_FOLDER "
-	echo -e " "
-        echo -e "and restart $COIN_NAME daemon"
-	sleep 10s
-	exit 0
-}
+ }
 	
 function install_service() {
   echo -e "Checking if service alrely installed"
    if [ -f "/etc/systemd/system/$COIN_NAME.service" ]; then
+   clear
    last_commits
    fi
-   
+  clear   
   echo -e "${GREEN}Install Service ${NC}"
    	if [ ! -d "$TMP_FOLDER" ]; then mkdir $TMP_FOLDER; fi
 	if [ $? -ne 0 ]; then error; fi
@@ -278,6 +273,7 @@ EOF
   fi
   sleep 10s
   clear
+  last_commits
 }
 
 # -------------------------------- GLOBAL CHECKS --------------------------------
@@ -298,7 +294,6 @@ if [[ $(lsb_release -d) != *16.04* ]]; then
 fi
 }
 
-
 function check_daemon() {
 if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
   echo -e "${RED}$COIN_NAME is already run with other command, you need to stop daemon before start update.${NC}"
@@ -306,36 +301,51 @@ if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
 fi
 }
 
+function configfile_error() {
+    clear
+    echo -e " "
+	echo -e "${RED}Error in create $CONFIG_FILE roll back! ${NC}"
+	echo -e " "
+	echo -e "Try use this command:"
+	echo -e " "
+	echo -e " unzip -o $TMP_FOLDER/backup_files/backup_'$COIN_NAME'*.zip $HOME_FOLDER/$CONFIG_FOLDER "
+	echo -e " "
+    echo -e "and restart $COIN_NAME daemon"
+	sleep 10s
+	install_service
+}
+
 # ----------------------------- CONGRATULATIONS ---------------------------------
 function last_commits() {
+        GET_INFO=$($COIN_CLI getinfo)
+	    GET_MNSYNC=$($COIN_CLI mnsync status)
+	    GET_LISTCONF=$($COIN_CLI masternode list-conf)
+        TXOUTPUTS=$($COIN_CLI masternode outputs )
+	    
+		echo -e " "
         echo -e "Commit lasts configs of $COIN_NAME Daemon!"
         sleep 5s
         message "Preparing $COIN_NAME Daemon to work."
 	    $COIN_DAEMON -daemon >/dev/null 2>&1
         sleep 15s
+        echo -e "${GREEN} $GET_INFO ${NC}"
         message "Wait 120 seconds to $COIN_NAME start sync"
-        sleep 120s
+        #sleep 120s
         clear
-
         message "Checking $COIN_NAME sync progress"
-        GET_INFO=$($COIN_CLI getinfo)
-	    GET_MNSYNC=$($COIN_CLI mnsync status)
-	    GET_LISTCONF=$($COIN_CLI masternode list-conf)
-        TXOUTPUTS=$($COIN_CLI masternode outputs )
         echo -e "${GREEN} $GET_INFO ${NC}"
 	echo -e " "
 	echo -e "If no show information any problem during update!" 
 	echo -e " "
 	sleep 3s
-        echo -e "If update work without any error at now you see you txid and index bellow:"
+    echo -e "If update work without any error at now you see you txid and index bellow:"
 	echo -e "${RED}Obs: $COIN_NAME need to be sync completed!${NC}"
-        echo -e " "
+    echo -e " "
+	echo -e "Check outputs: "
 	echo -e "Outputs: ${GREEN} $TXOUTPUTS ${NC}" 
 	echo -e " "
-	echo -e " "
-	echo -e "If show none you need to complete informations in $CONFIG_FOLDER/masternode.conf manualy (TXID and INDEX)"
 	sleep 10s
-        echo -e "Checking masternode sync"
+    echo -e "Checking masternode sync"
 	echo -e "${GREEN} $GET_MNSYNC ${NC}"
 	echo -e " " 
 	echo -e "If show 999 your maternode is full sync" 
@@ -344,11 +354,9 @@ function last_commits() {
 	echo -e "${GREEN} $GET_LISTCONF ${NC}"
 	echo -e " "
 	echo -e "If show none information you need 15 minutes or more at listed"
-	echo -n "Press key [ENTER] to continue..."
-        read var_name
-        sleep 2s
+        sleep 10s
 	clear
-clear        
+    sucess
 }
 
 function success() {
@@ -381,22 +389,43 @@ function success() {
  # CLEAR TEMP FOLDER
  sudo rm -rf cache
  sudo rm -rf $TMP_FOLDER/* >/dev/null 2>&1
+ last_check
 }
 
+function last_check() {
+    if [ ! -f $CONFIG_FOLDER/$CONFIG_FILE ] || [ ! -f $CONFIG_FOLDER/masternode.conf ] || [ ! -f $CONFIG_FOLDER/wallet.dat ]; then 
+    clear
+    echo -e " "
+	echo -e "${RED}Error in create $CONFIG_FILE roll back! ${NC}"
+	echo -e " "
+	echo -e "Try use this command:"
+	echo -e " "
+	echo -e " unzip -o $TMP_FOLDER/backup_files/backup_'$COIN_NAME'*.zip $HOME_FOLDER/$CONFIG_FOLDER "
+	echo -e " "
+    echo -e "and restart $COIN_NAME daemon"
+	sleep 3s
+	fi
+	exit 0
+	exit 1
+	}
+	
 install() {
-        #install_dependences 
-	#install_swap_file
-        backup_configs
-	#prepare_node
-	#update_blockchain
-	#back_configs
-	#install_service
-	#last_commits
-	#success
+    install_dependences 
+	install_swap_file
+    backup_configs
+    update_node
+	update_blockchain
+	back_configs
+	install_service
+	last_commits
+	success
+	last_check
 }
 
 #main
 #default to --without-gui
+cd $HOME_FOLDER
+sudo rm -rf $TMP_FOLDER/*
 clear
 install --without-gui
 
