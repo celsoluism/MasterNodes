@@ -9,7 +9,7 @@ COIN_NAME=brofist
 COLATERAL=1250PEW
 CONFIG_FILE=brofist.conf
  
-# ALWAYS START WITH ~/ AND DEFAULT COIN FOLDER
+# ALWAYS START WITH ~/. AND DEFAULT COIN FOLDER
 CONFIG_FOLDER=~/.brofistcore
 COIN_DAEMON=brofistd
 COIN_CLI=brofist-cli
@@ -122,20 +122,22 @@ function backup_configs() {
    echo "Stop Service (work if you have installed with ./rebase)"
    sudo systemctl stop brofist.service >/dev/null 2>&1
    sleep 5s
-   brofist-cli stop  >/dev/null 2>&1
+   $COIN_CLI stop  >/dev/null 2>&1
    echo "Wait $COIN_NAME daemon stop"
    sleep 10s
    if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
        echo -e "${RED}$COIN_NAME is already run with other command, you need to stop daemon before start update.${NC}"
     exit 1
    fi
+   sleep 3s
+   clear
    echo -e "Making backup of ${GREEN}$COIN_NAME ${NC} Wallet and Files..."  
    mkdir $TMP_FOLDER >/dev/null 2>&1
    mkdir $TMP_FOLDER/backup_files >/dev/null 2>&1
-   cp $HOME_FOLDER/$CONFIG_FOLDER/*.conf $TMP_FOLDER/backup_files
-   cp $HOME_FOLDER/$CONFIG_FOLDER/wallet.dat $TMP_FOLDER/backup_files
-   cp -rf $HOME_FOLDER/$CONFIG_FOLDER/backups $TMP_FOLDER/backup_files
-   cd $HOME_FOLDER/$CONFIG_FOLDER
+   cp $CONFIG_FOLDER/*.conf $TMP_FOLDER/backup_files
+   cp $CONFIG_FOLDER/wallet.dat $TMP_FOLDER/backup_files
+   cp -rf $CONFIG_FOLDER/backups $TMP_FOLDER/backup_files
+   cd $CONFIG_FOLDER
    zip -r "$COIN_NAME_backup-$(date +"%Y-%m-%d %H-%M-%S").zip" *.conf wallet.dat
    cp $COIN_NAME_backup*.zip $HOME_FOLDER
 }
@@ -199,12 +201,12 @@ function update_blockchain() {
 
 function back_configs() {
   echo -e "${GREEN}Back with your wallet and cofigurations${NC}"
-  cp -f $TMP_FOLDER/backup_files/*.conf $HOME_FOLDER/$CONFIG_FOLDER
-  cp -f $TMP_FOLDER/backup_files/wallet.dat $HOME_FOLDER/$CONFIG_FOLDER
-  if [ ! -f "$HOME_FOLDER/$CONFIG_FOLDER/$CONFIG_FILE" ] && [ ! -f "$HOME_FOLDER/$CONFIG_FOLDER/masternode.conf" ] && [ ! -f "$HOME_FOLDER/$CONFIG_FOLDER/wallet.dat" ]; then 
-  unzip -o $TMP_FOLDER/backup_files/$COIN_NAME_backup*.zip $HOME_FOLDER/$CONFIG_FOLDER
+  cp -f $TMP_FOLDER/backup_files/*.conf $CONFIG_FOLDER
+  cp -f $TMP_FOLDER/backup_files/wallet.dat $CONFIG_FOLDER
+  if [ ! -f "$CONFIG_FOLDER/$CONFIG_FILE" ] && [ ! -f "$CONFIG_FOLDER/masternode.conf" ] && [ ! -f "$CONFIG_FOLDER/wallet.dat" ]; then 
+  unzip -o $TMP_FOLDER/backup_files/$COIN_NAME_backup*.zip $CONFIG_FOLDER
   fi
-  if [ ! -f "$HOME_FOLDER/$CONFIG_FOLDER/$CONFIG_FILE" ] && [ ! -f "$HOME_FOLDER/$CONFIG_FOLDER/masternode.conf" ] && [ ! -f "$HOME_FOLDER/$CONFIG_FOLDER/wallet.dat" ]; then 
+  if [ ! -f "$CONFIG_FOLDER/$CONFIG_FILE" ] && [ ! -f "$CONFIG_FOLDER/masternode.conf" ] && [ ! -f "$CONFIG_FOLDER/wallet.dat" ]; then 
   configfile_error
   fi
   clear
@@ -213,7 +215,7 @@ function back_configs() {
 
 function configfile_error() {
         echo -e " "
-	echo -e "${RED}Error in create $CONFIG_FILE! ${NC}"
+	echo -e "${RED}Error in create $CONFIG_FILE roll back! ${NC}"
 	echo -e " "
 	echo -e "Try use this command:"
 	echo -e " "
