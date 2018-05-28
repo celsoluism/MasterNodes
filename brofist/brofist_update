@@ -192,20 +192,38 @@ function update_blockchain() {
 }
 
 function back_configs() {
-
+  echo -e "${GREEN}Back with your wallet and cofigurations${NC}"
+  cp -f $TMP_FOLDER/backup_files/*.conf $HOME_FOLDER/$CONFIG_FOLDER
+  cp -f $TMP_FOLDER/backup_files/wallet.dat $HOME_FOLDER/$CONFIG_FOLDER
+  if [ ! -f "$HOME_FOLDER/$CONFIG_FOLDER/$CONFIG_FILE" ] && [ ! -f "$HOME_FOLDER/$CONFIG_FOLDER/masternode.conf" ] && [ ! -f "$HOME_FOLDER/$CONFIG_FOLDER/wallet.dat" ]; then 
+  unzip -o $TMP_FOLDER/backup_files/$COIN_NAME_backup*.zip $HOME_FOLDER/$CONFIG_FOLDER
+  fi
+  if [ ! -f "$HOME_FOLDER/$CONFIG_FOLDER/$CONFIG_FILE" ] && [ ! -f "$HOME_FOLDER/$CONFIG_FOLDER/masternode.conf" ] && [ ! -f "$HOME_FOLDER/$CONFIG_FOLDER/wallet.dat" ]; then 
+  configfile_error
+  fi
+  clear
+  install_service
 }
 
 function configfile_error() {
         echo -e " "
 	echo -e "${RED}Error in create $CONFIG_FILE! ${NC}"
 	echo -e " "
-	echo -e "Try use this command = unzip -o $HOME_FOLDER/$COIN_NAME_backup*.zip $HOME_FOLDER/$CONFIG_FOLDER "
-  echo -e "and restart $COIN_NAME daemon"
+	echo -e "Try use this command:
+	echo -e " "
+	echo -e " unzip -o $HOME_FOLDER/$COIN_NAME_backup*.zip $HOME_FOLDER/$CONFIG_FOLDER "
+	echo -e " "
+        echo -e "and restart $COIN_NAME daemon"
 	sleep 10s
 	exit 0
 }
 	
 function install_service() {
+  echo -e "Checking if service alrely installed"
+   if [ -f "/etc/systemd/system/$COIN_NAME.service" ]; then
+   last_commits
+   fi
+   
   echo -e "${GREEN}Install Service ${NC}"
    	if [ ! -d "$TMP_FOLDER" ]; then mkdir $TMP_FOLDER; fi
 	if [ $? -ne 0 ]; then error; fi
@@ -281,8 +299,8 @@ fi
 # ----------------------------- CONGRATULATIONS ---------------------------------
 function last_commits() {
         echo -e "Commit lasts configs of $COIN_NAME Daemon!"
-        sleep 2s
-        echo -e "Starting $COIN_NAME Daemon"
+        sleep 5s
+        message "Preparing $COIN_NAME Daemon to work."
 	$COIN_DAEMON -daemon >/dev/null 2>&1
         sleep 15s
         message "Wait 120 seconds to $COIN_NAME start sync"
@@ -290,80 +308,45 @@ function last_commits() {
         clear
 
         message "Checking $COIN_NAME sync progress"
-        GET_INFO=$(echo $COIN_CLI getinfo)
-	echo -e "${GREEN} $GET_INFO ${NC}"
-	
-	message "Preparing masternode.conf file."
-        echo -e "Obs: Only work if you have send ${GREEN}$COLATERAL${NC} to address ${GREEN}$COIN_ADDRESS ${NC}of ${GREEN}$COIN_NAME ${NC}and alrely get ${GREEN}1 confirmation!${NC}" 
-	echo -e " "
-	echo -e " " 
-	echo -e "To create masternode.file ${GREEN}$COIN_DAEMON${NC} need ${GREEN}full sync${NC}"
-	echo -e "To check it you need to open a new ssh conection and check using this command:"
-	echo -e " " 
-	echo -e " $COIN_CLI getinfo "
-	echo -e " " 
-	echo -e "Or you can press [ENTER] now and continue without complete masternode.conf if sync is not completed!" 
-	echo -e "Obs.: You need to edit $CONF_FOLDER/masternode.conf and insert TXID INDEX after install complete and reboot server."
-	echo -e " " 
-	echo -n "Press key [ENTER] to continue..."
-        read var_name
-        sleep 2s
-	clear
-
+        GET_INFO=$($COIN_CLI getinfo)
+	GET_MNSYNC=$($COIN_CLI mnsync status)
+	GET_LISTCONF=$($COIN_CLI masternode list-conf)
         TXOUTPUTS=$($COIN_CLI masternode outputs )
-        echo -e "If you have send ammount $COLATERAL and get 1 confirmed to the $COIN_ADDRESS the OUTPUTS show now:"
-	echo -e "Obs: $COIN_NAME need to be sync completed!"
-        echo -e " "
+        echo -e "${GREEN} $GET_INFO ${NC}"
 	echo -e " "
+	echo -e "If no show information any problem during update!" 
+	echo -e " "
+	sleep 3s
+        echo -e "If update work without any error at now you see you txid and index bellow:"
+	echo -e "${RED}Obs: $COIN_NAME need to be sync completed!${NC}"
+        echo -e " "
 	echo -e "Outputs: ${GREEN} $TXOUTPUTS ${NC}" 
 	echo -e " "
 	echo -e " "
 	echo -e "If show none you need to complete informations in $CONFIG_FOLDER/masternode.conf manualy (TXID and INDEX)"
 	sleep 10s
+        echo -e "Checking masternode sync"
+	echo -e "${GREEN} $GET_MNSYNC ${NC}"
+	echo -e " " 
+	echo -e "If show 999 your maternode is full sync" 
+	echo -e " "
+	echo -e "Checking if your masternode is listed"
+	echo -e "${GREEN} $GET_LISTCONF ${NC}"
+	echo -e " "
+	echo -e "If show none information you need 15 minutes or more at listed"
+	echo -n "Press key [ENTER] to continue..."
+        read var_name
+        sleep 2s
+	clear
 clear        
 }
 
-function install_sentinel() {
-  SENTINELPORT=$[10001+$COIN_PORT]
-  cd $HOME_FOLDER  >/dev/null 2>&1
-  sudo rm -rf $HOME_FOLDER/sentinel_$COIN_NAME  #>/dev/null 2>&1
-  echo -e "${GREEN}Install sentinel.${NC}"
-  sudo apt-get install virtualenv >/dev/null 2>&1
-  git clone $SENTINEL_REPO $HOME_FOLDER/sentinel_$COIN_NAME  >/dev/null 2>&1
-  cd $HOME_FOLDER/sentinel_$COIN_NAME
-  sed -i 's/#'$COIN_NAME'_conf/omegacoin_conf/g' $HOME_FOLDER/sentinel_$COIN_NAME/sentinel.conf
-  sed -i "s/username/$HOME_USER/g" $HOME_FOLDER/sentinel_$COIN_NAME/sentinel.conf
-  virtualenv ./venv
-  ./venv/bin/pip install -r requirements.txt
-  sed -i "s/19998/7777/g" $HOME_FOLDER/sentinel_$COIN_NAME/venv/bin/py.test  $HOME_FOLDER/sentinel_$COIN_NAME/test/unit/test_dash_config.py
-  CRON_LINE="* * * * * cd $HOME_FOLDER/sentinel_$COIN_NAME && ./venv/bin/python bin/sentinel.py >> $HOME_FOLDER/sentinel.log >/dev/null 2>&1"
-  (crontab -u $HOME_USER -l; echo "$CRON_LINE" ) | crontab -u $HOME_USER -
-  (crontab -u $HOME_USER -l; echo "$CRON_LINE" ) | sudo crontab -u root -
-  sudo chown -R $HOME_USER: $HOME_FOLDER/
-  sudo chown -R $HOME_USER: $HOME_FOLDER/sentinel_$COIN_NAME
-  ./venv/bin/py.test ./test
-  echo -e "If show a ${GREEN} green massage${NC} all is ok, but if show ${RED}red message${NC} you config have a error or not all dependences installed!"
-  echo -e "Getting ${RED}red${NC} message try first remove # from $HOME_FOLDER/sentinel_$COIN_NAME/sentinel.conf"
-  echo -e "If dont work after remove # try reboot system"
-  echo -e "Wait install continue..."
-  sleep 20s
-  clear
-}
-
 function success() {
-TXID_INDEX=$($COIN_CLI masternode outputs)
-TX_OUTPUTS=$(echo $TXID_INDEX  |  sed 's/"//g' | sed 's/{//g' |  sed 's/}//g' |  sed 's/://g')
-MN_PRIVKEY=$(head -n 1 $TMP_FOLDER/$COIN_NAME.masternodeprivkey.txt)
 
 # TO MASTERNODE CONFIG FILE
-if [ ! -e "$CONFIG_FOLDER/masternode.conf" ]; then rm $CONFIG_FOLDER/masternode.conf; fi
-        if [ $? -ne 0 ]; then echo -e "masternode.conf created!" ; fi
- printf "%s\n" "# Masternode config file" "# Format: alias IP:port masternodeprivkey collateral_output_txid collateral_output_index" "# Example: mn1 127.0.0.2:23403 93HaYBVUCYjEMeeH1Y4sBGLALQZE1Yc1K64xiqgX37tGBDQL8Xg 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 0" "$ALIAS $NODEIP:$COIN_PORT $MN_PRIVKEY $TX_OUTPUTS" >  $CONFIG_FOLDER/masternode.conf
- 
+
  # TO SHOW
  echo -e "SUCCESS! Your ${GREEN}$COIN_NAME ${NC}has started. All your configs are"
- echo -e " "
- echo -e "Obs: All informations are saved in $HOME_FOLDER/$COIN_NAME.txt !"
  echo -e " "
  message "${GREEN}CONGRATULATIONS, YOUR MASTERNODE IS INSTALLED AND CONFIGURED! ${NC}"
  echo -e "================================================================================================================================" 
@@ -371,47 +354,19 @@ if [ ! -e "$CONFIG_FOLDER/masternode.conf" ]; then rm $CONFIG_FOLDER/masternode.
  echo -e "Configuration file is: ${RED}$CONFIG_FOLDER/$CONFIG_FILE${NC}"
  echo -e "Start: ${RED}systemctl start $COIN_NAME.service${NC}"
  echo -e "Stop: ${RED}systemctl stop $COIN_NAME.service${NC}"
- echo -e "NODE_IP:PORT ${RED}$NODEIP:$COIN_PORT ${NC}"
- echo -e "MASTERNODE PRIVATEKEY is: ${RED} $MN_PRIVKEY ${NC}"
+ #echo -e "NODE_IP:PORT ${RED}$NODEIP:$COIN_PORT ${NC}"
+ #echo -e "MASTERNODE PRIVATEKEY is: ${RED} $MN_PRIVKEY ${NC}"
  echo -e "MASTERNODE file: $CONFIG_FOLDER/masternode.conf"
- echo -e "MASTERNODE configuration, copy this line bellow and paste in your windows wallet masternode file:"
- echo -e "$ALIAS $NODEIP:$COIN_PORT $MN_PRIVKEY $TX_OUTPUTS"
+ #echo -e "MASTERNODE configuration, copy this line bellow and paste in your windows wallet masternode file:"
+ #echo -e "$ALIAS $NODEIP:$COIN_PORT $MN_PRIVKEY $TX_OUTPUTS"
  echo -e "Please check ${RED}$COIN_NAME${NC} is running with the following command: ${GREEN}systemctl status $COIN_NAME.service${NC}" 
  echo -e "================================================================================================================================" 
  echo -e " "
  echo -e "================================================================================================================================" 
  echo -e "A copy of MASTERNODE file ${GREEN}$CONFIG_FOLDER/masternode.conf${NC} and"
  echo -e "a copy of CONFIG file ${GREEN}$CONFIG_FOLDER/$CONFIG_FILE ${NC}"
- echo -e "are saved in ${GREEN}$HOME_FOLDER/$COIN_NAME.txt${NC}"
+ echo -e "are saved in ${GREEN}$HOME_FOLDER/$COIN_NAME_backup_DATE_TIME.txt${NC}"
  echo -e "================================================================================================================================" 
-
-# TO COINFILE TXT
-        if [ -e "$HOME_FOLDER/$COIN_NAME.txt" ]; then rm $HOME_FOLDER/$COIN_NAME.txt; fi
-        if [ $? -ne 0 ]; then clear; fi
- echo -e "================================================================================================================================" >> ~/$COIN_NAME.txt
- echo -e "$COIN_NAME Masternode is up and running listening on port $COIN_PORT." >> ~/$COIN_NAME.txt
- echo -e "Configuration file is: $CONFIG_FOLDER/$CONFIG_FILE" >> ~/$COIN_NAME.txt
- echo -e "Start: systemctl start $COIN_NAME.service" >> ~/$COIN_NAME.txt
- echo -e "Stop: systemctl stop $COIN_NAME.service" >> ~/$COIN_NAME.txt
- echo -e "NODE_IP:PORT $NODEIP:$COIN_PORT" >> ~/$COIN_NAME.txt
- echo -e "MASTERNODE PRIVATEKEY is: $MN_PRIVKEY" >> ~/$COIN_NAME.txt
- echo -e "MASTERNODE file: $CONFIG_FOLDER/masternode.conf " >> ~/$COIN_NAME.txt
- echo -e "MASTERNODE configuration bellow:" >> ~/$COIN_NAME.txt
- echo -e "$ALIAS $NODEIP:$COIN_PORT $MN_PRIVKEY $TX_OUTPUTS" >> ~/$COIN_NAME.txt
- echo -e "Please check $COIN_NAME$ is running with the following command: systemctl status $COIN_NAME.service" >> ~/$COIN_NAME.txt
- echo -e "================================================================================================================================" >> ~/$COIN_NAME.txt
- echo -e " " >> ~/$COIN_NAME.txt
- echo -e "Copy of MASTERNODE file: $CONFIG_FOLDER/masternode.conf" >> ~/$COIN_NAME.txt
- echo -e "================================================================================================================================"  >> ~/$COIN_NAME.txt
- cat "$CONFIG_FOLDER/masternode.conf" >> ~/$COIN_NAME.txt
- echo -e "================================================================================================================================"  >> ~/$COIN_NAME.txt
- echo -e " " >> ~/$COIN_NAME.txt
- echo -e "Copy of CONFIG file: $CONFIG_FOLDER/$CONFIG_FILE" >> ~/$COIN_NAME.txt
- echo -e "================================================================================================================================"  >> ~/$COIN_NAME.txt
- cat "$CONFIG_FOLDER/$CONFIG_FILE" >> ~/$COIN_NAME.txt
- echo -e "================================================================================================================================"  >> ~/$COIN_NAME.txt
- 
-
 
  # CLEAR TEMP FOLDER
  sudo rm -rf cache
@@ -419,17 +374,14 @@ if [ ! -e "$CONFIG_FOLDER/masternode.conf" ]; then rm $CONFIG_FOLDER/masternode.
 }
 
 install() {
-  install_dependences 
+        install_dependences 
 	install_swap_file
-  backup_configs
+        backup_configs
 	prepare_node
 	update_blockchain
 	back_configs
 	install_service
 	last_commits
-	if [[ $USE_SENTINEL == Y ]] || [[ $USE_SENTINEL == y ]]; then
-	install_sentinel
-	fi
 	success
 }
 
