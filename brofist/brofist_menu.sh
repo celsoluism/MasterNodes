@@ -4,7 +4,7 @@
 #TODO: to run you need to use ./Install.sh from MasterNodes folder.
 VERSION=$(cat "changelog.md" | grep -n ^ | grep ^1: | cut -d: -f2)
 
-COINNAME="Brosfit"
+COIN_NAME="Brosfit"
 INSTALLFILE=./brofist/brofist_install.sh
 UPDATEFILE=./brofist/brofist_update.sh
 DEPENDENCEFILE=./brofist/brofist_dependences.sh
@@ -16,9 +16,9 @@ BACKTITLE="Created By PerfilConectado.NET - $VERSION "
 TITLE="Masternode Installer And Update"
 MENU="Choose one of the following options:"
 
-OPTIONS=(1 "Install $COINNAME MasterNode..."
-         2 "Update $COINNAME MasterNode..."
-	 3 "Install Libraries and Dependences..."
+OPTIONS=(1 "Install $COIN_NAME MasterNode..."
+         2 "Update $COIN_NAME MasterNode..."
+	 3 "Install Pack of Libraries and Dependences..."
 	 4 "Quit")
 
 CHOICE=$(dialog --clear \
@@ -33,15 +33,15 @@ clear
 
 case $CHOICE in
         1)
-            echo "You select Install DextroCore..."
+            echo "You select Install $COIN_NAME..."
             $INSTALLFILE
             ;;
         2)
-            echo "You chose Update DextroCore MasterNode..."
+            echo "You chose Update $COIN_NAME MasterNode..."
             $UPDATEFILE
             ;;
 	3)  
-	    echo "You select to Install Libraries and Dependences..."
+	    echo "You select to Install a pack of Libraries and Dependences..."
 	    $DEPENDENCEFILE
             ;;
         4)
