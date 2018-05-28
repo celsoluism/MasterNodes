@@ -25,6 +25,7 @@ STAKING=0
 # CHECK BOLEANS
 USE_BIND=y
 USE_ADDR=y
+USE_SENTINEL=n
 
 # SENTINEL CONFIGURATIONS
 SENTINEL_REPO='https://github.com/omegacoinnetwork/sentinel.git'
@@ -935,7 +936,9 @@ install() {
 	create_configs
 	install_service
 	last_commits
+	if [[ $USE_SENTINEL == Y ]] || [[ $USE_SENTINEL == y ]]; then
 	install_sentinel
+	fi
 	success
 }
 
