@@ -22,8 +22,6 @@ RPC_PORT=7778
 LISTEN_ONION=0
 STAKING=0
 
-ALIAS=$(echo $HOSTNAME)
-HOME_USER=$(echo $USER)
 # CHECK BOLEANS
 USE_BIND=n
 USE_ADDR=y
@@ -33,6 +31,7 @@ SENTINEL_REPO='https://github.com/omegacoinnetwork/sentinel.git'
 
 # FILE WITH NODES IN MASTERNODE INSTALL FOLDER
 FILE_NODES=~/MasterNodes/omegacoin/omegacoin_nodes.txt
+
 # LINK TO DOWNLOAD DAEMON
 COIN_TGZ_ZIP=https://github.com/omegacoinnetwork/omegacoin/releases/download/0.12.5.1/omagecoincore-0.12.5.1-linux64.zip
 # SET FOLDER IF UNZIP DAEMON IS ON SUBFOLDER?
@@ -47,6 +46,8 @@ BLOCKCHAIN_SUBFOLDER=data
 COIN_PATH=/usr/local/bin/
 TMP_FOLDER=~/temp_masternodes
 HOME_FOLDER=$(echo $HOME)
+ALIAS=$(echo $HOSTNAME)
+HOME_USER=$(echo $USER)
 
 # DONT TOUCH
 COIN_ZIP=$(echo $COIN_TGZ_ZIP | awk -F'/' '{print $NF}')
@@ -316,24 +317,19 @@ function install_service() {
 [Unit]
 Description=$COIN_NAME service
 After=network.target
-
 [Service]
 User=root
 Group=root
-
 Type=forking
 #PIDFile=$CONFIG_FOLDER/$COIN_NAME.pid
-
 ExecStart=$COIN_PATH$COIN_DAEMON -daemon -conf=$CONFIG_FOLDER/$CONFIG_FILE -datadir=$CONFIG_FOLDER
 ExecStop=-$COIN_PATH$COIN_CLI -conf=$CONFIG_FOLDER/$CONFIG_FILE -datadir=$CONFIG_FOLDER stop
-
 Restart=always
 PrivateTmp=true
 TimeoutStopSec=60s
 TimeoutStartSec=10s
 StartLimitInterval=120s
 StartLimitBurst=5
-
 [Install]
 WantedBy=multi-user.target
 EOF
@@ -538,4 +534,3 @@ install() {
 #default to --without-gui
 clear
 install --without-gui
-
