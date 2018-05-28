@@ -22,8 +22,6 @@ RPC_PORT=12454
 LISTEN_ONION=0
 STAKING=0
 
-ALIAS=$(echo $HOSTNAME)
-HOME_USER=$(echo $USER)
 # CHECK BOLEANS
 USE_BIND=y
 USE_ADDR=y
@@ -48,6 +46,8 @@ BLOCKCHAIN_SUBFOLDER=data
 COIN_PATH=/usr/local/bin/
 TMP_FOLDER=~/temp_masternodes
 HOME_FOLDER=$(echo $HOME)
+ALIAS=$(echo $HOSTNAME)
+HOME_USER=$(echo $USER)
 
 # DONT TOUCH
 COIN_ZIP=$(echo $COIN_TGZ_ZIP | awk -F'/' '{print $NF}')
