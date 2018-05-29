@@ -18,25 +18,38 @@ Obs.: if NO run as root you need to enter password of a sudo user. No need to ru
 
 News coins added soon as possible...
 
-HOW TO UPDATE
+HOW TO UPDATE MENU:
 
 Run this command and wait:
 
         ./rebase.sh
         
-Solo Installers List:        
+
+SOLO INSTALLERS AND UPDATES:        
         
-Brofist-pew:
+Brofist-pew (Installer):
         
         wget https://raw.githubusercontent.com/celsoluism/MasterNodes/master/brofist/brofist_install.sh && bash brofist_install.sh
         
-DextroCore-dxo:
+Brofist-pew (Updater):
+        
+        wget https://raw.githubusercontent.com/celsoluism/MasterNodes/master/brofist/brofist_update.sh && bash brofist_update.sh
+
+DextroCore-dxo (Installer):
         
         wget https://raw.githubusercontent.com/celsoluism/MasterNodes/master/dextrocore/dextrocore_install.sh && bash dextrocore_install.sh
         
-OmegaCoin-omega:
+DextroCore-dxo (Updater)
+        
+        wget https://raw.githubusercontent.com/celsoluism/MasterNodes/master/dextrocore/dextrocore_update.sh && bash dextrocore_update.sh
+        
+OmegaCoin-omega (Installer):
 
         wget https://raw.githubusercontent.com/celsoluism/MasterNodes/master/omegacoin/omegacoin_install.sh && bash omegacoin_install.sh
+        
+OmegaCoin-omega (Updater):
+
+        wget https://raw.githubusercontent.com/celsoluism/MasterNodes/master/omegacoin/omegacoin_update.sh && bash omegacoin_update.sh
         
         
 Obs: All abandoned coins are removed!
