@@ -24,7 +24,19 @@ Run this command and wait:
 
         ./rebase.sh
         
+Solo Installers List:        
+        Brofist-pew:
         
+        wget https://raw.githubusercontent.com/celsoluism/MasterNodes/master/brofist/brofist_install.sh && bash brofist_install.sh
+        
+        DextroCore-dxo:
+        
+        wget https://raw.githubusercontent.com/celsoluism/MasterNodes/master/dextrocore/dextrocore_install.sh && bash dextrocore_install.sh
+        OmegaCoin-omega:
+        wget https://raw.githubusercontent.com/celsoluism/MasterNodes/master/omegacoin/omegacoin_install.sh && bash omegacoin_install.sh
+        
+        
+        Obs: All abandoned coins are removed!
 
 If like send donations:
 
