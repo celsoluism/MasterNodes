@@ -34,12 +34,12 @@ SENTINEL_REPO='https://github.com/omegacoinnetwork/sentinel.git'
 FILE_NODES=~/MasterNodes/brofist/brofist_nodes.txt
 
 # LINK TO DOWNLOAD DAEMON
-COIN_TGZ_ZIP='https://github.com/modcrypto/brofist/releases/download/1.0.2.10/brofist_ubuntu_1.0.2.10.tar.gz'
+COIN_TGZ_ZIP='https://github.com/modcrypto/brofist/releases/download/1.0.2.11/brofist_ubuntu1604_1.0.2.11.tar.gz'
 # SET FOLDER IF UNZIP DAEMON IS ON SUBFOLDER?
 COIN_SUBFOLDER=linux
 
 # LINK TO DOWNLOAD BLOCKCHAIN
-LINK_BLOCKCHAIN=https://github.com/modcrypto/brofist/releases/download/1.0.2.10/brofist.blockchain.data.zip
+LINK_BLOCKCHAIN=#https://github.com/modcrypto/brofist/releases/download/1.0.2.10/brofist.blockchain.data.zip
 # SET FOLDER IF UNZIP BLOCKCHAIN IS ON SUBFOLDER?
 BLOCKCHAIN_SUBFOLDER=data
  
