@@ -119,13 +119,18 @@ function install_dependences() {
     }
 	
 function backup_configs() {
-   echo "Stop Service (work if you have installed with ./rebase)"
+   echo "Stop Service (work if you have installed with ./rebase.sh)"
    sudo systemctl stop brofist.service >/dev/null 2>&1
    sleep 10s
    sudo systemctl stop $COIN_NAME.service 
    $COIN_CLI stop  >/dev/null 2>&1
    echo "Wait $COIN_NAME daemon stop"
    sleep 15s
+   if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
+      pkill brofistd >/dev/null 2>&1
+      killall brofistd >/dev/null 2>&1
+   exit 1
+   fi
    if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
        echo -e "${RED}$COIN_NAME is already run with other command, you need to stop daemon before start update.${NC}"
     exit 1
