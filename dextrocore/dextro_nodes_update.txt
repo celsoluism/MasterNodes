@@ -1,0 +1,19 @@
+
+# ----------- nodes dextro 1.0.1.1
+addnode=seed1.dextro.io 
+addnode=seed2.dextro.io 
+addnode=seed3.dextro.io 
+addnode=seed4.dextro.io 
+addnode=seed5.dextro.io 
+addnode=seed6.dextro.io 
+addnode=seed7.dextro.io 
+addnode=seed8.dextro.io
+
+addnode=185.231.69.101:39320
+addnode=8.12.17.248:39320
+addnode=45.63.21.117:39320
+addnode=54.36.175.160:39320
+addnode=140.82.45.101:39320
+addnode=195.181.210.200:39320
+addnode=82.76.134.241:39320
+addnode=8.9.37.254:39320
