@@ -416,7 +416,7 @@ install() {
     update_node
 	update_blockchain
 	back_configs
-	install_service
+	#install_service
 	last_commits
 	success
 	last_check
