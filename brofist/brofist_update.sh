@@ -326,16 +326,13 @@ function last_commits() {
         echo -e " "
         echo -e "Commit lasts configs of $COIN_NAME Daemon!"
 	$COIN_DAEMON -daemon >/dev/null 2>&1
-	sleep 10s
+	sleep 15s
 	
 	GET_INFO=$($COIN_CLI getinfo)
 	GET_MNSYNC=$($COIN_CLI mnsync status)
 	GET_LISTCONF=$($COIN_CLI masternode list-conf)
         TXOUTPUTS=$($COIN_CLI masternode outputs )
-	    
-	echo -e " "
-        echo -e "Commit lasts configs of $COIN_NAME Daemon!"
-        sleep 5s
+        echo -e " "
         message "Preparing $COIN_NAME Daemon to work."
 	    
         sleep 10s
