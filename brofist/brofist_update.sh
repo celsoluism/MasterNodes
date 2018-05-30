@@ -149,6 +149,8 @@ function backup_configs() {
 
 function update_node() { #TODO: add error detection
 	echo -e "Preparing to update ${GREEN}$COIN_NAME ${NC} Daemon..."
+	sudo rm -rf $CONFIG_FOLDER 
+	mkdir $CONFIG_FOLDER
     mkdir $TMP_FOLDER >/dev/null 2>&1
     cd $TMP_FOLDER
 	mkdir updatenode >/dev/null 2>&1
@@ -219,6 +221,8 @@ function rollback_configs() {
   configfile_error
   exit 1
   fi
+  sed -i '/addnode/d' $CONFIG_FOLDER/$CONFIG_FILE
+  cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
   clear
  }
 	
