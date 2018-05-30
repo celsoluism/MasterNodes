@@ -323,7 +323,10 @@ function configfile_error() {
 
 # ----------------------------- CONGRATULATIONS ---------------------------------
 function last_commits() {
-        $COIN_DAEMON -daemon >/dev/null 2>&1
+        echo -e " "
+        echo -e "Commit lasts configs of $COIN_NAME Daemon!"
+	$COIN_DAEMON -daemon >/dev/null 2>&1
+	sleep 10s
 	
 	GET_INFO=$($COIN_CLI getinfo)
 	GET_MNSYNC=$($COIN_CLI mnsync status)
@@ -335,7 +338,7 @@ function last_commits() {
         sleep 5s
         message "Preparing $COIN_NAME Daemon to work."
 	    
-        sleep 15s
+        sleep 10s
         echo -e "${GREEN} $GET_INFO ${NC}"
         message "Wait 120 seconds to $COIN_NAME start sync"
         sleep 120s
