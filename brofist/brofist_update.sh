@@ -129,7 +129,6 @@ function backup_configs() {
    if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
       pkill brofistd >/dev/null 2>&1
       killall brofistd >/dev/null 2>&1
-   exit 1
    fi
    sleep 5s
    if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
