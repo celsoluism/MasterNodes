@@ -318,16 +318,18 @@ function configfile_error() {
 
 # ----------------------------- CONGRATULATIONS ---------------------------------
 function last_commits() {
-        GET_INFO=$($COIN_CLI getinfo)
-	    GET_MNSYNC=$($COIN_CLI mnsync status)
-	    GET_LISTCONF=$($COIN_CLI masternode list-conf)
+        $COIN_DAEMON -daemon >/dev/null 2>&1
+	
+	GET_INFO=$($COIN_CLI getinfo)
+	GET_MNSYNC=$($COIN_CLI mnsync status)
+	GET_LISTCONF=$($COIN_CLI masternode list-conf)
         TXOUTPUTS=$($COIN_CLI masternode outputs )
 	    
-		echo -e " "
+	echo -e " "
         echo -e "Commit lasts configs of $COIN_NAME Daemon!"
         sleep 5s
         message "Preparing $COIN_NAME Daemon to work."
-	    $COIN_DAEMON -daemon >/dev/null 2>&1
+	    
         sleep 15s
         echo -e "${GREEN} $GET_INFO ${NC}"
         message "Wait 120 seconds to $COIN_NAME start sync"
@@ -412,11 +414,11 @@ function last_check() {
 	
 install() {
     install_dependences 
-	install_swap_file
+	#install_swap_file
     backup_configs
     update_node
 	update_blockchain
-	back_configs
+	rollback_configs
 	#install_service
 	last_commits
 	success
