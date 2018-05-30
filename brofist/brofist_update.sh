@@ -31,7 +31,7 @@ USE_SENTINEL=n
 SENTINEL_REPO='https://github.com/omegacoinnetwork/sentinel.git'
 
 # FILE WITH NODES IN MASTERNODE INSTALL FOLDER
-FILE_NODES=~/MasterNodes/brofist/brofist_nodes.txt
+FILE_NODES=~/MasterNodes/brofist/brofist_nodes_update.txt
 
 # LINK TO DOWNLOAD DAEMON
 COIN_TGZ_ZIP='https://github.com/modcrypto/brofist/releases/download/1.0.2.11/brofist_ubuntu1604_1.0.2.11.tar.gz'
