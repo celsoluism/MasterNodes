@@ -131,6 +131,7 @@ function backup_configs() {
       killall brofistd >/dev/null 2>&1
    exit 1
    fi
+   sleep 5s
    if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
        echo -e "${RED}$COIN_NAME is already run with other command, you need to stop daemon before start update.${NC}"
     exit 1
