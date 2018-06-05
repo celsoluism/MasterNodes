@@ -39,6 +39,7 @@ COIN_TGZ_ZIP='https://github.com/modcrypto/brofist/releases/download/1.0.2.12/br
 COIN_SUBFOLDER=linux
 
 # LINK TO DOWNLOAD BLOCKCHAIN
+UPDATE_BLOCKCHAIN=no
 LINK_BLOCKCHAIN=#https://github.com/modcrypto/brofist/releases/download/1.0.2.10/brofist.blockchain.data.zip
 # SET FOLDER IF UNZIP BLOCKCHAIN IS ON SUBFOLDER?
 BLOCKCHAIN_SUBFOLDER=data
@@ -186,6 +187,7 @@ function update_node() { #TODO: add error detection
 }
 
 function update_blockchain() {
+  if [[ $UPDATE_BLOCKCHAIN == yes ]]; then 
   echo -e "Wait some time, update blockchain!"
   if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
        echo -e "${RED}$COIN_NAME is already run with other command, you need to stop daemon before start update.${NC}"
@@ -212,6 +214,7 @@ function update_blockchain() {
   rm -rf $TMP_FOLDER/tmp_blockchain/*
 	
   cd ~ - >/dev/null 2>&1
+  fi
   clear
 }
 
