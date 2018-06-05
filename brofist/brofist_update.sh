@@ -34,7 +34,7 @@ SENTINEL_REPO='https://github.com/omegacoinnetwork/sentinel.git'
 FILE_NODES=~/MasterNodes/brofist/brofist_nodes_update.txt
 
 # LINK TO DOWNLOAD DAEMON
-COIN_TGZ_ZIP='https://github.com/modcrypto/brofist/releases/download/1.0.2.11/brofist_ubuntu1604_1.0.2.11.tar.gz'
+COIN_TGZ_ZIP='https://github.com/modcrypto/brofist/releases/download/1.0.2.12/brofist_ubuntu1604_1.0.2.12.tar.gz'
 # SET FOLDER IF UNZIP DAEMON IS ON SUBFOLDER?
 COIN_SUBFOLDER=linux
 
