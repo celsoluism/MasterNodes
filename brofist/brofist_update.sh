@@ -187,34 +187,35 @@ function update_node() { #TODO: add error detection
 }
 
 function update_blockchain() {
-  if [[ $UPDATE_BLOCKCHAIN == yes ]]; then 
+  
   echo -e "Wait some time, update blockchain!"
   if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
        echo -e "${RED}$COIN_NAME is already run with other command, you need to stop daemon before start update.${NC}"
     exit 1
   fi
   cd $CONFIG_FOLDER 
+  if [[ $UPDATE_BLOCKCHAIN == yes ]] || [[ $UPDATE_BLOCKCHAIN == YES ]] || [[ $UPDATE_BLOCKCHAIN == y ]] || [[ $UPDATE_BLOCKCHAIN == Y ]] ; then 
   cd $CONFIG_FOLDER && sudo rm -rf blocks chainstate .lock db.log debug.log fee_estimates.dat governance.dat mncache.dat mnpayments.dat netfulfilled.dat peers.dat database >/dev/null 2>&1
+  fi
   mkdir $TMP_FOLDER >/dev/null 2>&1
   mkdir $TMP_FOLDER/tmp_blockchain >/dev/null 2>&1
   cd $TMP_FOLDER/tmp_blockchain
+  if [[ $UPDATE_BLOCKCHAIN == yes ]] || [[ $UPDATE_BLOCKCHAIN == YES ]] || [[ $UPDATE_BLOCKCHAIN == y ]] || [[ $UPDATE_BLOCKCHAIN == Y ]] ; then 
   wget -q $LINK_BLOCKCHAIN
- 	if [[ $LINK_BLOCKCHAIN == *.gz ]]; then
-	   cd $TMP_FOLDER/tmp_blockchain
-     tar -xf  *.gz >/dev/null 2>&1
+  fi
+  if [[ $LINK_BLOCKCHAIN == *.gz ]]; then
+   cd $TMP_FOLDER/tmp_blockchain
+   tar -xf  *.gz >/dev/null 2>&1
   fi
   if [[ $LINK_BLOCKCHAIN == *.zip ]]; then
-     cd $TMP_FOLDER/tmp_blockchain
-	   unzip  *.zip >/dev/null 2>&1
+   cd $TMP_FOLDER/tmp_blockchain
+   unzip  *.zip >/dev/null 2>&1
   fi
   mkdir $CONFIG_FOLDER >/dev/null 2>&1
   if [ -d "$TMP_FOLDER/tmp_blockchain/$BLOCKCHAIN_SUBFOLDER" ]; then cp -rvf $TMP_FOLDER/tmp_blockchain/$BLOCKCHAIN_SUBFOLDER/* $CONFIG_FOLDER >/dev/null 2>&1 ; fi
 	if [ $? -ne 0 ]; then cp -rvf $TMP_FOLDER/tmp_blockchain/* $CONFIG_FOLDER >/dev/null 2>&1 ; fi
-	
   rm -rf $TMP_FOLDER/tmp_blockchain/*
-	
   cd ~ - >/dev/null 2>&1
-  fi
   clear
 }
 
