@@ -156,7 +156,6 @@ function backup_configs() {
 
 function update_node() { #TODO: add error detection
 	echo -e "Preparing to update ${GREEN}$COIN_NAME ${NC} Daemon..."
-	sudo rm -rf $CONFIG_FOLDER 
 	mkdir $CONFIG_FOLDER
     mkdir $TMP_FOLDER >/dev/null 2>&1
     cd $TMP_FOLDER
@@ -187,8 +186,7 @@ function update_node() { #TODO: add error detection
 }
 
 function update_blockchain() {
-  
-  echo -e "Wait some time, update blockchain!"
+   echo -e "Wait some time, update blockchain!"
   if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
        echo -e "${RED}$COIN_NAME is already run with other command, you need to stop daemon before start update.${NC}"
     exit 1
