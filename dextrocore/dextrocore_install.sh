@@ -38,6 +38,8 @@ COIN_TGZ_ZIP=https://github.com/JDXOCoin20180520Z/dxo_v1.0.1/raw/master/dextro_u
 # SET FOLDER IF UNZIP DAEMON IS ON SUBFOLDER?
 COIN_SUBFOLDER=dextro
 
+# DOWNLOAD BLOCKCHAIN?
+DOWNLOAD_BLOCKCHAIN=n
 # LINK TO DOWNLOAD BLOCKCHAIN
 LINK_BLOCKCHAIN=
 # SET FOLDER IF UNZIP BLOCKCHAIN IS ON SUBFOLDER?
@@ -47,7 +49,6 @@ BLOCKCHAIN_SUBFOLDER=data
 COIN_PATH=/usr/local/bin/
 TMP_FOLDER=~/temp_masternodes
 HOME_FOLDER=$(echo $HOME)
-HOME_USER=$(echo $USER)
 ALIAS=$(echo $HOSTNAME)
 HOME_USER=$(echo $USER)
 
@@ -207,7 +208,17 @@ function install_blockchain() {
   mkdir $TMP_FOLDER/tmp_blockchain
   cd $TMP_FOLDER/tmp_blockchain
   wget -q $LINK_BLOCKCHAIN
-  $BLOCKCHAIN_TAR_UNZIP >/dev/null 2>&1
+          echo -e "uncompressing file"
+	if [[ $LINK_BLOCKCHAIN == *.gz ]]; then
+	   cd $TMP_FOLDER/tmp_blockchain
+           tar -xf  *.gz >/dev/null 2>&1
+        fi
+        if [[ $LINK_BLOCKCHAIN == *.zip ]]; then
+       	   cd $TMP_FOLDER/tmp_blockchain
+	   unzip  *.zip >/dev/null 2>&1
+        fi
+	rm *.gz >/dev/null 2>&1
+	rm *.zip >/dev/null 2>&1
   mkdir $CONFIG_FOLDER >/dev/null 2>&1
   if [ -d "$TMP_FOLDER/tmp_blockchain/$BLOCKCHAIN_SUBFOLDER" ]; then cp -rvf $TMP_FOLDER/tmp_blockchain/$BLOCKCHAIN_SUBFOLDER/* $CONFIG_FOLDER >/dev/null 2>&1 ; fi
 	if [ $? -ne 0 ]; then cp -rvf $TMP_FOLDER/tmp_blockchain/* $CONFIG_FOLDER >/dev/null 2>&1 ; fi
@@ -251,11 +262,12 @@ function create_configs() {
 
 	mnip=$(curl -s https://api.ipify.org)
 	BIND_IP=$mnip:$COIN_PORT
-	if [[ $USE_BIND == Y ]] || [[ $USE_BIND == y ]]; then
+	if [[ $USE_BIND == Y ]] || [[ $USE_BIND == y ]] || [[ $USE_BIND == YES ]] || [[ $USE_BIND == yes ]]; then
+	sed -i '/bind/d' $CONFIG_FOLDER/$CONFIG_FILE
 	CHECK_BIND=$(echo bind=$BIND_IP)
 	fi
 	if [[ $USE_ADDR == Y ]] || [[ $USE_ADDR == y ]]; then
-	CHECK_ADDR=$(echo bind=$BIND_IP)
+	CHECK_ADDR=$(echo masternodeaddr=$BIND_IP)
 	fi
 	rpcuser=$(date +%s | sha256sum | base64 | head -c 24 ; echo)
 	rpcpass=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
@@ -319,24 +331,19 @@ function install_service() {
 [Unit]
 Description=$COIN_NAME service
 After=network.target
-
 [Service]
 User=root
 Group=root
-
 Type=forking
 #PIDFile=$CONFIG_FOLDER/$COIN_NAME.pid
-
 ExecStart=$COIN_PATH$COIN_DAEMON -daemon -conf=$CONFIG_FOLDER/$CONFIG_FILE -datadir=$CONFIG_FOLDER
 ExecStop=-$COIN_PATH$COIN_CLI -conf=$CONFIG_FOLDER/$CONFIG_FILE -datadir=$CONFIG_FOLDER stop
-
 Restart=always
 PrivateTmp=true
 TimeoutStopSec=60s
 TimeoutStartSec=10s
 StartLimitInterval=120s
 StartLimitBurst=5
-
 [Install]
 WantedBy=multi-user.target
 EOF
@@ -528,12 +535,14 @@ install() {
         install_dependences 
 	install_swap_file
 	prepare_node
+	if [[ $DOWNLOAD_BLOCKCHAIN == Y ]] || [[ $DOWNLOAD_BLOCKCHAIN == y ]] || [[ $DOWNLOAD_BLOCKCHAIN == YES ]] || [[ $DOWNLOAD_BLOCKCHAIN == yes ]]; then
 	install_blockchain
+	fi
 	enable_firewall
 	create_configs
 	install_service
 	last_commits
-	if [[ $USE_SENTINEL == Y ]] || [[ $USE_SENTINEL == y ]]; then
+	if [[ $USE_SENTINEL == Y ]] || [[ $USE_SENTINEL == y ]] || [[ $USE_SENTINEL == YES ]]  || [[ $USE_SENTINEL == yes ]]; then
 	install_sentinel
 	fi
 	success
