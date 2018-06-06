@@ -1,3 +1,7 @@
+Version 0.0.3.5
+* Update brofist version 1.0.2.12
+* repair brofist blockchain installer
+
 Version 0.0.3.4
 * Added Bolean in code
 * Repair DextroCore Installer
