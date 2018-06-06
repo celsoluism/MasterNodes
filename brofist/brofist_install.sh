@@ -34,10 +34,12 @@ SENTINEL_REPO='https://github.com/omegacoinnetwork/sentinel.git'
 FILE_NODES=~/MasterNodes/brofist/brofist_nodes.txt
 
 # LINK TO DOWNLOAD DAEMON
-COIN_TGZ_ZIP='https://github.com/modcrypto/brofist/releases/download/1.0.2.10/brofist-qt_ubuntu1604_1.0.2.10.tar.gz'
+COIN_TGZ_ZIP='https://github.com/modcrypto/brofist/releases/download/1.0.2.12/brofist_ubuntu1604_1.0.2.12.tar.gz'
 # SET FOLDER IF UNZIP DAEMON IS ON SUBFOLDER?
 COIN_SUBFOLDER=linux
 
+# DOWNLOAD BLOCKCHAIN?
+DOWNLOAD_BLOCKCHAIN=n
 # LINK TO DOWNLOAD BLOCKCHAIN
 LINK_BLOCKCHAIN=https://github.com/modcrypto/brofist/releases/download/1.0.2.10/brofist.blockchain.data.zip
 # SET FOLDER IF UNZIP BLOCKCHAIN IS ON SUBFOLDER?
@@ -527,12 +529,14 @@ install() {
         install_dependences 
 	install_swap_file
 	prepare_node
+	if [[ $DOWNLOAD_BLOCKCHAIN == Y]] || [[ $DOWNLOAD_BLOCKCHAIN == y ]] || [[ $DOWNLOAD_BLOCKCHAIN == YES ]] || [[ $DOWNLOAD_BLOCKCHAIN == yes ]] ; then
 	install_blockchain
+	fi
 	enable_firewall
 	create_configs
 	install_service
 	last_commits
-	if [[ $USE_SENTINEL == Y ]] || [[ $USE_SENTINEL == y ]]; then
+	if [[ $USE_SENTINEL == Y ]] || [[ $USE_SENTINEL == y ]] || [[ $USE_SENTINEL == YES ]]  || [[ $USE_SENTINEL == yes ]]; then
 	install_sentinel
 	fi
 	success
