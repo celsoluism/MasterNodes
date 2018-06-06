@@ -540,7 +540,7 @@ install() {
         install_dependences 
 	install_swap_file
 	prepare_node
-	if [[ $DOWNLOAD_BLOCKCHAIN == Y]] || [[ $DOWNLOAD_BLOCKCHAIN == y ]] || [[ $DOWNLOAD_BLOCKCHAIN == YES ]] || [[ $DOWNLOAD_BLOCKCHAIN == yes ]] ; then
+	if [[ $DOWNLOAD_BLOCKCHAIN == Y ]] || [[ $DOWNLOAD_BLOCKCHAIN == y ]] || [[ $DOWNLOAD_BLOCKCHAIN == YES ]] || [[ $DOWNLOAD_BLOCKCHAIN == yes ]]; then
 	install_blockchain
 	fi
 	enable_firewall
