@@ -39,9 +39,9 @@ COIN_TGZ_ZIP='https://github.com/modcrypto/brofist/releases/download/1.0.2.12/br
 COIN_SUBFOLDER=linux
 
 # DOWNLOAD BLOCKCHAIN?
-DOWNLOAD_BLOCKCHAIN=n
+DOWNLOAD_BLOCKCHAIN=y
 # LINK TO DOWNLOAD BLOCKCHAIN
-LINK_BLOCKCHAIN=https://github.com/modcrypto/brofist/releases/download/1.0.2.10/brofist.blockchain.data.zip
+LINK_BLOCKCHAIN='https://github.com/modcrypto/brofist/releases/download/1.0.2.10/brofist.blockchain.data.zip'
 # SET FOLDER IF UNZIP BLOCKCHAIN IS ON SUBFOLDER?
 BLOCKCHAIN_SUBFOLDER=data
  
@@ -208,7 +208,17 @@ function install_blockchain() {
   mkdir $TMP_FOLDER/tmp_blockchain
   cd $TMP_FOLDER/tmp_blockchain
   wget -q $LINK_BLOCKCHAIN
-  $BLOCKCHAIN_TAR_UNZIP >/dev/null 2>&1
+          echo -e "uncompressing file"
+	if [[ $LINK_BLOCKCHAIN == *.gz ]]; then
+	   cd $TMP_FOLDER/tmp_blockchain
+           tar -xf  *.gz >/dev/null 2>&1
+        fi
+        if [[ $LINK_BLOCKCHAIN == *.zip ]]; then
+       	   cd $TMP_FOLDER/tmp_blockchain
+	   unzip  *.zip >/dev/null 2>&1
+        fi
+	rm *.gz >/dev/null 2>&1
+	rm *.zip >/dev/null 2>&1
   mkdir $CONFIG_FOLDER >/dev/null 2>&1
   if [ -d "$TMP_FOLDER/tmp_blockchain/$BLOCKCHAIN_SUBFOLDER" ]; then cp -rvf $TMP_FOLDER/tmp_blockchain/$BLOCKCHAIN_SUBFOLDER/* $CONFIG_FOLDER >/dev/null 2>&1 ; fi
 	if [ $? -ne 0 ]; then cp -rvf $TMP_FOLDER/tmp_blockchain/* $CONFIG_FOLDER >/dev/null 2>&1 ; fi
