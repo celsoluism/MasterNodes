@@ -262,7 +262,8 @@ function create_configs() {
 
 	mnip=$(curl -s https://api.ipify.org)
 	BIND_IP=$mnip:$COIN_PORT
-	if [[ $USE_BIND == Y ]] || [[ $USE_BIND == y ]]; then
+	if [[ $USE_BIND == Y ]] || [[ $USE_BIND == y ]] || [[ $USE_BIND == YES ]] || [[ $USE_BIND == yes ]]; then
+	sed -i '/bind/d' $CONFIG_FOLDER/$CONFIG_FILE
 	CHECK_BIND=$(echo bind=$BIND_IP)
 	fi
 	if [[ $USE_ADDR == Y ]] || [[ $USE_ADDR == y ]]; then
