@@ -267,7 +267,7 @@ function create_configs() {
 	CHECK_BIND=$(echo bind=$BIND_IP)
 	fi
 	if [[ $USE_ADDR == Y ]] || [[ $USE_ADDR == y ]]; then
-	CHECK_ADDR=$(echo bind=$BIND_IP)
+	CHECK_ADDR=$(echo masternodeaddr=$BIND_IP)
 	fi
 	rpcuser=$(date +%s | sha256sum | base64 | head -c 24 ; echo)
 	rpcpass=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
