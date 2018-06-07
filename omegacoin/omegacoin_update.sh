@@ -420,9 +420,9 @@ function last_check() {
 	}
 	
 install() {
-    install_dependences 
+    #install_dependences 
 	#install_swap_file
-    backup_configs
+    #backup_configs
     update_node
 	update_blockchain
 	rollback_configs
