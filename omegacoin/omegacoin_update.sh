@@ -157,31 +157,30 @@ function backup_configs() {
 }
 
 function update_node() { #TODO: add error detection
-	echo -e "Preparing to update ${GREEN}$COIN_NAME ${NC} Daemon..."
-	mkdir $CONFIG_FOLDER
+    echo -e "Preparing to update ${GREEN}$COIN_NAME ${NC} Daemon..."
+    mkdir $CONFIG_FOLDER
     mkdir $TMP_FOLDER >/dev/null 2>&1
     cd $TMP_FOLDER
-	mkdir updatenode >/dev/null 2>&1
-	cd $TMP_FOLDER/updatenode
-	wget $COIN_TGZ_ZIP
+    mkdir updatenode >/dev/null 2>&1
+    cd $TMP_FOLDER/updatenode 
+    wget $COIN_TGZ_ZIP
     clear
     echo -e "uncompressing file"
-	if [[ $COIN_TGZ_ZIP == *.gz ]]; then
-	   cd $TMP_FOLDER/updatenode
-     tar -xf  *.gz >/dev/null 2>&1
+    if [[ $COIN_TGZ_ZIP == *.gz ]]; then
+       cd $TMP_FOLDER/updatenode
+       tar -xf  *.gz >/dev/null 2>&1
     fi
     if [[ $COIN_TGZ_ZIP == *.zip ]]; then
        cd $TMP_FOLDER/updatenode
-	   unzip  *.zip >/dev/null 2>&1
+       unzip  *.zip >/dev/null 2>&1
     fi
     cd $TMP_FOLDER/updatenode
 	rm *.gz >/dev/null 2>&1
 	rm *.zip >/dev/null 2>&1
-    RM_COINS=$(echo $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT)
-    sudo cd $COIN_PATH && sudo rm -f $COIN_PATH/$RM_COINS
-    cd $TMP_FOLDER/updatenode
-    if [ -d "$TMP_FOLDER/updatenode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/updatenode/$COIN_SUBFOLDER && strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
-    if [ $? -ne 0 ]; then strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
+    	cd $HOME_FOLDER && sudo rm -f $COIN_PATH/$COIN_DAEMON && sudo rm -f $COIN_PATH/$COIN_CLI && sudo rm -f $COIN_PATH/$COIN_QT && sudo rm -f $COIN_PATH/$COIN_TX 
+    	cd $TMP_FOLDER/updatenode
+    	if [ -d "$TMP_FOLDER/updatenode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/updatenode/$COIN_SUBFOLDER && strip $COIN_DAEMON && strip $COIN_CLI && strip $COIN_TX && strip $COIN_QT ; fi
+    	if [ $? -ne 0 ]; then strip $COIN_DAEMON && strip $COIN_CLI && strip $COIN_TX && strip $COIN_QT ; fi
 	compile_error
 	if [ -d "$TMP_FOLDER/updatenode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/updatenode/$COIN_SUBFOLDER && chmod +x * && sudo cp -f * /usr/local/bin ; fi
 	if [ $? -ne 0 ]; then cd $TMP_FOLDER/updatenode && chmod +x * && sudo cp -f * /usr/local/bin ; fi
