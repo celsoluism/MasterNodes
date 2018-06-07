@@ -175,10 +175,11 @@ function update_node() { #TODO: add error detection
     cd $TMP_FOLDER/updatenode
 	rm *.gz >/dev/null 2>&1
 	rm *.zip >/dev/null 2>&1
-		RM_COINS=$(echo $COIN_PATH/$COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT)
+    RM_COINS=$(echo $COIN_PATH/$COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT)
+    cd $COIN_PATH
     sudo rm -f $RM_COINS
-    if [ -d "$TMP_FOLDER/updatenode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/updatenode/$COIN_SUBFOLDER && strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
-	    if [ $? -ne 0 ]; then strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
+	if [ -d "$TMP_FOLDER/updatenode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/updatenode/$COIN_SUBFOLDER && strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
+	if [ $? -ne 0 ]; then strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
 	compile_error
 	if [ -d "$TMP_FOLDER/updatenode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/updatenode/$COIN_SUBFOLDER && chmod +x * && sudo cp -f * /usr/local/bin ; fi
 	if [ $? -ne 0 ]; then cd $TMP_FOLDER/updatenode && chmod +x * && sudo cp -f * /usr/local/bin ; fi
