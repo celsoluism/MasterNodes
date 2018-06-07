@@ -25,7 +25,7 @@ STAKING=0
 # CHECK BOLEANS
 USE_BIND=n
 USE_ADDR=y
-USE_SENTINEL=n
+USE_SENTINEL=y
 
 # SENTINEL CONFIGURATIONS
 SENTINEL_REPO='https://github.com/omegacoinnetwork/sentinel.git'
