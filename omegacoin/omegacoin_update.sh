@@ -39,7 +39,7 @@ COIN_TGZ_ZIP='https://github.com/omegacoinnetwork/omegacoin/releases/download/0.
 COIN_SUBFOLDER=
 
 # LINK TO DOWNLOAD BLOCKCHAIN
-UPDATE_BLOCKCHAIN=no
+UPDATE_BLOCKCHAIN=yes
 LINK_BLOCKCHAIN=#https://github.com/modcrypto/brofist/releases/download/1.0.2.10/brofist.blockchain.data.zip
 # SET FOLDER IF UNZIP BLOCKCHAIN IS ON SUBFOLDER?
 BLOCKCHAIN_SUBFOLDER=data
