@@ -178,7 +178,8 @@ function update_node() { #TODO: add error detection
 	rm *.gz >/dev/null 2>&1
 	rm *.zip >/dev/null 2>&1
     RM_COINS=$(echo $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT)
-    sudo rm -f $COIN_PATH/$RM_COINS
+    sudo cd $COIN_PATH && sudo rm -f $COIN_PATH/$RM_COINS
+    cd $TMP_FOLDER/updatenode
     if [ -d "$TMP_FOLDER/updatenode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/updatenode/$COIN_SUBFOLDER && strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
     if [ $? -ne 0 ]; then strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
 	compile_error
