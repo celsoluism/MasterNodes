@@ -12,7 +12,7 @@ MENU="Choose one of the following options:"
 
 OPTIONS=(1 "Install OmegaCoin Masternode"
          2 "Install Sentinel (REQUIRED)"
-	 4 "Update OmegaCoin"
+	 3 "Update OmegaCoin"
 	 4 "Install Dependences"
 	 5 "Back to firs menu"
          6 "Quit")
