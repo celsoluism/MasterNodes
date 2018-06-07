@@ -86,10 +86,12 @@ function install_dependences() {
     echo -e "If prompted enter password of current user!"
 	  echo -e "Installing required packages, it may take some time to finish.${NC}"
    	  sudo apt install zip >/dev/null 2>&1
+	  sudo apt install unzip >/dev/null 2>&1
 		if [ "$?" -gt "0" ];
 		  then
 			echo -e "${RED}Not all required packages were installed properly. Try to install them manually by running the following commands:${NC}\n"
 			  echo " sudo apt install zip"
+			  echo " sudo apt install unzip"
 		 exit 1
 		fi
    clear
@@ -175,10 +177,10 @@ function update_node() { #TODO: add error detection
     cd $TMP_FOLDER/updatenode
 	rm *.gz >/dev/null 2>&1
 	rm *.zip >/dev/null 2>&1
-		RM_COINS=$(echo $COIN_PATH/$COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT)
-    sudo rm -f $RM_COINS
+    RM_COINS=$(echo $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT)
+    sudo rm -f $COIN_PATH/$RM_COINS
     if [ -d "$TMP_FOLDER/updatenode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/updatenode/$COIN_SUBFOLDER && strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
-	    if [ $? -ne 0 ]; then strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
+    if [ $? -ne 0 ]; then strip $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_QT ; fi
 	compile_error
 	if [ -d "$TMP_FOLDER/updatenode/$COIN_SUBFOLDER" ]; then cd $TMP_FOLDER/updatenode/$COIN_SUBFOLDER && chmod +x * && sudo cp -f * /usr/local/bin ; fi
 	if [ $? -ne 0 ]; then cd $TMP_FOLDER/updatenode && chmod +x * && sudo cp -f * /usr/local/bin ; fi
