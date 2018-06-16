@@ -10,7 +10,7 @@ COLATERAL=1000ESS
 CONFIG_FILE=essence.conf
 
 # ALWAYS START WITH ~/. AND DEFAULT COIN FOLDER
-CONFIG_FOLDER=~/.essence
+CONFIG_FOLDER=~/.essencecore
 COIN_DAEMON=essenced
 COIN_CLI=essence-cli
 COIN_TX=essence-tx
