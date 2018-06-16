@@ -27,9 +27,10 @@ OPTIONS=(1 "Brofist"
          2 "DextroCore"
          3 "DynamoPay..."
 	 4 "OmegaCoin"
-	 5 "StannumCoin"
-         6 "Install Libraries and Dependences..."
-         7 "Quit")
+	 5 "Essence"
+	 6 "StannumCoin"
+         7 "Install Libraries and Dependences..."
+         8 "Quit")
  
 CHOICE=$(dialog --clear \
                 --backtitle "$BACKTITLE" \
@@ -59,14 +60,18 @@ case $CHOICE in
             ./omegacoin/omegacoin_menu.sh
             ;;
         5)  
+	    echo "You chose Essence Coin..."
+            ./essence/essence_menu.sh
+            ;;
+        6)  
 	    echo "You chose StannumCoin..."
             ./stannumcore/stannumcore_menu.sh
             ;;
-        6)
+        7)
             echo "You chose Install Libraries and Dependences"
             ./dependences/install_dependences.sh
 	    ;;
-	7)
+	8)
             echo "You chose Quit!"
             echo "Access https://PerfilConectado.NET"
             echo "Thankyou!"
