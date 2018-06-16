@@ -1,3 +1,6 @@
+Version 0.0.3.6
+* Added Essence Coin
+
 Version 0.0.3.5
 * Update brofist version 1.0.2.12
 * repair brofist blockchain installer
