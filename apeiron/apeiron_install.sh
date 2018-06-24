@@ -31,13 +31,13 @@ USE_SENTINEL=n
 SENTINEL_REPO='https://github.com/omegacoinnetwork/sentinel.git'
 
 # FILE WITH NODES IN MASTERNODE INSTALL FOLDER
-FILE_NODES=~/MasterNodes/dextrocore/apeiron_nodes.txt
+FILE_NODES=~/MasterNodes/apeiron/apeiron_nodes.txt
 
 # LINK TO DOWNLOAD DAEMON
-COIN_TGZ_ZIP=https://github.com/apeironcoin/apeiron/releases/download/v1.1/apeiron-ubuntu16.04-qt_v1.1.tar.gz
+COIN_TGZ_ZIP=https://github.com/apeironcoin/apeiron/releases/download/v1.1/apeiron-linux_v1.1.tar.gz
 
 # SET FOLDER IF UNZIP DAEMON IS ON SUBFOLDER?
-COIN_SUBFOLDER=Essence-linux
+COIN_SUBFOLDER=
 
 # DOWNLOAD BLOCKCHAIN?
 DOWNLOAD_BLOCKCHAIN=n
