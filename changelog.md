@@ -1,3 +1,6 @@
+Version 0.0.2.7
+* Added Apeiron Coin
+
 Version 0.0.3.6
 * Added Essence Coin
 
