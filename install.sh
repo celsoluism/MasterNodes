@@ -23,14 +23,15 @@ BACKTITLE="Created By PerfilConectado.NET - $VERSION "
 TITLE="Masternode Installer And Update"
 MENU="Choose one of the following options:"
 
-OPTIONS=(1 "Brofist"
-         2 "DextroCore"
-         3 "DynamoPay..."
-	 4 "OmegaCoin"
-	 5 "Essence"
-	 6 "StannumCoin"
-         7 "Install Libraries and Dependences..."
-         8 "Quit")
+OPTIONS=( 1 "Apeiron"
+         2 "Brofist"
+         3 "DextroCore"
+         4 "DynamoPay..."
+	 5 "OmegaCoin"
+	 6 "Essence"
+	 7 "StannumCoin"
+         8 "Install Libraries and Dependences..."
+         9 "Quit")
  
 CHOICE=$(dialog --clear \
                 --backtitle "$BACKTITLE" \
@@ -43,35 +44,39 @@ CHOICE=$(dialog --clear \
 clear
 
 case $CHOICE in
-        1) 
+	1) echo "You chose Apeiron"
+	   ./apeiron/apeiron_menu.sh
+	   ;;
+	
+	2) 
 	    echo "You chose Brofist"
 	    ./brofist/brofist_menu.sh
 	    ;;	
-        2)
+        3)
 	    echo "You chose DextroCore..."
             ./dextrocore/dextrocore_menu.sh
             ;;
-        3)  
+        4)  
 	    echo "You chose DynamoPay..."
             ./dynamopay/dynocore_menu.sh
             ;;
-	4)    
+	5)    
 	    echo "You chose OmegaCoin..."
             ./omegacoin/omegacoin_menu.sh
             ;;
-        5)  
+        6)  
 	    echo "You chose Essence Coin..."
             ./essence/essence_menu.sh
             ;;
-        6)  
+        7)  
 	    echo "You chose StannumCoin..."
             ./stannumcore/stannumcore_menu.sh
             ;;
-        7)
+        8)
             echo "You chose Install Libraries and Dependences"
             ./dependences/install_dependences.sh
 	    ;;
-	8)
+	9)
             echo "You chose Quit!"
             echo "Access https://PerfilConectado.NET"
             echo "Thankyou!"
