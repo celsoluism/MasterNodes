@@ -31,7 +31,7 @@ USE_SENTINEL=n
 SENTINEL_REPO='https://github.com/omegacoinnetwork/sentinel.git'
 
 # FILE WITH NODES IN MASTERNODE INSTALL FOLDER
-FILE_NODES=~/MasterNodes/dextrocore/dextrocore_nodes.txt
+FILE_NODES=~/MasterNodes/essence/essence_nodes.txt
 
 # LINK TO DOWNLOAD DAEMON
 COIN_TGZ_ZIP=https://github.com/essencecoin/essence/releases/download/0.12.1.1/Essence-linux.tar.gz
