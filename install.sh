@@ -30,8 +30,9 @@ OPTIONS=( 1 "Apeiron"
 	 5 "OmegaCoin"
 	 6 "Essence"
 	 7 "StannumCoin"
-         8 "Install Libraries and Dependences..."
-         9 "Quit")
+	 8 "QuixCoin"
+         9 "Install Libraries and Dependences..."
+         10 "Quit")
  
 CHOICE=$(dialog --clear \
                 --backtitle "$BACKTITLE" \
@@ -73,10 +74,14 @@ case $CHOICE in
             ./stannumcore/stannumcore_menu.sh
             ;;
         8)
+            echo "You chose QuixCoin"
+            ./quix/quix_install.sh
+	    ;;
+	9)
             echo "You chose Install Libraries and Dependences"
             ./dependences/install_dependences.sh
 	    ;;
-	9)
+	10)
             echo "You chose Quit!"
             echo "Access https://PerfilConectado.NET"
             echo "Thankyou!"
