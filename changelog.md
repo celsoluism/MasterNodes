@@ -1,3 +1,6 @@
+Version 0.0.2.8
+* Added Quix Coin
+
 Version 0.0.2.7
 * Added Apeiron Coin
 
