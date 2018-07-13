@@ -192,9 +192,9 @@ function update_blockchain() {
     exit 1
   fi
   cd $CONFIG_FOLDER 
-  if [[ $UPDATE_BLOCKCHAIN == yes ]] || [[ $UPDATE_BLOCKCHAIN == YES ]] || [[ $UPDATE_BLOCKCHAIN == y ]] || [[ $UPDATE_BLOCKCHAIN == Y ]] ; then 
+  #if [[ $UPDATE_BLOCKCHAIN == yes ]] || [[ $UPDATE_BLOCKCHAIN == YES ]] || [[ $UPDATE_BLOCKCHAIN == y ]] || [[ $UPDATE_BLOCKCHAIN == Y ]] ; then 
   cd $CONFIG_FOLDER && sudo rm -rf blocks chainstate .lock db.log debug.log fee_estimates.dat governance.dat mncache.dat mnpayments.dat netfulfilled.dat peers.dat database >/dev/null 2>&1
-  fi
+  #fi
   mkdir $TMP_FOLDER >/dev/null 2>&1
   mkdir $TMP_FOLDER/tmp_blockchain >/dev/null 2>&1
   cd $TMP_FOLDER/tmp_blockchain
