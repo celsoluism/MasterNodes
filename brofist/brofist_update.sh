@@ -230,7 +230,7 @@ function rollback_configs() {
   exit 1
   fi
   sed -i '/addnode/d' $CONFIG_FOLDER/$CONFIG_FILE
-  sed -i '/# ---/d' $CONFIG_FOLDER/$CONFIG_FILE
+  sed -i '/--- blockchain/d' $CONFIG_FOLDER/$CONFIG_FILE
   cat $FILE_NODES >> $CONFIG_FOLDER/$CONFIG_FILE
   clear
  }
