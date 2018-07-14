@@ -92,10 +92,13 @@ function install_dependences() {
 	  echo -e "${GREEN}Start install dependences!${NC}"
           echo -e "If prompted enter password of current user!"
 	  echo -e "Installing required packages, it may take some time to finish.${NC}"
-	  sudo apt-get -y upgrade >/dev/null 2>&1
-	  sudo apt-get -y dist-upgrade >/dev/null 2>&1
+	  sleep 2s
+	  echo -e "wait to start update system..."
+	  sleep 2s
+	  #sudo apt-get -y upgrade # >/dev/null 2>&1
+	  #sudo apt-get -y dist-upgrade # >/dev/null 2>&1
 	  sudo apt-get install -y nano htop git >/dev/null 2>&1
-	  sudo apt-get install -y software-properties-common >/dev/null 2>&1
+	  sudo apt-get install -y software-properties-common # >/dev/null 2>&1
 	  sudo apt-get install -y build-essential libtool autotools-dev pkg-config libssl-dev >/dev/null 2>&1
 
           clear
@@ -107,17 +110,30 @@ function install_dependences() {
 	  sudo apt-get install -y libminiupnpc-dev >/dev/null 2>&1
 	  sudo apt-get install -y autoconf >/dev/null 2>&1
 	  sudo apt-get install -y automake unzip >/dev/null 2>&1
+	  sleep 2s
+	  echo -e "Wait to install bitcoin repository..."
+	  sleep 2s
 	  sudo add-apt-repository  -y  ppa:bitcoin/bitcoin >/dev/null 2>&1
-	  sudo apt-get -y update >/dev/null 2>&1
+	  # sudo apt-get -y update # >/dev/null 2>&1
 	  sudo apt-get install -y libdb4.8-dev libdb4.8++-dev
 	  
 	  clear
           echo -e "${GREEN}Updating system!${NC}" 
           echo -e "If prompted enter password of current user!"
-	  echo -e "Installing required packages, it may take some time to finish.${NC}"
-	  sudo apt-get -y update >/dev/null 2>&1
-	  sudo apt-get -y upgrade >/dev/null 2>&1
-	  sudo apt-get -y dist-upgrade >/dev/null 2>&1
+	  echo -e "Checking updates, it may take some time to finish.${NC}"
+	  sleep 3s
+	  sudo apt-get -y update # >/dev/null 2>&1
+	  clear
+          echo -e "${GREEN}Updating system!${NC}" 
+          echo -e "If prompted enter password of current user!"
+	  echo -e "Checking upgrades, it may take some time to finish.${NC}"
+	  sleep 3s
+	  sudo apt-get -y upgrade # >/dev/null 2>&1
+	  clear
+          echo -e "${GREEN}Updating system!${NC}" 
+          echo -e "If prompted enter password of current user!"
+	  echo -e "Checking distribution version, it may take some time to finish.${NC}"
+	  sudo apt-get -y dist-upgrade # >/dev/null 2>&1
 	  sudo apt-get install -y unzip >/dev/null 2>&1
       
       clear
