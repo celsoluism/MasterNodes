@@ -31,8 +31,9 @@ OPTIONS=( 1 "Apeiron"
 	 6 "Essence"
 	 7 "StannumCoin"
 	 8 "QuixCoin"
-         9 "Install Libraries and Dependences..."
-         10 "Quit")
+	 9 "Chronon"
+         10 "Install Libraries and Dependences..."
+         0 "Quit")
  
 CHOICE=$(dialog --clear \
                 --backtitle "$BACKTITLE" \
@@ -77,11 +78,15 @@ case $CHOICE in
             echo "You chose QuixCoin"
             ./quix/quix_install.sh
 	    ;;
-	9)
+	9) 
+	    echo "You choise Chronon"
+	    ./chronon/chronon_install.sh
+	    ;;
+ 	10)
             echo "You chose Install Libraries and Dependences"
             ./dependences/install_dependences.sh
 	    ;;
-	10)
+	0)
             echo "You chose Quit!"
             echo "Access https://PerfilConectado.NET"
             echo "Thankyou!"
