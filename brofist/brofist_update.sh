@@ -39,10 +39,10 @@ COIN_TGZ_ZIP='https://github.com/modcrypto/brofist/releases/download/1.0.2.13/br
 COIN_SUBFOLDER=linux
 
 # LINK TO DOWNLOAD BLOCKCHAIN
-UPDATE_BLOCKCHAIN=no
-LINK_BLOCKCHAIN=#https://github.com/modcrypto/brofist/releases/download/1.0.2.12/brofist_blocks_99044.zip
+UPDATE_BLOCKCHAIN=yes
+LINK_BLOCKCHAIN=https://github.com/modcrypto/brofist/releases/download/1.0.2.12/brofist_blocks_99044.zip
 # SET FOLDER IF UNZIP BLOCKCHAIN IS ON SUBFOLDER?
-BLOCKCHAIN_SUBFOLDER=data
+BLOCKCHAIN_SUBFOLDER=.brofistcore
  
 # TO CONFIG
 COIN_PATH=/usr/local/bin/
