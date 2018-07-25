@@ -1,5 +1,5 @@
 Version 0.0.2.9
-* Added Chronon Coin
+* Update BrofistCore to version 1.0.2.13
 
 Version 0.0.2.8
 * Added Quix Coin
