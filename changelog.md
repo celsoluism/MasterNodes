@@ -1,3 +1,6 @@
+Version 0.0.3.0
+* Added FXRate Coin
+
 Version 0.0.2.9
 * Update BrofistCore to version 1.0.2.13
 
