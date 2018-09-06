@@ -10,7 +10,7 @@ COLATERAL=ammount of PEW required by TIER
 CONFIG_FILE=fxrate.conf
 
 # ALWAYS START WITH ~/ AND DEFAULT COIN FOLDER
-CONFIG_FOLDER=~/.fxrate
+CONFIG_FOLDER=~/.fxratecore
 COIN_DAEMON=fxrated
 COIN_CLI=fxrate-cli
 COIN_TX=fxrate-tx
