@@ -36,7 +36,7 @@ FILE_NODES=~/MasterNodes/fxrate/fxrate_nodes.txt
 # LINK TO DOWNLOAD DAEMON
 COIN_TGZ_ZIP='https://github.com/fxrate/fxratecoin/releases/download/1.0.0.1/FXRateCoin_v1.0.0.1_linux.zip'
 # SET FOLDER IF UNZIP DAEMON IS ON SUBFOLDER?
-COIN_SUBFOLDER=linux
+COIN_SUBFOLDER=
 
 # DOWNLOAD BLOCKCHAIN?
 DOWNLOAD_BLOCKCHAIN=n
