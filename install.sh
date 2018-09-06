@@ -27,12 +27,13 @@ OPTIONS=( 1 "Apeiron"
          2 "Brofist"
          3 "DextroCore"
          4 "DynamoPay..."
-	 5 "OmegaCoin"
-	 6 "Essence"
-	 7 "StannumCoin"
-	 8 "QuixCoin"
-	 9 "Chronon"
-         10 "Install Libraries and Dependences..."
+	 5 "FXRate"
+	 6 "OmegaCoin"
+	 7 "Essence"
+	 8 "StannumCoin"
+	 9 "QuixCoin"
+	 10 "Chronon"
+         11 "Install Libraries and Dependences..."
          0 "Quit")
  
 CHOICE=$(dialog --clear \
@@ -63,26 +64,30 @@ case $CHOICE in
             ./dynamopay/dynocore_menu.sh
             ;;
 	5)    
+	    echo "You chose FXRate..."
+            ./fxrate/fxrate_menu.sh
+            ;;
+	6)    
 	    echo "You chose OmegaCoin..."
             ./omegacoin/omegacoin_menu.sh
             ;;
-        6)  
+        7)  
 	    echo "You chose Essence Coin..."
             ./essence/essence_menu.sh
             ;;
-        7)  
+        8)  
 	    echo "You chose StannumCoin..."
             ./stannumcore/stannumcore_menu.sh
             ;;
-        8)
+        9)
             echo "You chose QuixCoin"
             ./quix/quix_install.sh
 	    ;;
-	9) 
+	10) 
 	    echo "You choise Chronon"
 	    ./chronon/chronon_install.sh
 	    ;;
- 	10)
+ 	11)
             echo "You chose Install Libraries and Dependences"
             ./dependences/install_dependences.sh
 	    ;;
